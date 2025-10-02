@@ -16,7 +16,7 @@ export const PublicNavbar = () => {
 
     return (
         <>
-            <nav className="bg-white backdrop-blur-md rounded-b-4xl border-white/20 sticky top-0 z-50">
+            <nav className="bg-dark backdrop-blur-md sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 py-3 md:px-2 md:py-4">
                     <div className="flex items-center justify-between">
                         {/* logotipo */}
@@ -30,7 +30,7 @@ export const PublicNavbar = () => {
                                 className="w-34 h-auto md:w-42 md:h-auto"
                                 />
                                 
-                                <div className="absolute inset-1 bg-gradient-to-r from-light to-accent rounded-xl blur opacity-30 md:rounded-b-xl"></div>
+                                <div className="absolute inset-1 rounded-xl blur opacity-30 md:rounded-b-xl"></div>
                             </div>
                         </div>
                         </a>
@@ -43,7 +43,7 @@ export const PublicNavbar = () => {
                                     className={`hidden sm:block font-extrabold transition-colors text-sm md:text-[20px] mr-12 ${
                                         isActive(link.to)
                                             ? 'text-accent'
-                                            : 'text-dark/70 hover:text-accent'
+                                            : 'text-light hover:text-accent'
                                         }`}>
                                     {link.label}
                                 </Link>

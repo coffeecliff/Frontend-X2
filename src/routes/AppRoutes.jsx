@@ -7,12 +7,12 @@ import { useAuth } from '../context/AuthContext';
 // Componentes reutilizáveis
 import { PublicNavbar } from '../components/PublicNavbar';
 // import { Sidebar } from '../components/Sidebar';
-// import { Footer } from "../components/Footer";
+import { Footer } from "../components/Footer";
 // import { LoadingSpinner } from '../components/LoadingSpinner';
  
 // Páginas públicas
 import { Home } from '../pages/Home';
-// import { About } from '../pages/About';
+import { About } from '../pages/About';
 // import { Login } from '../pages/Login';
 // import { Register } from '../pages/Register';
 // import { NotFound } from '../pages/NotFound';
@@ -35,7 +35,7 @@ import { Home } from '../pages/Home';
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth(); // Obtém usuário e estado de carregamento
  
-  if (loading) return <LoadingSpinner size="lg" />; // Mostra spinner enquanto carrega
+  // if (loading) return <LoadingSpinner size="lg" />; // Mostra spinner enquanto carrega
   if (!user) return <Navigate to="/login" replace />; // Redireciona não autenticados para login
  
   return (
@@ -58,7 +58,7 @@ const ProtectedRoute = ({ children }) => {
 const PublicRoute = ({ children }) => {
   const { user, loading } = useAuth(); // Obtém usuário e estado de carregamento
  
-  if (loading) return <LoadingSpinner size="lg" />; // Mostra spinner enquanto carrega
+  // if (loading) return <LoadingSpinner size="lg" />; // Mostra spinner enquanto carrega
   if (user) return <Navigate to="/dashboard" replace />; // Redireciona usuário logado para dashboard
  
   return (
@@ -81,7 +81,7 @@ const PublicRoute = ({ children }) => {
 const LogRegRoute = ({ children }) => {
   const { user, loading } = useAuth(); // Obtém usuário e estado de carregamento
  
-  if (loading) return <LoadingSpinner size="lg" />; // Mostra spinner enquanto carrega
+  // if (loading) return <LoadingSpinner size="lg" />; // Mostra spinner enquanto carrega
   if (user) return <Navigate to="/dashboard" replace />; // Redireciona usuário logado para dashboard
  
   return (
@@ -124,6 +124,11 @@ export const AppRoutes = () => {
         <Route path="/" element={
           <PublicRoute>
             <Home />
+          </PublicRoute>
+        } />
+        <Route path="/about" element={
+          <PublicRoute>
+            <About />
           </PublicRoute>
         } />
        
