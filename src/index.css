@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss"; /* Importa todas as utilidades do TailwindCSS */
-
+ 
 /* ==============================
    Paleta de cores personalizada
    ============================== */
 @theme {
-  --color-dark: #0c4740;       /* Indigo escuro */
-  --color-medium: #685293;     /* Indigo claro */
-  --color-light: #8582e4;      /* Roxo */
-  --color-accent: #a18ef2;     /* Lilás */
-  --color-background: #F2EFE9; /* Cinza claro para fundo */
+  --color-dark: #0C4740;       /* Turqueza Escuro */
+  --color-medium: #006D61;     /* Turqueza Escuro mais claro */
+  --color-light: #02B765;      /* verde Vívido */
+  --color-accent: #7ED957;     /* Verde Folha */
+  --color-background: #FCFFFA; /* Verde claro para fundo */
 }
-
+ 
 /* ==============================
    Classes utilitárias de cores
    ============================== */
@@ -21,25 +21,25 @@
 .bg-light { background-color: var(--color-light); }
 .bg-accent { background-color: var(--color-accent); }
 .bg-background { background-color: var(--color-background); }
-
+ 
 /* Texto */
 .text-dark { color: var(--color-dark); }
 .text-medium { color: var(--color-medium); }
 .text-light { color: var(--color-light); }
 .text-accent { color: var(--color-accent); }
-
+ 
 /* Bordas */
 .border-dark { border-color: var(--color-dark); }
 .border-medium { border-color: var(--color-medium); }
 .border-light { border-color: var(--color-light); }
 .border-accent { border-color: var(--color-accent); }
-
+ 
 /* Ring (foco do Tailwind) */
 .ring-dark { --tw-ring-color: var(--color-dark); }
 .ring-medium { --tw-ring-color: var(--color-medium); }
 .ring-light { --tw-ring-color: var(--color-light); }
 .ring-accent { --tw-ring-color: var(--color-accent); }
-
+ 
 /* ==============================
    Efeitos de hover (interação)
    ============================== */
@@ -48,19 +48,19 @@
 .hover\:bg-medium:hover { background-color: var(--color-medium); }
 .hover\:bg-light:hover { background-color: var(--color-light); }
 .hover\:bg-accent:hover { background-color: var(--color-accent); }
-
+ 
 /* Texto ao passar mouse */
 .hover\:text-dark:hover { color: var(--color-dark); }
 .hover\:text-medium:hover { color: var(--color-medium); }
 .hover\:text-light:hover { color: var(--color-light); }
 .hover\:text-accent:hover { color: var(--color-accent); }
-
+ 
 /* Bordas ao passar mouse */
 .hover\:border-dark:hover { border-color: var(--color-dark); }
 .hover\:border-medium:hover { border-color: var(--color-medium); }
 .hover\:border-light:hover { border-color: var(--color-light); }
 .hover\:border-accent:hover { border-color: var(--color-accent); }
-
+ 
 /* ==============================
    Estilo global do body
    ============================== */
@@ -75,11 +75,11 @@ body {
   );
   min-height: 100vh; /* Sempre ocupa altura mínima da tela */
 }
-
+ 
 /* ==============================
    Efeito Glassmorphism
    ============================== */
-
+ 
    .glass-card {
     background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(10px);
@@ -90,7 +90,7 @@ body {
     position: relative;
     overflow: hidden;
   }
-  
+ 
   .glass-card::before {
     content: '';
     position: absolute;
@@ -105,7 +105,7 @@ body {
       transparent
     );
   }
-  
+ 
   .glass-card::after {
     content: '';
     position: absolute;
@@ -120,8 +120,8 @@ body {
       rgba(255, 255, 255, 0.3)
     );
   }
-  
-
+ 
+ 
    .glassmorphism {
     background: rgba(255, 255, 255, 0.9);         /* Fundo branco translúcido */
     backdrop-filter: blur(20px);                  /* Efeito de desfoque */
@@ -129,14 +129,14 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);   /* Borda suave */
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* Sombra */
   }
-  
+ 
   .glassmorphism-light {
     background: rgba(255, 255, 255, 0.15);        /* Versão mais clara/transparente */
     backdrop-filter: blur(16px);
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
-  
+ 
   /* ==============================
      Elementos decorativos de fundo
      ============================== */
@@ -147,7 +147,7 @@ body {
     opacity: 0.3;         /* Transparente */
     z-index: -1;          /* Fica atrás de tudo */
   }
-  
+ 
   /* Bolha 1 */
   .bg-decoration-1 {
     width: 300px;
@@ -157,7 +157,7 @@ body {
     left: 10%;
     animation: float 6s ease-in-out infinite; /* Animação de flutuar */
   }
-  
+ 
   /* Bolha 2 */
   .bg-decoration-2 {
     width: 200px;
@@ -167,7 +167,7 @@ body {
     right: 15%;
     animation: float 8s ease-in-out infinite reverse; /* Flutua ao contrário */
   }
-  
+ 
   /* Bolha 3 */
   .bg-decoration-3 {
     width: 150px;
@@ -177,7 +177,7 @@ body {
     left: 20%;
     animation: float 7s ease-in-out infinite;
   }
-  
+ 
   /* ==============================
      Animações
      ============================== */
@@ -185,21 +185,21 @@ body {
     0%, 100% { transform: translateY(0px); }   /* Posição inicial e final */
     50% { transform: translateY(-20px); }      /* Sobe 20px no meio */
   }
-  
+ 
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); } /* Começa embaixo e invisível */
     to { opacity: 1; transform: translateY(0); }      /* Termina visível e no lugar */
   }
-  
+ 
   @keyframes fadeInLeft {
     from { opacity: 0; transform: translateX(-30px); } /* Começa à esquerda e invisível */
     to { opacity: 1; transform: translateX(0); }       /* Termina visível no lugar */
   }
-  
+ 
   /* Classes utilitárias para aplicar animações */
   .animate-fade-in-up { animation: fadeInUp 0.6s ease-out; }
   .animate-fade-in-left { animation: fadeInLeft 0.6s ease-out; }
-  
+ 
   /* ==============================
      Botões
      ============================== */
@@ -213,7 +213,7 @@ body {
     background: var(--color-accent); /* Muda cor no hover */
     transform: scale(1.02);          /* Leve zoom */
   }
-  
+ 
   /* Botão fantasma (sem fundo) */
   .btn-ghost {
     background: transparent;
@@ -223,7 +223,7 @@ body {
   .btn-ghost:hover {
     color: var(--color-medium); /* Texto muda de cor no hover */
   }
-  
+ 
   /* ==============================
      Campos de input
      ============================== */
@@ -237,7 +237,7 @@ body {
     border-color: var(--color-light);               /* Destacado em azul claro */
     box-shadow: 0 0 0 3px rgba(36, 147, 191, 0.1);  /* Glow em volta */
   }
-  
+ 
   /* ==============================
      Página mobile de redirecionamento
      ============================== */
@@ -251,4 +251,5 @@ body {
     text-align: center;            /* Texto centralizado */
     padding: 2rem;                 /* Espaçamento interno */
   }
-  
+ 
+ 

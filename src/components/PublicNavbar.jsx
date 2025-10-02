@@ -27,7 +27,7 @@ export const PublicNavbar = () => {
                                 <img
                                 src="/logo-big.svg"
                                 alt="logotipo site Cuide+"
-                                className="w-34 h-auto md:w-42 md:h-auto"
+                                className="w-auto h-24 md:w-42 md:h-24"
                                 />
                                 
                                 <div className="absolute inset-1 rounded-xl blur opacity-30 md:rounded-b-xl"></div>
