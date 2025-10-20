@@ -8,7 +8,7 @@ export const Footer = () => {
           {/* Links */}
           <div className="flex flex-wrap justify-center space-x-4">
             <a href="#" className="hover:underline">Contrato do Usuário</a>
-            <a href="#" className="hover:underline">Política de Privacidade do Cuide+</a>
+            <a href="#" className="hover:underline">Política de Privacidade do X2+</a>
             <a href="#" className="hover:underline">Diretrizes da Comunidade</a>
             <a href="#" className="hover:underline">Política dos Cookies</a>
             <a href="#" className="hover:underline">Enviar feedback</a>

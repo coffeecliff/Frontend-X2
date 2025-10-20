@@ -8,6 +8,7 @@ export const PublicNavbar = () => {
 
     const navLink = [
         { to: '/', label: 'Home' },
+        { to: '/games' , label: 'Jogos'},
         { to: '/about', label: 'Sobre' },
         { to: '/login', label: 'Login' }
     ];
@@ -16,7 +17,7 @@ export const PublicNavbar = () => {
 
     return (
         <>
-            <nav className="bg-dark backdrop-blur-md sticky top-0 z-50">
+            <nav className="bg-dark backdrop-blur-md border-white/20 sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 py-3 md:px-2 md:py-4">
                     <div className="flex items-center justify-between">
                         {/* logotipo */}
@@ -25,12 +26,13 @@ export const PublicNavbar = () => {
                             <div className="relative">
                                 
                                 <img
-                                src="/logo-big.svg"
-                                alt="logotipo site Cuide+"
-                                className="w-auto h-24 md:w-42 md:h-24"
+                                src="/navlogo.svg"
+                                alt="logotipo site X2"
+                                className="w-34 h-auto md:w-42 md:h-auto"
                                 />
                                 
-                                <div className="absolute inset-1 rounded-xl blur opacity-30 md:rounded-b-xl"></div>
+                                <div className="absolute inset-1 bg-gradient-to-r
+                                 rounded-xl blur opacity-30 md:rounded-b-xl"></div>
                             </div>
                         </div>
                         </a>
@@ -42,8 +44,8 @@ export const PublicNavbar = () => {
                                     to={link.to}
                                     className={`hidden sm:block font-extrabold transition-colors text-sm md:text-[20px] mr-12 ${
                                         isActive(link.to)
-                                            ? 'text-accent'
-                                            : 'text-light hover:text-accent'
+                                            ? 'text-white hover:text-accent'
+                                            : 'text-white hover:text-accent'
                                         }`}>
                                     {link.label}
                                 </Link>

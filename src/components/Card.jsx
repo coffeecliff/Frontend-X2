@@ -1,7 +1,7 @@
 export const Card = ({children, className = '', ...props}) => {
     return(
         <div
-        className={`glass-card shadow-lg p-6 ${className}`}
+        className={`glassmorphism shadow-lg p-6 ${className}`}
         {...props}
         >
         {children}

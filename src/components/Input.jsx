@@ -49,7 +49,7 @@ export const Input = ({
         )}
       </div>
       {error && (
-        <p id={errorId} className="text-sm text-red-500" role="alert">
+        <p id={errorId} className="text-sm text-red-600" role="alert">
           {error} {/* Exibe a mensagem de erro */}
         </p>
       )}

@@ -13,7 +13,8 @@ import { Footer } from "../components/Footer";
 // Páginas públicas
 import { Home } from '../pages/Home';
 import { About } from '../pages/About';
-// import { Login } from '../pages/Login';
+import { Login } from '../pages/Login';
+import { Games } from '../pages/Games';
 // import { Register } from '../pages/Register';
 // import { NotFound } from '../pages/NotFound';
 
@@ -32,26 +33,8 @@ import { About } from '../pages/About';
 /* ==============================
    Componente de rota protegida
    ============================== */
-const ProtectedRoute = ({ children }) => {
-  const { user, loading } = useAuth(); // Obtém usuário e estado de carregamento
- 
-  // if (loading) return <LoadingSpinner size="lg" />; // Mostra spinner enquanto carrega
-  if (!user) return <Navigate to="/login" replace />; // Redireciona não autenticados para login
- 
-  return (
-    <div  className="bg-cover bg-center min-h-screen w-full "
-        style={{backgroundImage: "url('/bg2.png')"}}
-        >
-    <div className="min-h-screen flex">
-      <Sidebar /> {/* Sidebar lateral sempre visível */}
-      <main className="flex-1 lg:ml-64 p-8">
-        {children} {/* Conteúdo da página protegida */}
-      </main>
-    </div>
-    </div>
-  );
-};
- 
+
+
 /* ==============================
    Componente de rota pública
    ============================== */
@@ -128,10 +111,19 @@ export const AppRoutes = () => {
         } />
         <Route path="/about" element={
           <PublicRoute>
-            <About />
+            <About/>
           </PublicRoute>
         } />
-       
+        <Route path="/login" element={
+          <PublicRoute>
+            <Login/>
+          </PublicRoute>
+        } />
+               <Route path="/games" element={
+          <PublicRoute>
+            <Games/>
+          </PublicRoute>
+        } />
        
         {/* ==============================
            Rotas Protegidas
