@@ -4,9 +4,9 @@ export const About = () => {
       <div className="w-full min-h-screen bg-white flex flex-col items-center px-6 py-12">
         {/* Logo central */}
         <img
-          src="/logo-grande.png"
+          src="/X2logo.svg"
           alt="Logo"
-          className="h-32 mb-8 drop-shadow-lg"
+          className="h-42 mb-16 drop-shadow-lg"
         />
   
         {/* Conteúdo */}

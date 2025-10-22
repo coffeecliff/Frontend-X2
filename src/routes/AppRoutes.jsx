@@ -15,6 +15,7 @@ import { Home } from '../pages/Home';
 import { About } from '../pages/About';
 import { Login } from '../pages/Login';
 import { Games } from '../pages/Games';
+import { NewEdition } from '../pages/NewEdition';
 // import { Register } from '../pages/Register';
 // import { NotFound } from '../pages/NotFound';
 
@@ -124,7 +125,11 @@ export const AppRoutes = () => {
             <Games/>
           </PublicRoute>
         } />
-       
+        <Route path="/newedition" element={
+          <PublicRoute>
+            <NewEdition/>
+          </PublicRoute>
+        } />
         {/* ==============================
            Rotas Protegidas
            ============================== */}

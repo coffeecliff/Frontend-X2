@@ -1,58 +1,71 @@
 // src/pages/Home.jsx
+import { Link } from 'react-router-dom';
+import { Button } from '../components/Button';
+ 
 export const Home = () => {
   return (
     <div className="w-full min-h-screen bg-white font-sans text-green-900">
-
+ 
       {/* Hero Section */}
-      <section className="relative flex items-center justify-between px-8 md:px-20 py-12">
-        {/* Texto */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-lg z-20">
-          <img src="/logoX2home.svg" alt="logo grande" className="h-32 mb-4" />
-          <h1 className="text-3xl font-extrabold text-green-900 leading-snug">
-            ALCANCE <br />
-            <span className="text-green-500">SEUS SONHOS</span> <br />
-            E <span className="text-green-600">MUDE VIDAS</span>
-          </h1>
-          <button className="mt-6 bg-green-500 text-white px-6 py-3 rounded-lg font-bold shadow-md hover:bg-green-600 cursor-pointer">
-            EDIÇÃO ATUAL
-          </button>
-        </div>
-
-        {/* Imagem cortada diagonalmente */}
-        <div className="absolute right-0 top-0 h-full w-1/2 overflow-hidden">
-          <img
-            src="/criancasjogando.svg"
-            alt="crianças jogando futebol"
-            className="h-full w-full object-cover"
-            style={{ clipPath: 'polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
-          />
-        </div>
-
-        {/* Fundo branco do texto, com corte diagonal */}
-        <div
-          className="absolute left-0 top-0 h-full w-1/2 bg-white z-10"
-          style={{ clipPath: 'polygon(0 0, 100% 0, 80% 100%, 0% 100%)' }}
-        ></div>
-      </section>
-
+      <section className="relative flex flex-col md:flex-row items-center justify-between px-8 md:px-32 py-16">
+ 
+  {/* Texto */}
+  <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-lg z-20 md:ml-32">
+    <img src="/logoX2home.svg" alt="logo grande" className="h-36 mb-6" />
+    <h1 className="text-5xl md:text-6xl font-extrabold text-green-900 leading-tight">
+      ALCANCE <br />
+      <span className="text-green-500">SEUS SONHOS</span> <br />
+      E <span className="text-green-600">MUDE VIDAS</span>
+    </h1>
+ 
+    {/* Botão */}
+    <div className="mt-8">
+      <Link to="/newedition">
+        <Button
+          size="lg"
+          className="px-8 py-4 text-lg rounded-lg font-bold shadow-md hover:bg-green-600"
+        >
+          EDIÇÃO ATUAL
+        </Button>
+      </Link>
+    </div>
+  </div>
+ 
+  {/* Imagem cortada diagonalmente */}
+  <div className="absolute right-0 top-0 h-221 w-3/5 overflow-hidden">
+    <img
+      src="/criancasjogando.svg"
+      alt="crianças jogando futebol"
+      className="h-full w-full object-cover"
+      style={{
+        clipPath: 'polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%)',
+      }}
+    />
+  </div>
+ 
+  {/* Fundo branco do texto, com corte diagonal */}
+  <div
+    className="absolute left-0 top-0 h-full w-1/2 bg-white z-10"
+    style={{
+      clipPath: 'polygon(0 0, 100% 0, 80% 100%, 0% 100%)',
+    }}
+  ></div>
+</section>
+ 
+ 
       {/* Faixa de patrocinadores */}
-      <section
-        className="bg-[#006B3D] flex justify-center items-center space-x-16 py-4 overflow-hidden"
-      >
-        <img src="/patr1.svg" alt="patrocinador 1" className="h-20 md:h-24" />
-        <img src="/patr2.svg" alt="patrocinador 2" className="h-20 md:h-24" />
-        <img src="/patr3.svg" alt="patrocinador 3" className="h-20 md:h-24" />
-      </section>
-
+      <section className="bg-[#006B3D] flex justify-center items-center space-x-16 py-4 overflow-hidden mt-68">
+  <img src="/patr1.svg" alt="patrocinador 1" className="h-20 md:h-24" />
+  <img src="/patr2.svg" alt="patrocinador 2" className="h-20 md:h-24" />
+  <img src="/patr3.svg" alt="patrocinador 3" className="h-20 md:h-24" />
+</section>
+ 
+ 
       {/* Resultado do último jogo */}
       <section className="py-12 text-center relative">
-        <h2 className="text-2xl font-extrabold text-green-900 uppercase">
-          Resultado
-        </h2>
-        <p className="text-green-600 font-semibold mb-8">
-          do último jogo
-        </p>
-
+        <h2 className="text-2xl font-extrabold text-green-900 uppercase">Resultado</h2>
+        <p className="text-green-600 font-semibold mb-8">do último jogo</p>
+ 
         {/* Fundo da seção */}
         <div
           className="absolute inset-0 bg-cover bg-center z-0"
@@ -60,10 +73,10 @@ export const Home = () => {
         >
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
-
-        {/* Conteúdo das tabelas */}
+ 
+        {/* Tabelas */}
         <div className="relative flex flex-col justify-center gap-10 items-center z-10">
-
+ 
           {/* GRUPO A */}
           <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-white/90">
             <div className="bg-[#19326C] text-white font-bold py-3 text-lg">
@@ -81,50 +94,27 @@ export const Home = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-[#5BC060] text-white">
-                  <td className="flex items-center justify-center py-3">
-                    <img src="/bandeiras/japao.svg" alt="Japão" className="h-6" />
-                  </td>
-                  <td className="py-3">2(1)</td>
-                  <td className="py-3">0</td>
-                  <td className="py-3">4</td>
-                  <td className="py-3">2</td>
-                  <td className="py-3">8</td>
-                </tr>
-                <tr className="bg-[#61C466] text-white">
-                  <td className="flex items-center justify-center py-3">
-                    <img src="/bandeiras/argentina.svg" alt="Argentina" className="h-6" />
-                  </td>
-                  <td className="py-3">2</td>
-                  <td className="py-3">1</td>
-                  <td className="py-3">6</td>
-                  <td className="py-3">1</td>
-                  <td className="py-3">6</td>
-                </tr>
-                <tr className="bg-[#69CA6C] text-white">
-                  <td className="flex items-center justify-center py-3">
-                    <img src="/bandeiras/marrocos.svg" alt="Marrocos" className="h-6" />
-                  </td>
-                  <td className="py-3">1</td>
-                  <td className="py-3">1(1)</td>
-                  <td className="py-3">7</td>
-                  <td className="py-3">2</td>
-                  <td className="py-3">4</td>
-                </tr>
-                <tr className="bg-[#70D072] text-white">
-                  <td className="flex items-center justify-center py-3">
-                    <img src="/bandeiras/brasil.svg" alt="Brasil" className="h-6" />
-                  </td>
-                  <td className="py-3">0</td>
-                  <td className="py-3">3</td>
-                  <td className="py-3">2</td>
-                  <td className="py-3">-2</td>
-                  <td className="py-3">0</td>
-                </tr>
+                {[
+                  { flag: 'jp.svg', v: '2(1)', d: '0', gm: '4', sg: '2', pts: '8' },
+                  { flag: 'ar.svg', v: '2', d: '1', gm: '6', sg: '1', pts: '6' },
+                  { flag: 'ma.svg', v: '1', d: '1(1)', gm: '7', sg: '2', pts: '4' },
+                  { flag: 'br.svg', v: '0', d: '3', gm: '2', sg: '-2', pts: '0' },
+                ].map(({ flag, v, d, gm, sg, pts }, i) => (
+                  <tr key={flag} className={`text-white ${['bg-[#5BC060]', 'bg-[#61C466]', 'bg-[#69CA6C]', 'bg-[#70D072]'][i]}`}>
+                    <td className="flex items-center justify-center py-3">
+                      <img src={`/${flag}`} alt={flag} className="h-6" />
+                    </td>
+                    <td className="py-3">{v}</td>
+                    <td className="py-3">{d}</td>
+                    <td className="py-3">{gm}</td>
+                    <td className="py-3">{sg}</td>
+                    <td className="py-3">{pts}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
-
+ 
           {/* GRUPO B */}
           <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-white/90">
             <div className="bg-[#19326C] text-white font-bold py-3 text-lg">
@@ -142,49 +132,27 @@ export const Home = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-[#5BC060] text-white">
-                  <td className="flex items-center justify-center py-3">
-                    <img src="/bandeiras/franca.svg" alt="França" className="h-6" />
-                  </td>
-                  <td className="py-3">3</td>
-                  <td className="py-3">0</td>
-                  <td className="py-3">8</td>
-                  <td className="py-3">6</td>
-                  <td className="py-3">9</td>
-                </tr>
-                <tr className="bg-[#61C466] text-white">
-                  <td className="flex items-center justify-center py-3">
-                    <img src="/bandeiras/alemanha.svg" alt="Alemanha" className="h-6" />
-                  </td>
-                  <td className="py-3">2</td>
-                  <td className="py-3">1</td>
-                  <td className="py-3">4</td>
-                  <td className="py-3">-1</td>
-                  <td className="py-3">6</td>
-                </tr>
-                <tr className="bg-[#69CA6C] text-white">
-                  <td className="flex items-center justify-center py-3">
-                    <img src="/bandeiras/mexico.svg" alt="México" className="h-6" />
-                  </td>
-                  <td className="py-3">1</td>
-                  <td className="py-3">2</td>
-                  <td className="py-3">3</td>
-                  <td className="py-3">-1</td>
-                  <td className="py-3">3</td>
-                </tr>
-                <tr className="bg-[#70D072] text-white">
-                  <td className="flex items-center justify-center py-3">
-                    <img src="/bandeiras/portugal.svg" alt="Portugal" className="h-6" />
-                  </td>
-                  <td className="py-3">0</td>
-                  <td className="py-3">3</td>
-                  <td className="py-3">1</td>
-                  <td className="py-3">-4</td>
-                  <td className="py-3">0</td>
-                </tr>
+                {[
+                  { flag: 'fr.svg', v: '3', d: '0', gm: '8', sg: '6', pts: '9' },
+                  { flag: 'ger.svg', v: '2', d: '1', gm: '4', sg: '-1', pts: '6' },
+                  { flag: 'mx.svg', v: '1', d: '2', gm: '3', sg: '-1', pts: '3' },
+                  { flag: 'pt.svg', v: '0', d: '3', gm: '1', sg: '-4', pts: '0' },
+                ].map(({ flag, v, d, gm, sg, pts }, i) => (
+                  <tr key={flag} className={`text-white ${['bg-[#5BC060]', 'bg-[#61C466]', 'bg-[#69CA6C]', 'bg-[#70D072]'][i]}`}>
+                    <td className="flex items-center justify-center py-3">
+                      <img src={`/${flag}`} alt={flag} className="h-6" />
+                    </td>
+                    <td className="py-3">{v}</td>
+                    <td className="py-3">{d}</td>
+                    <td className="py-3">{gm}</td>
+                    <td className="py-3">{sg}</td>
+                    <td className="py-3">{pts}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
+ 
         </div>
       </section>
     </div>
