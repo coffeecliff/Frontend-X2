@@ -9,7 +9,7 @@ import { PublicNavbar } from '../components/PublicNavbar';
 import { PrivateNavbar } from '../components/PrivateNavbar';
 import { Sidebar } from '../components/Sidebar';
 import { Footer } from "../components/Footer";
-// import { LoadingSpinner } from '../components/LoadingSpinner';
+import { LoadingSpinner } from '../components/LoadingSpinner';
  
 // Páginas públicas
 import { Home } from '../pages/Home';
@@ -43,7 +43,7 @@ import { AdmHomeEdit } from '../pages/AdmHomeEdit';
    
     return (
       <div className="min-h-screen flex">
-        <PrivateNavbar/>
+        {/* <PrivateNavbar/> */}
         <Sidebar /> {/* Sidebar lateral sempre visível */}
         <main className="flex-1 lg:ml-64 p-8">
           {children} {/* Conteúdo da página protegida */}
@@ -58,18 +58,14 @@ import { AdmHomeEdit } from '../pages/AdmHomeEdit';
    const PublicRoute = ({ children }) => {
     const { user, loading } = useAuth();
   
-    // if (loading) return <LoadingSpinner size="lg" />; // Exibe spinner se quiser
+    if (loading) return null; // pode pôr spinner se quiser
   
-    // Se o usuário estiver logado, redireciona conforme o tipo
-    if (user) {
-      if (user.type === "psicologo") {
-        return <Navigate to="/admhomeedit" replace />;
-      } else if (user.type === "paciente") {
-        return <Navigate to="/" replace />;
-      }
+    if (user?.type === "psicologo") {
+      return <Navigate to="/admhomeedit" replace />;
+    } else if (user?.type === "paciente") {
+      return <Navigate to="/" replace />;
     }
   
-    // Se não estiver logado, mostra a tela pública normalmente
     return (
       <div
         className="bg-cover bg-center min-h-screen w-full"
