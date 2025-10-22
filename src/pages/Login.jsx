@@ -23,7 +23,7 @@ export const Login = () => {
             );
             login(user, token);
             toast.success("Login realizado com sucesso!");
-            navigate("/dashboard");
+            navigate("/admhomeedit");
         } catch (error) {
             toast.error(error.message);
         } finally {

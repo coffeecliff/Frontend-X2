@@ -6,7 +6,8 @@ import { useAuth } from '../context/AuthContext';
  
 // Componentes reutilizáveis
 import { PublicNavbar } from '../components/PublicNavbar';
-// import { Sidebar } from '../components/Sidebar';
+import { PrivateNavbar } from '../components/PrivateNavbar';
+import { Sidebar } from '../components/Sidebar';
 import { Footer } from "../components/Footer";
 // import { LoadingSpinner } from '../components/LoadingSpinner';
  
@@ -21,7 +22,7 @@ import { NewEdition } from '../pages/NewEdition';
 
  
 // Páginas protegidas (apenas para usuários autenticados)
-// import { DashboardPsicologo } from '../pages/DashboardPsicologo';
+import { AdmHomeEdit } from '../pages/AdmHomeEdit';
 // import { DashboardPaciente } from '../pages/DashboardPaciente';
 // import { Agendamento } from '../pages/Agendamentos';
 // import { ChatIA } from '../pages/ChatIA';
@@ -34,65 +35,70 @@ import { NewEdition } from '../pages/NewEdition';
 /* ==============================
    Componente de rota protegida
    ============================== */
-
-
-/* ==============================
-   Componente de rota pública
-   ============================== */
-const PublicRoute = ({ children }) => {
-  const { user, loading } = useAuth(); // Obtém usuário e estado de carregamento
- 
-  // if (loading) return <LoadingSpinner size="lg" />; // Mostra spinner enquanto carrega
-  if (user) return <Navigate to="/dashboard" replace />; // Redireciona usuário logado para dashboard
- 
-  return (
-    <div  className="bg-cover bg-center min-h-screen w-full "
-        style={{backgroundImage: "url('/bg.png')"}}
-        >
-    <div className="min-h-screen">
-      <PublicNavbar /> {/* Navbar pública */}
-      <main className="mx-auto">
-        {children} {/* Conteúdo da página pública */}
-      </main>
-      <footer>
-        <Footer/>
-      </footer>
-    </div>
-    </div>
-  );
-};
-
-const LogRegRoute = ({ children }) => {
-  const { user, loading } = useAuth(); // Obtém usuário e estado de carregamento
- 
-  // if (loading) return <LoadingSpinner size="lg" />; // Mostra spinner enquanto carrega
-  if (user) return <Navigate to="/dashboard" replace />; // Redireciona usuário logado para dashboard
- 
-  return (
-    <div  className="bg-cover bg-center min-h-screen w-full "
-        style={{backgroundImage: "url('/bg2.png')"}}
-        >
-    <div className="min-h-screen">
-      <PublicNavbar /> {/* Navbar pública */}
-      <main className="mx-auto">
-        {children} {/* Conteúdo da página pública */}
-      </main>
-      <footer>
-        <Footer/>
-      </footer>
-    </div>
-    </div>
-  );
-};
+   const ProtectedRoute = ({ children }) => {
+    const { user, loading } = useAuth(); // Obtém usuário e estado de carregamento
+   
+    if (loading) return <LoadingSpinner size="lg" />; // Mostra spinner enquanto carrega
+    if (!user) return <Navigate to="/login" replace />; // Redireciona não autenticados para login
+   
+    return (
+      <div className="min-h-screen flex">
+        <PrivateNavbar/>
+        <Sidebar /> {/* Sidebar lateral sempre visível */}
+        <main className="flex-1 lg:ml-64 p-8">
+          {children} {/* Conteúdo da página protegida */}
+        </main>
+      </div>
+    );
+  };
 
 /* ==============================
-   Componente Dashboard condicional
+   ROTA PÚBLICA
    ============================== */
-const Dashboard = () => {
-  const { user } = useAuth();
-  // Retorna dashboard específico baseado no tipo do usuário
-  return user?.type === 'psicologo' ? <DashboardPsicologo /> : <DashboardPaciente />;
-};
+   const PublicRoute = ({ children }) => {
+    const { user, loading } = useAuth();
+  
+    // if (loading) return <LoadingSpinner size="lg" />; // Exibe spinner se quiser
+  
+    // Se o usuário estiver logado, redireciona conforme o tipo
+    if (user) {
+      if (user.type === "psicologo") {
+        return <Navigate to="/admhomeedit" replace />;
+      } else if (user.type === "paciente") {
+        return <Navigate to="/" replace />;
+      }
+    }
+  
+    // Se não estiver logado, mostra a tela pública normalmente
+    return (
+      <div
+        className="bg-cover bg-center min-h-screen w-full"
+        style={{ backgroundImage: "url('/bg.png')" }}
+      >
+        <div className="min-h-screen flex flex-col">
+          <PublicNavbar />
+          <main className="flex-1 mx-auto">{children}</main>
+          <Footer />
+        </div>
+      </div>
+    );
+  };
+  
+  /* ==============================
+     DASHBOARD CONDICIONAL
+     ============================== */
+  const Dashboard = () => {
+    const { user } = useAuth();
+  
+    if (!user) return <Navigate to="/" replace />;
+  
+    // Retorna dashboard baseado no tipo do usuário
+    return user.type === "psicologo" ? (
+      <DashboardPsicologo />
+    ) : (
+      <DashboardPaciente />
+    );
+  };
  
 /* ==============================
    Configuração de rotas da aplicação
@@ -133,6 +139,11 @@ export const AppRoutes = () => {
         {/* ==============================
            Rotas Protegidas
            ============================== */}
+        <Route path="/admhomeedit" element={
+          <ProtectedRoute>
+            <AdmHomeEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+          </ProtectedRoute>
+        } />
 
       </Routes>
     </Router>
