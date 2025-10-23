@@ -146,7 +146,7 @@ export const Sidebar = () => {
           </nav>
  
           {/* 📌 Botão de Logout */}
-          <div className="p-4 border-t-2 border-white/70">
+          {/* <div className="p-4 border-t-2 border-white/70">
             <button
               onClick={handleLogout}
               className="flex items-center space-x-3 w-full text-[17px] px-4 py-3 text-white 
@@ -155,7 +155,7 @@ export const Sidebar = () => {
               <LogOut size={30} />
               <span>Sair</span>
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
  
