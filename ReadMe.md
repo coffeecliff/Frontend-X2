@@ -1,6 +1,6 @@
 # 🏆 X2 — Site Informativo do Projeto X2
 
- ![Projeto X2](./public/webLogo.png)
+ ![Projeto X2](./public/X2logo.svg)
 
 
 ## 📖 Descrição
