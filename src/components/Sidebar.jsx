@@ -12,13 +12,16 @@ import {
   Menu,
   X,
   LogOut,
-  BarChart3,
   Calendar,
   UserRound,
   MessageCircle,
   Bell
 } from 'lucide-react';
- 
+import { FaHome, FaInfoCircle } from "react-icons/fa"; 
+import { RiFootballFill } from "react-icons/ri";
+import { FaRegHandshake } from "react-icons/fa6";
+import { MdNewReleases } from "react-icons/md";
+
 export const Sidebar = () => {
   // Estado que controla se o menu mobile está aberto ou fechado
   const [isOpen, setIsOpen] = useState(false);
@@ -29,25 +32,25 @@ export const Sidebar = () => {
   // Hooks do React Router
   const navigate = useNavigate(); // navegação programática
   const location = useLocation(); // rota atual, útil para destacar link ativo
- 
+
   // 📌 Função para fazer logout
   const handleLogout = () => {
     logout();           // limpa o contexto
     navigate('/login'); // redireciona para página de login
   };
- 
+
   // 📌 Links de navegação, diferentes para psicólogo ou paciente
   const navLinks =
     user?.type === 'psicologo'
       ? [
-          { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
-          { to: '/solicitacoes', label: 'Solicitações', icon: Bell },
-          { to: '/pacientes', label: 'Pacientes', icon: UserRound },
-          { to: '/relatorios', label: 'Relatórios', icon: BarChart3 },
-          { to: '/chat-ia', label: 'Chat IA', icon: MessageCircle }
+          { to: '/admhomeedit', label: 'Home', icon: FaHome },
+          { to: '/admeditionedit', label: 'Última Edição', icon: MdNewReleases },
+          { to: '/admgamesedit', label: 'Jogos', icon: RiFootballFill },
+          { to: '/admsponsoredit', label: 'Patrocínios', icon: FaRegHandshake },
+          { to: '/admaboutedit', label: 'Sobre', icon: FaInfoCircle }
         ]
       : [
-          { to: '/dashboard', label: 'Dashboard', icon: BarChart3 },
+          { to: '/admhomeedit', label: 'Dashboard', icon: FaHome },
           { to: '/agendamento', label: 'Solicitar Sessão', icon: Calendar }
         ];
  
@@ -84,7 +87,8 @@ export const Sidebar = () => {
  
       {/* 📌 Sidebar principal */}
       <div
-        className={`fixed left-0 top-0 h-full w-64 bg-gradient-to-br border-3 from-white/60 to-white/40 backdrop-blur-md border-white/80 shadow-xl transform transition-transform duration-300 z-40 rounded-r-4xl ${
+        className={`fixed left-0 top-0 h-full w-64 bg-gradient-to-br bg-medium 
+          shadow-xl transform transition-transform duration-300 z-40 ${
           // Se estiver aberta: fica visível (translate-x-0)
           // Se fechada em mobile: sai da tela à esquerda (-translate-x-full)
           // Em telas grandes (lg:), sempre visível (translate-x-0)
@@ -105,13 +109,14 @@ export const Sidebar = () => {
           <div className="p-6 border-b-2 border-white/60">
             <div className="flex items-center space-x-3">
               {/* Avatar genérico com fundo gradiente */}
-              <div className="w-10 h-10 bg-gradient-to-br from-light to-accent rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-light to-accent 
+              rounded-full flex items-center justify-center">
                 <UserRound className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-dark font-bold">{user?.name}</p>
+                <p className="text-white font-bold">NOME</p>
                 {/* Tipo de usuário (psicólogo ou paciente) */}
-                <p className="text-xs text-dark/60 capitalize font-semibold">{user?.type}</p>
+                <p className="text-xs text-white/60 capitalize font-semibold">Administrador</p>
               </div>
             </div>
           </div>
@@ -127,7 +132,7 @@ export const Sidebar = () => {
                     className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-colors ${
                       isActive(link.to)
                         ? 'bg-light text-white' // ativo: fundo claro + texto branco
-                        : 'text-dark hover:text-white hover:bg-white/10' // inativo: texto cinza, hover melhora contraste
+                        : 'text-white hover:text-white hover:bg-white/10' // inativo: texto cinza, hover melhora contraste
                     }`}
                     onClick={() => setIsOpen(false)} // Fecha menu mobile ao clicar
                   >
@@ -145,7 +150,8 @@ export const Sidebar = () => {
           <div className="p-4 border-t-2 border-white/70">
             <button
               onClick={handleLogout}
-              className="flex items-center space-x-3 w-full text-[17px] px-4 py-3 text-dark font-bold hover:text-white hover:bg-white/10 rounded-xl transition-colors cursor-pointer"
+              className="flex items-center space-x-3 w-full text-[17px] px-4 py-3 text-white 
+              font-bold hover:text-white hover:bg-white/10 rounded-xl transition-colors cursor-pointer"
             >
               <LogOut size={30} />
               <span>Sair</span>

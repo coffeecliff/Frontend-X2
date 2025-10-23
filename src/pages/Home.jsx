@@ -11,8 +11,8 @@ export const Home = () => {
  
   {/* Texto */}
   <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-lg z-20 md:ml-32">
-    <img src="/logoX2home.svg" alt="logo grande" className="h-36 mb-6" />
-    <h1 className="text-5xl md:text-6xl font-extrabold text-green-900 leading-tight">
+    <img src="/logoX2home.svg" alt="logo grande" className="h-70 mb-6" />
+    <h1 className="text-5xl md:text-5xl font-extrabold text-green-900 leading-tight">
       ALCANCE <br />
       <span className="text-green-500">SEUS SONHOS</span> <br />
       E <span className="text-green-600">MUDE VIDAS</span>
@@ -54,7 +54,7 @@ export const Home = () => {
  
  
       {/* Faixa de patrocinadores */}
-      <section className="bg-[#006B3D] flex justify-center items-center space-x-16 py-4 overflow-hidden mt-68">
+      <section className="bg-[#006B3D] flex justify-center items-center space-x-16 py-4 overflow-hidden mt-45">
   <img src="/patr1.svg" alt="patrocinador 1" className="h-20 md:h-24" />
   <img src="/patr2.svg" alt="patrocinador 2" className="h-20 md:h-24" />
   <img src="/patr3.svg" alt="patrocinador 3" className="h-20 md:h-24" />

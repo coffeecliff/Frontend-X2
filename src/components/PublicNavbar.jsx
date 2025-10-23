@@ -1,21 +1,22 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 export const PublicNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user, logout } = useAuth(); // pega user e função logout
 
   const navLink = [
     { to: "/", label: "Home" },
     { to: "/games", label: "Jogos" },
+    { to: "/sponsor", label: "Patrocinadores" },
     { to: "/about", label: "Sobre" },
-    { to: "/login", label: "Login" },
+    { to: "/login", label: "Login" }, // mantemos para usuários não logados
   ];
 
   const isActive = (path) => location.pathname === path;
-
-  // ✅ Detecta se está na página "Edição Atual"
   const isNewEdition = location.pathname === "/newedition";
 
   return (
@@ -24,10 +25,9 @@ export const PublicNavbar = () => {
         className={`backdrop-blur-md sticky top-0 z-50 border-white/20 transition-colors duration-500
         ${
           isNewEdition
-            ? "bg-gradient-to-r from-newaccent to-newdark text-yellow-200" //  degradê da edição atual
-            : "bg-dark text-white" // cor padrão do resto do site
+            ? "bg-gradient-to-r from-newaccent to-newdark text-yellow-200"
+            : "bg-dark text-white"
         }`}
-      
       >
         <div className="max-w-7xl mx-auto px-4 py-3 md:px-2 md:py-4">
           <div className="flex items-center justify-between">
@@ -59,12 +59,22 @@ export const PublicNavbar = () => {
                 </Link>
               ))}
 
-              <Link to="/login">
-                <button className="cursor-pointer bg-gradient-to-r border-3 border-accent text-accent px-4 py-1 md:px-8 rounded-lg font-bold hover:shadow-lg transition-all duration-300 text-sm md:text-base">
-                  <span className="hidden sm:inline">Entrar</span>
-                  <span className="sm:hidden">Login</span>
+              {/* Botão Login ou Logout */}
+              {user ? (
+                <button
+                  onClick={logout}
+                  className="cursor-pointer bg-gradient-to-r border-3 border-accent text-accent px-4 py-1 md:px-8 rounded-lg font-bold hover:shadow-lg transition-all duration-300 text-sm md:text-base"
+                >
+                  Logout
                 </button>
-              </Link>
+              ) : (
+                <Link to="/login">
+                  <button className="cursor-pointer bg-gradient-to-r border-3 border-accent text-accent px-4 py-1 md:px-8 rounded-lg font-bold hover:shadow-lg transition-all duration-300 text-sm md:text-base">
+                    <span className="hidden sm:inline">Entrar</span>
+                    <span className="sm:hidden">Login</span>
+                  </button>
+                </Link>
+              )}
             </div>
 
             {/* Botão menu mobile */}
@@ -97,6 +107,18 @@ export const PublicNavbar = () => {
                     {link.label}
                   </Link>
                 ))}
+                {/* Logout no menu mobile */}
+                {user && (
+                  <button
+                    onClick={() => {
+                      logout();
+                      setIsOpen(false);
+                    }}
+                    className="w-full text-left px-3 py-1 rounded-lg text-red-600 hover:bg-red-100"
+                  >
+                    Logout
+                  </button>
+                )}
               </div>
             </div>
           )}

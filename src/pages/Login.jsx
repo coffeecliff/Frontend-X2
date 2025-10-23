@@ -21,9 +21,12 @@ export const Login = () => {
                 formData.email,
                 formData.password
             );
+
             login(user, token);
             toast.success("Login realizado com sucesso!");
-            navigate("/admhomeedit");
+            // ❌ Não navegue aqui — o redirecionamento será feito automaticamente pelo AppRoutes
+            // navigate("/admhomeedit");
+
         } catch (error) {
             toast.error(error.message);
         } finally {

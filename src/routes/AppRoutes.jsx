@@ -1,5 +1,5 @@
 // Importação de rotas do React Router
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
  
 // Importa contexto de autenticação
 import { useAuth } from '../context/AuthContext';
@@ -23,6 +23,10 @@ import { NewEdition } from '../pages/NewEdition';
  
 // Páginas protegidas (apenas para usuários autenticados)
 import { AdmHomeEdit } from '../pages/AdmHomeEdit';
+import { AdmGamesEdit } from '../pages/AdmGamesEdit';
+import { AdmAboutEdit } from '../pages/AdmAboutEdit';
+import { Sponsor } from '../pages/Sponsor';
+import { AdmSponsorEdit } from '../pages/AdmSponsorEdit';
 // import { DashboardPaciente } from '../pages/DashboardPaciente';
 // import { Agendamento } from '../pages/Agendamentos';
 // import { ChatIA } from '../pages/ChatIA';
@@ -42,59 +46,67 @@ import { AdmHomeEdit } from '../pages/AdmHomeEdit';
     if (!user) return <Navigate to="/login" replace />; // Redireciona não autenticados para login
    
     return (
+      <>
+      <navbar>
+        <PrivateNavbar/>
+      </navbar>
+       
+      
       <div className="min-h-screen flex">
-        {/* <PrivateNavbar/> */}
+
         <Sidebar /> {/* Sidebar lateral sempre visível */}
         <main className="flex-1 lg:ml-64 p-8">
           {children} {/* Conteúdo da página protegida */}
         </main>
       </div>
+      </>
     );
   };
 
 /* ==============================
-   ROTA PÚBLICA
+   Componente de rota pública
    ============================== */
-   const PublicRoute = ({ children }) => {
-    const { user, loading } = useAuth();
-  
-    if (loading) return null; // pode pôr spinner se quiser
-  
-    if (user?.type === "psicologo") {
+const PublicRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  const location = useLocation();
+
+  const authPages = ["/login", "/register"];
+  const isAuthPage = authPages.includes(location.pathname);
+
+  // Redireciona conforme tipo de usuário
+  if (user && isAuthPage) {
+    if (user.type === "psicologo") {
       return <Navigate to="/admhomeedit" replace />;
-    } else if (user?.type === "paciente") {
-      return <Navigate to="/" replace />;
+    } else {
+      return <Navigate to="/" replace />; // paciente
     }
-  
-    return (
-      <div
-        className="bg-cover bg-center min-h-screen w-full"
-        style={{ backgroundImage: "url('/bg.png')" }}
-      >
-        <div className="min-h-screen flex flex-col">
-          <PublicNavbar />
-          <main className="flex-1 mx-auto">{children}</main>
-          <Footer />
-        </div>
-      </div>
-    );
-  };
-  
-  /* ==============================
-     DASHBOARD CONDICIONAL
-     ============================== */
-  const Dashboard = () => {
-    const { user } = useAuth();
-  
-    if (!user) return <Navigate to="/" replace />;
-  
-    // Retorna dashboard baseado no tipo do usuário
-    return user.type === "psicologo" ? (
-      <DashboardPsicologo />
-    ) : (
-      <DashboardPaciente />
-    );
-  };
+  }
+  return (
+    <div  className="bg-cover bg-center min-h-screen w-full "
+        style={{backgroundImage: "url('/bg.png')"}}
+        >
+    <div className="min-h-screen">
+      <PublicNavbar /> {/* Navbar pública */}
+      <main className="mx-auto">
+        {children} {/* Conteúdo da página pública */}
+      </main>
+      <footer>
+        <Footer/>
+      </footer>
+    </div>
+    </div>
+  );
+};
+
+
+/* ==============================
+   Componente Dashboard condicional
+   ============================== */
+const Dashboard = () => {
+  const { user } = useAuth();
+  // Retorna dashboard específico baseado no tipo do usuário
+  return user?.type === 'psicologo' ? <DashboardPsicologo /> : <DashboardPaciente />;
+};
  
 /* ==============================
    Configuração de rotas da aplicação
@@ -122,9 +134,14 @@ export const AppRoutes = () => {
             <Login/>
           </PublicRoute>
         } />
-               <Route path="/games" element={
+        <Route path="/games" element={
           <PublicRoute>
             <Games/>
+          </PublicRoute>
+        } />
+        <Route path="/sponsor" element={
+          <PublicRoute>
+            <Sponsor/>
           </PublicRoute>
         } />
         <Route path="/newedition" element={
@@ -138,6 +155,21 @@ export const AppRoutes = () => {
         <Route path="/admhomeedit" element={
           <ProtectedRoute>
             <AdmHomeEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+          </ProtectedRoute>
+        } />
+        <Route path="/admgamesedit" element={
+          <ProtectedRoute>
+            <AdmGamesEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+          </ProtectedRoute>
+        } />
+        <Route path="/admaboutedit" element={
+          <ProtectedRoute>
+            <AdmAboutEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+          </ProtectedRoute>
+        } />
+        <Route path="/admsponsoredit" element={
+          <ProtectedRoute>
+            <AdmSponsorEdit/> {/* Escolhe dashboard de psicólogo ou paciente */}
           </ProtectedRoute>
         } />
 
