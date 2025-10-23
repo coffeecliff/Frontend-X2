@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, UserCircle} from "lucide-react";
+
 import { useAuth } from "../context/AuthContext";
  
 export const PublicNavbar = () => {
@@ -90,7 +91,11 @@ export const PublicNavbar = () => {
                   </button>
                 </Link>
               )}
+              <div className="flex items-center justify-center bg-white/10 p-2 rounded-full cursor-pointer hover:bg-white/20 transition">
+              <UserCircle size={28} />
             </div>
+            </div>
+            
  
             {/* Botão menu mobile */}
             <div className="md:hidden flex items-center ml-2">
