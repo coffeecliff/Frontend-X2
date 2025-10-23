@@ -11,7 +11,6 @@ export const PublicNavbar = () => {
   const navLink = [
     { to: "/", label: "Home" },
     { to: "/games", label: "Jogos" },
-    { to: "/sponsor", label: "Patrocinadores" },
     { to: "/about", label: "Sobre" },
     { to: "/login", label: "Login" }, // mantemos para usuários não logados
   ];

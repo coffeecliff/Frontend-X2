@@ -44,7 +44,6 @@ export const Sidebar = () => {
     user?.type === 'psicologo'
       ? [
           { to: '/admhomeedit', label: 'Home', icon: FaHome },
-          { to: '/admeditionedit', label: 'Última Edição', icon: MdNewReleases },
           { to: '/admgamesedit', label: 'Jogos', icon: RiFootballFill },
           { to: '/admsponsoredit', label: 'Patrocínios', icon: FaRegHandshake },
           { to: '/admaboutedit', label: 'Sobre', icon: FaInfoCircle }

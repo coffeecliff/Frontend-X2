@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Edit3, Save, X, Plus, Trash } from "lucide-react";
+import { Edit3, Save, X, Plus, Trash, ImagePlus  } from "lucide-react";
 
 export const AdmSponsorEdit = () => {
   const [editing, setEditing] = useState(false);
@@ -80,13 +80,21 @@ export const AdmSponsorEdit = () => {
                     Sem imagem
                   </div>
                 )}
-
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageChange(e, index)}
-                  className="cursor-pointer text-sm text-gray-600"
-                />
+                <div className="bg-light rounded-2xl ">
+                  <label
+                    htmlFor={`file-input-${index}`}
+                    className="cursor-pointer flex text-md text-white py-2 px-3 text-center hover:bg-green-400 rounded-2xl transition-colors"
+                  >
+                    Escolha o arquivo    <div className="pl-2"><ImagePlus /></div>
+                  </label>
+                  <input
+                    id={`file-input-${index}`}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageChange(e, index)}
+                    className="hidden"
+                  />
+                </div>
 
                 <input
                   type="text"
