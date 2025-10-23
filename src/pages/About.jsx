@@ -12,7 +12,7 @@ export const About = () => {
         {/* Conteúdo */}
         <div className="max-w-3xl text-sm md:text-base text-justify space-y-6">
           <section>
-            <h2 className="font-bold text-green-900 mb-2">
+            <h2 className="font-bold text-medium mb-2">
               ▶ TORNEIO X2 FUTEBOL JUVENIL – REGULAMENTO (2010 A 2015)
             </h2>
             <p>
@@ -26,7 +26,7 @@ export const About = () => {
           </section>
   
           <section>
-            <h2 className="font-bold text-green-900 mb-2">▶ SISTEMA DE DISPUTA</h2>
+            <h2 className="font-bold text-medium mb-2">▶ SISTEMA DE DISPUTA</h2>
             <p>
               O campeonato terá dois grupos de 4 times. Os dois melhores de cada grupo avançam às semifinais.
             </p>
@@ -42,7 +42,7 @@ export const About = () => {
           </section>
   
           <section>
-            <h2 className="font-bold text-green-900 mb-2">▶ REGRAS DE JOGO</h2>
+            <h2 className="font-bold text-medium mb-2">▶ REGRAS DE JOGO</h2>
             <ul className="list-disc ml-6">
               <li>Jogos em campo society (Arena Faisqueira).</li>
               <li>Fase de grupos: 2 tempos de 7 min (intervalo de 2).</li>
@@ -53,7 +53,7 @@ export const About = () => {
           </section>
   
           <section>
-            <h2 className="font-bold text-green-900 mb-2">▶ CONDUTA E PENALIDADES</h2>
+            <h2 className="font-bold text-medium mb-2">▶ CONDUTA E PENALIDADES</h2>
             <ul className="list-disc ml-6">
               <li>Cartão amarelo: advertência.</li>
               <li>
@@ -67,7 +67,7 @@ export const About = () => {
           </section>
   
           <section>
-            <h2 className="font-bold text-green-900 mb-2">▶ PREMIAÇÃO</h2>
+            <h2 className="font-bold text-medium mb-2">▶ PREMIAÇÃO</h2>
             <ul className="list-disc ml-6">
               <li>Troféu e medalhas para campeão e vice.</li>
               <li>Troféu para artilheiro e goleiro menos vazado.</li>
@@ -77,9 +77,11 @@ export const About = () => {
         </div>
   
         {/* Botão de patrocinadores */}
-        <button className="mt-10 bg-green-700 text-white px-6 py-3 rounded-lg font-bold shadow-md hover:bg-green-800">
+        <a href="/sponsor">
+        <button className="mt-10 cursor-pointer transition-colors duration-500 bg-light text-white px-6 py-3 rounded-lg font-bold shadow-md hover:bg-accent">
           PATROCINADORES
         </button>
+        </a>
       </div>
     );
   };

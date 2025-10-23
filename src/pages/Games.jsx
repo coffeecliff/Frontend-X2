@@ -40,7 +40,7 @@ export const Games = () => {
       <div className="bg-white rounded-2xl shadow-2xl w-96 p-6 text-center relative">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-xl font-bold"
+          className="absolute top-3 right-3 cursor-pointer text-gray-500 hover:text-red-600 text-xl font-bold"
         >
           ×
         </button>
@@ -52,7 +52,7 @@ export const Games = () => {
         <p className="text-gray-500 text-sm mb-4">Status: Encerrado</p>
         <button
           onClick={onClose}
-          className="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition"
+          className="bg-light text-white px-6 py-2 rounded-full cursor-pointer hover:bg-accent transition"
         >
           Fechar
         </button>
