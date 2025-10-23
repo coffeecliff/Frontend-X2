@@ -80,7 +80,7 @@ export const PublicNavbar = () => {
             <div className="md:hidden flex items-center ml-2">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-dark/70 hover:text-light"
+                className="text-white hover:text-light"
                 aria-label="Menu"
               >
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
