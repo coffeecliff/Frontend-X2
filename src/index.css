@@ -251,3 +251,34 @@ body {
     padding: 2rem;                 /* Espaçamento interno */
   }
   
+  .animate-slide {
+    animation: slide 20s linear infinite;
+  }
+ 
+  .animate-slide:hover {
+    animation-play-state: paused; /* pausa quando o mouse passa */
+  }
+ 
+  /* classe auxiliar para hover */
+  .pause:hover {
+    animation-play-state: paused;
+  }
+  
+  @keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+ 
+  .animate-slide {
+    animation: slide 20s linear infinite;
+  }
+ 
+  .animate-slide:hover {
+    animation-play-state: paused; /* pausa quando o mouse passa */
+  }
+ 
+  /* classe auxiliar para hover */
+  .pause:hover {
+    animation-play-state: paused;
+  }
+ 

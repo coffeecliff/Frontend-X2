@@ -27,6 +27,7 @@ import { AdmGamesEdit } from '../pages/AdmGamesEdit';
 import { AdmAboutEdit } from '../pages/AdmAboutEdit';
 import { Sponsor } from '../pages/Sponsor';
 import { AdmSponsorEdit } from '../pages/AdmSponsorEdit';
+import { Register } from '../pages/Register';
 // import { DashboardPaciente } from '../pages/DashboardPaciente';
 // import { Agendamento } from '../pages/Agendamentos';
 // import { ChatIA } from '../pages/ChatIA';
@@ -132,6 +133,11 @@ export const AppRoutes = () => {
         <Route path="/login" element={
           <PublicRoute>
             <Login/>
+          </PublicRoute>
+        } />
+        <Route path="/register" element={
+          <PublicRoute>
+            <Register/>
           </PublicRoute>
         } />
         <Route path="/games" element={

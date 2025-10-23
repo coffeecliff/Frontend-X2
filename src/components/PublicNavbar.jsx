@@ -2,22 +2,22 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
-
+ 
 export const PublicNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { user, logout } = useAuth(); // pega user e função logout
-
+  const { user, logout } = useAuth();
+ 
   const navLink = [
     { to: "/", label: "Home" },
     { to: "/games", label: "Jogos" },
     { to: "/about", label: "Sobre" },
-    { to: "/login", label: "Login" }, // mantemos para usuários não logados
+    { to: "/login", label: "Login" },
   ];
-
+ 
   const isActive = (path) => location.pathname === path;
   const isNewEdition = location.pathname === "/newedition";
-
+ 
   return (
     <>
       <nav
@@ -36,12 +36,12 @@ export const PublicNavbar = () => {
                 <img
                   src="/navlogo.svg"
                   alt="logotipo site X2"
-                  className="w-34 h-auto md:w-42 md:h-auto"
+                  className="w-32 h-auto md:w-40 md:h-auto"
                 />
                 <div className="absolute inset-1 bg-gradient-to-r rounded-xl blur opacity-30 md:rounded-b-xl"></div>
               </div>
             </Link>
-
+ 
             {/* Links Desktop */}
             <div className="flex items-center space-x-3 md:space-x-4">
               {navLink.slice(0, -1).map((link) => (
@@ -50,55 +50,86 @@ export const PublicNavbar = () => {
                   to={link.to}
                   className={`hidden sm:block font-extrabold transition-colors text-sm md:text-[20px] mr-12 ${
                     isActive(link.to)
-                      ? "text-accent"
+                      ? isNewEdition
+                        ? "text-yellow-300"
+                        : "text-accent"
+                      : isNewEdition
+                      ? "text-yellow-100 hover:text-yellow-300"
                       : "text-white hover:text-accent"
                   }`}
                 >
                   {link.label}
                 </Link>
               ))}
-
+ 
               {/* Botão Login ou Logout */}
               {user ? (
                 <button
                   onClick={logout}
-                  className="cursor-pointer bg-gradient-to-r border-3 border-accent text-accent px-4 py-1 md:px-8 rounded-lg font-bold hover:shadow-lg transition-all duration-300 text-sm md:text-base"
+                  className={`cursor-pointer border-3 px-4 py-1 md:px-8 rounded-lg font-bold hover:shadow-lg transition-all duration-300 text-sm md:text-base
+                    ${
+                      isNewEdition
+                        ? "border-yellow-300 text-yellow-200 hover:text-yellow-100"
+                        : "border-accent text-accent"
+                    }`}
                 >
                   Logout
                 </button>
               ) : (
                 <Link to="/login">
-                  <button className="cursor-pointer bg-gradient-to-r border-3 border-accent text-accent px-4 py-1 md:px-8 rounded-lg font-bold hover:shadow-lg transition-all duration-300 text-sm md:text-base">
+                  <button
+                    className={`cursor-pointer border-3 px-4 py-1 md:px-8 rounded-lg font-bold hover:shadow-lg transition-all duration-300 text-sm md:text-base
+                      ${
+                        isNewEdition
+                          ? "border-yellow-300 text-yellow-200 hover:text-yellow-100"
+                          : "border-accent text-accent"
+                      }`}
+                  >
                     <span className="hidden sm:inline">Entrar</span>
                     <span className="sm:hidden">Login</span>
                   </button>
                 </Link>
               )}
             </div>
-
+ 
             {/* Botão menu mobile */}
             <div className="md:hidden flex items-center ml-2">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-white hover:text-light"
+                className={`transition-colors ${
+                  isNewEdition
+                    ? "text-yellow-200 hover:text-yellow-100"
+                    : "text-white hover:text-accent"
+                }`}
                 aria-label="Menu"
+                aria-expanded={isOpen}
               >
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
           </div>
-
+ 
           {/* Menu Mobile */}
           {isOpen && (
-            <div className="md:hidden mt-4">
-              <div className="px-2 pt-2 pb-2 space-y-1 bg-white/80 backdrop:blur-md rounded-lg">
+            <div className="md:hidden mt-4 transition-all duration-300">
+              <div
+                className={`px-2 pt-2 pb-2 space-y-1 rounded-lg ${
+                  isNewEdition
+                    ? "bg-newdark/70"
+                    : "bg-white/80 backdrop-blur-md"
+                }`}
+              >
                 {navLink.map((link) => (
                   <Link
                     key={link.to}
                     to={link.to}
-                    className={`block px-3 rounded-lg transition-colors ${
+                    className={`block px-3 py-1 rounded-lg transition-colors ${
                       isActive(link.to)
-                        ? "text-light bg-light/10 font-medium"
+                        ? isNewEdition
+                          ? "text-yellow-300 bg-yellow-100/10 font-semibold"
+                          : "text-accent bg-light/10 font-semibold"
+                        : isNewEdition
+                        ? "text-yellow-100 hover:text-yellow-300 hover:bg-yellow-100/5"
                         : "text-dark/70 hover:text-accent hover:bg-light/5"
                     }`}
                     onClick={() => setIsOpen(false)}
@@ -106,6 +137,7 @@ export const PublicNavbar = () => {
                     {link.label}
                   </Link>
                 ))}
+ 
                 {/* Logout no menu mobile */}
                 {user && (
                   <button
@@ -113,7 +145,11 @@ export const PublicNavbar = () => {
                       logout();
                       setIsOpen(false);
                     }}
-                    className="w-full text-left px-3 py-1 rounded-lg text-red-600 hover:bg-red-100"
+                    className={`w-full text-left px-3 py-1 rounded-lg transition-colors ${
+                      isNewEdition
+                        ? "text-yellow-300 hover:bg-yellow-100/10"
+                        : "text-red-600 hover:bg-red-100"
+                    }`}
                   >
                     Logout
                   </button>
@@ -126,3 +162,5 @@ export const PublicNavbar = () => {
     </>
   );
 };
+ 
+ 

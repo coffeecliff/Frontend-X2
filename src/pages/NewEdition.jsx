@@ -3,15 +3,14 @@ import { Link } from "react-router-dom";
 import { Button } from "../components/Button";
  
 export const NewEdition = () => {
+  const patrocinadores = ["/patr1.svg", "/patr2.svg", "/patr3.svg", "/patr4.svg", "/patr5.svg"];
+ 
   return (
     <div className="w-full min-h-screen bg-black font-sans text-white relative overflow-hidden">
- 
       {/* Seção principal */}
       <section className="relative flex flex-col md:flex-row items-center justify-between px-8 md:px-20 py-12">
- 
         {/* Texto à esquerda */}
         <div className="relative z-20 max-w-lg flex flex-col items-start text-left space-y-3">
-          {/* Imagem SVG substituindo os textos */}
           <img
             src="/novaedicao.svg"
             alt="3ª Edição - 18 de Novembro"
@@ -31,7 +30,11 @@ export const NewEdition = () => {
  
           <div className="mt-6">
             <Link to="/">
-              <Button className="bg-newaccent text-black px-6 py-3 rounded-lg font-bold shadow-md hover:bg-newaccent">
+              <Button
+                className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-3 rounded-lg
+                           font-extrabold shadow-md hover:from-yellow-300 hover:to-yellow-400
+                           hover:shadow-yellow-500/50 transition-all duration-300"
+              >
                 VOLTAR PARA HOME
               </Button>
             </Link>
@@ -45,7 +48,7 @@ export const NewEdition = () => {
             alt="Estádio iluminado"
             className="h-full w-full object-cover brightness-90"
             style={{
-              clipPath: 'polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%)'
+              clipPath: "polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%)",
             }}
           />
         </div>
@@ -54,21 +57,27 @@ export const NewEdition = () => {
         <div
           className="absolute left-0 top-0 h-full w-full md:w-1/2 bg-black z-10"
           style={{
-            clipPath: 'polygon(0 0, 70% 0, 40% 100%, 0% 100%)'
+            clipPath: "polygon(0 0, 70% 0, 40% 100%, 0% 100%)",
           }}
         ></div>
       </section>
  
-      {/* Faixa de patrocinadores */}
-      <section className="bg-black flex justify-center items-center space-x-16 py-4 border-t border-newaccent relative z-20">
-        <img src="/patr1.svg" alt="patrocinador 1" className="h-14 md:h-20" />
-        <img src="/patr2.svg" alt="patrocinador 2" className="h-14 md:h-20" />
-        <img src="/patr3.svg" alt="patrocinador 3" className="h-14 md:h-20" />
+      {/* Faixa de patrocinadores - agora com carrossel */}
+      <section className="overflow-hidden bg-black py-8 border-t border-newaccent relative z-20">
+        <div className="flex animate-slide space-x-16 w-max pause">
+          {patrocinadores.concat(patrocinadores).map((logo, i) => (
+            <img
+              key={i}
+              src={logo}
+              alt={`patrocinador ${i + 1}`}
+              className="h-14 md:h-20 lg:h-24 w-auto opacity-80 hover:opacity-100 transition-all duration-300"
+            />
+          ))}
+        </div>
       </section>
  
       {/* Seção dos clubes */}
       <section className="relative bg-black py-16 text-center overflow-hidden">
-        {/* Imagem de fundo */}
         <div className="absolute inset-0">
           <img
             src="/fundonewedition.svg"
@@ -78,7 +87,6 @@ export const NewEdition = () => {
           <div className="absolute inset-0 bg-gradient-to-b"></div>
         </div>
  
-        {/* Conteúdo por cima */}
         <div className="relative z-10">
           <h2 className="text-newaccent text-2xl md:text-3xl font-extrabold mb-10 tracking-wide">
             CLUBES DESTA EDIÇÃO
