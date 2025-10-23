@@ -1,5 +1,8 @@
 # 🏆 X2 — Site Informativo do Projeto X2
- 
+
+ ![Projeto X2](./public/webLogo.png)
+
+
 ## 📖 Descrição
  
 O **X2** é um site informativo desenvolvido para divulgar e centralizar informações sobre o **Projeto X2**.  
