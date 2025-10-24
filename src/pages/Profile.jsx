@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
+import { ImagePlus } from "lucide-react"
 import toast from "react-hot-toast";
 
 export const Profile = () => {
@@ -76,15 +77,21 @@ export const Profile = () => {
             )}
           </div>
 
-          <label className="mt-3 text-green-600 font-semibold cursor-pointer hover:text-green-500 transition">
-            Alterar foto
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="hidden"
-            />
-          </label>
+          <div className="bg-light rounded-2xl items-center text-center hover:bg-accent transition cursor-pointer p-1 mt-1.5">
+            <label className="flex  text-sm justify-center gap-2  text-white font-semibold m-1 cursor-pointer">
+              Alterar foto
+              <div className="pl-1 ">
+                <ImagePlus size={20}/>
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+            </label>
+          </div>
+
         </div>
 
         {/* 🔹 Informações do usuário */}
