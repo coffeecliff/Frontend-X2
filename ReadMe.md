@@ -23,14 +23,18 @@ Com o site, espera-se alcançar mais público e fortalecer a identidade visual d
 ## ⚙️ Funcionalidades
  
 ### Sistema **Client**
-- Visualização dos resultados dos jogos.
+
+###  **Login**
+- react-hot-toast (notificação, login realizado)
+- autenticação de usuario adm ou usuario comum
+
+
  
 ### Sistema **Admin**
-- Edição das informações da **Home** do site.  
-- Edição da **Tabela de Jogos**.  
-- Edição da seção **Sobre**.  
-- Edição da tela de **Patrocinadores**.
- 
+- Edição das informações da **Home** do site. ( em desenvolvimento)
+- Edição da **Tabela de Jogos**.              ( em desenvolvimento)
+- Edição da seção **Sobre**.                  ( em desenvolvimento)
+- Edição da tela de **Patrocinadores**.       ( em desenvolvimento)
 ---
  
 ## 🧠 Tecnologias Utilizadas
@@ -52,7 +56,40 @@ Com o site, espera-se alcançar mais público e fortalecer a identidade visual d
 - npm ou yarn instalado
  
 ---
- 
+
+
+
+# 🌿 Design System – 
+
+Sistema de design baseado em tons de verde e turquesa, com foco em leveza, natureza e modernidade.
+
+## 🎨 Paleta de cores
+
+|-------Variável-------|-Cor (Hex)-| 
+|----------------------|-----------|
+| `--color-dark`       | `#0C4740` | 
+| `--color-medium`     | `#006D61` | 
+| `--color-light`      | `#02B765` | 
+| `--color-accent`     | `#7ED957` | 
+| `--color-background` | `#FCFFFA` | 
+| `--color-newaccent`  | `#C89116` | 
+| `--color-newdark`    | `#000000` | 
+
+---
+
+## 💻 Variáveis CSS
+
+```css
+@theme {
+  --color-dark: [#0C4740];
+  --color-medium: [#006D61];
+  --color-light: [#02B765];
+  --color-accent: [#7ED957];
+  --color-background: [#FCFFFA];
+  --color-newaccent: [#C89116];
+  --color-newdark: [#000000];
+}
+ ```
 ## 💻 Instalação
  
 ```bash
@@ -65,6 +102,24 @@ npm install
 # Inicie o servidor de desenvolvimento
 npm run dev
 
+#caso dê algum erro execute esses comandos
+
+# se estiver preso em algum pacote use:
+ npm cache clean --force
+
+ # e tente novamente o 
+npm install
+
+# se quiser ver em qual pacote esta travando use:
+npm install --verbose
+
+#se o npm está tentando baixar um pacote, mas a conexão HTTPS está sendo interceptada por um certificado SSL interno (autoassinado) use:
+npm config set strict-ssl false
+
+# e tente novamente o 
+npm install
+
+```
 
 ## Estrutura de pastas
 

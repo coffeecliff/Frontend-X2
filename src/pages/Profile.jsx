@@ -101,7 +101,7 @@ export const Profile = () => {
               <p className="bg-gray-100 rounded-lg p-2">{user?.name}</p>
             )}
           </div>
-          
+
 
           <div>
             <label className="block text-sm font-bold mb-1">E-mail:</label>
@@ -119,12 +119,11 @@ export const Profile = () => {
           <div>
             <label className="block text-sm font-bold mb-1">Tipo de conta:</label>
             <p className="bg-gray-100 rounded-lg p-2 capitalize">
-              {user?.type === "psicologo"
-                ? "Psicólogo(a)"
-                : user?.type === "paciente"
-                ? "Paciente"
+              {user?.type === "adm"
+                ? "Usuário ADM"
                 : "Usuário comum"}
             </p>
+
           </div>
         </div>
 
