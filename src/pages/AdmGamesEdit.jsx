@@ -1,6 +1,7 @@
 // src/pages/GamesEdit.jsx
 import { useState } from "react";
 import { Edit3, Save, X } from "lucide-react";
+import { main } from "framer-motion/client";
 
 export const AdmGamesEdit = () => {
   const [editing, setEditing] = useState(false);
@@ -76,7 +77,12 @@ export const AdmGamesEdit = () => {
   );
 
   return (
+    <main className="flex-1 p-8">
+    <h1 className="text-3xl font-bold text-emerald-900 mb-6 border-b-2 border-emerald-700 pb-2">
+        JOGOS
+      </h1>
     <div className="w-full min-h-screen bg-green-50 flex flex-col items-center py-12 px-4 relative overflow-hidden">
+      
       {/* Bolas decorativas */}
       <img
         src="/Bolas.svg"
@@ -151,5 +157,6 @@ export const AdmGamesEdit = () => {
         )}
       </div>
     </div>
+    </main>
   );
 };

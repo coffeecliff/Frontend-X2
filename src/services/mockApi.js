@@ -57,7 +57,7 @@ const initialUsers = [
     email: 'adm@test.com', 
     password: '123456', 
     type: 'adm', 
-    name: 'Administrador do Sistema', 
+    name: 'Administrador', 
     specialty: 'Terapia Cognitivo-Comportamental', 
     crp: 'CRP 01/23456' 
   },

@@ -32,7 +32,7 @@ export const PrivateNavbar = () => {
 
   return (
     <>
-      <nav className="backdrop-blur-md sticky top-0 z-50 border-white/20 transition-colors duration-500 bg-emerald-900 text-white">
+      <nav className="backdrop-blur-md sticky top-0 z-50 border-white/20 transition-colors duration-500 bg-dark text-white">
         <div className="max-w-7xl mx-auto px-4 py-3 md:px-2 md:py-4 flex items-center justify-between">
           {/* Logo + Menu Mobile */}
           <div className="flex items-center gap-3">
@@ -75,9 +75,13 @@ export const PrivateNavbar = () => {
             )}
 
             {/* Ícone do usuário */}
-            <div className="flex items-center justify-center bg-white/10 p-2 rounded-full cursor-pointer hover:bg-white/20 transition">
+            <a href="/profile">
+                <button>
+              <div className="flex items-center justify-center bg-white/10 p-2 rounded-full cursor-pointer hover:bg-white/20 transition">
               <UserCircle size={28} />
             </div>
+            </button>
+            </a>
 
             {/* Mensagem animada */}
             <AnimatePresence>

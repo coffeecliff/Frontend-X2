@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
  
 export const Home = () => {
+  const patrocinadores = ["/patr1.svg", "/patr2.svg", "/patr3.svg"];
+
   return (
     <div className="w-full min-h-screen bg-white font-sans text-green-900">
  
@@ -55,9 +57,16 @@ export const Home = () => {
  
       {/* Faixa de patrocinadores */}
       <section className="bg-[#006B3D] flex justify-center items-center space-x-16 py-4 overflow-hidden mt-45">
-  <img src="/patr1.svg" alt="patrocinador 1" className="h-20 md:h-24" />
-  <img src="/patr2.svg" alt="patrocinador 2" className="h-20 md:h-24" />
-  <img src="/patr3.svg" alt="patrocinador 3" className="h-20 md:h-24" />
+  <div className="flex animate-slide space-x-16 w-max pause">
+          {patrocinadores.concat(patrocinadores).map((logo, i) => (
+            <img
+              key={i}
+              src={logo}
+              alt={`patrocinador ${i + 1}`}
+              className="h-14 md:h-20 lg:h-24 w-auto opacity-80 hover:opacity-100 transition-all duration-300"
+            />
+          ))}
+        </div>
 </section>
  
  

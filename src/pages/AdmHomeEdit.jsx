@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Edit3, Save, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Edit3, Save, X, ImagePlus } from "lucide-react";
 
 export const AdmHomeEdit = () => {
   const [editing, setEditing] = useState(false);
 
-  const [grupos, setGrupos] = useState({
+  const initialData = {
     A: [
       { flag: "jp.svg", nome: "Japão", v: "2(1)", d: 0, gm: 4, sg: 2, pontos: 8 },
       { flag: "ar.svg", nome: "Argentina", v: 2, d: 1, gm: 6, sg: 1, pontos: 6 },
@@ -17,7 +17,21 @@ export const AdmHomeEdit = () => {
       { flag: "mx.svg", nome: "México", v: 1, d: 2, gm: 3, sg: -1, pontos: 3 },
       { flag: "pt.svg", nome: "Portugal", v: 0, d: 3, gm: 3, sg: -4, pontos: 0 },
     ],
-  });
+  };
+
+  const [grupos, setGrupos] = useState(initialData);
+
+  // 🔹 Carrega dados do localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("admHomeData");
+    if (saved) setGrupos(JSON.parse(saved));
+  }, []);
+
+  // 🔹 Salva no localStorage
+  const handleSave = () => {
+    localStorage.setItem("admHomeData", JSON.stringify(grupos));
+    setEditing(false);
+  };
 
   const handleChange = (grupo, index, campo, valor) => {
     const copia = { ...grupos };
@@ -25,22 +39,33 @@ export const AdmHomeEdit = () => {
     setGrupos(copia);
   };
 
-  const handleSave = () => {
-    console.log("Tabelas salvas:", grupos);
-    setEditing(false);
+  const handleFlagChange = (grupo, index, file) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const copia = { ...grupos };
+      copia[grupo][index].flag = ev.target.result;
+      setGrupos(copia);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleCancel = () => {
-    window.location.reload();
+    const saved = localStorage.getItem("admHomeData");
+    if (saved) setGrupos(JSON.parse(saved));
+    else setGrupos(initialData);
+    setEditing(false);
   };
 
   const bgCores = ["bg-[#5BC060]", "bg-[#61C466]", "bg-[#69CA6C]", "bg-[#70D072]"];
 
   const renderTabela = (grupoNome, grupoDados) => (
-    <div className="rounded-xl shadow-lg overflow-hidden">
-      <h3 className="text-center font-bold py-2 bg-indigo-950 text-white">{`GRUPO ${grupoNome}`}</h3>
-      <table className="w-full text-base text-centerp-4 font-semibold">
-        <thead className=" bg-[#19326C] text-white ">
+    <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-white/90">
+      <div className="bg-[#19326C] text-white items-center justify-center flex font-bold py-3 text-lg">
+        {`GRUPO ${grupoNome}`}
+      </div>
+      <table className="w-full text-base text-center font-semibold">
+        <thead className="bg-[#19326C] text-white">
           <tr>
             <th className="p-3"></th>
             <th className="p-3">V</th>
@@ -53,18 +78,44 @@ export const AdmHomeEdit = () => {
         <tbody>
           {grupoDados.map((time, i) => (
             <tr key={i} className={`text-white ${bgCores[i % bgCores.length]}`}>
-              <td className="flex mr-4 p-4 items-center justify-center py-3">
-                <img src={`/${time.flag}`} alt={time.nome} className="h-6 mr-4" />
+              <td className="flex items-center justify-center py-3 mr-4 relative">
+                <img
+                  src={time.flag}
+                  alt={time.nome}
+                  className="h-6 mr-2 cursor-pointer"
+                  onClick={() => {
+                    const input = document.getElementById(`flag-${grupoNome}-${i}`);
+                    if (input) input.click();
+                  }}
+                />
+                {editing && (
+                  <>
+                    <input
+                      id={`flag-${grupoNome}-${i}`}
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleFlagChange(grupoNome, i, e.target.files[0])}
+                      className="hidden"
+                    />
+                    <ImagePlus
+                      size={18}
+                      className="cursor-pointer text-white"
+                      onClick={() => {
+                        const input = document.getElementById(`flag-${grupoNome}-${i}`);
+                        if (input) input.click();
+                      }}
+                    />
+                  </>
+                )}
               </td>
+
               {["v", "d", "gm", "sg", "pontos"].map((campo) => (
                 <td key={campo} className="py-3">
                   {editing ? (
                     <input
                       type="text"
                       value={time[campo]}
-                      onChange={(e) =>
-                        handleChange(grupoNome, i, campo, e.target.value)
-                      }
+                      onChange={(e) => handleChange(grupoNome, i, campo, e.target.value)}
                       className="w-12 text-center text-black rounded-md p-1"
                     />
                   ) : (
@@ -102,8 +153,7 @@ export const AdmHomeEdit = () => {
             onClick={() => setEditing(true)}
             className="flex items-center gap-2 cursor-pointer bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
           >
-            <Edit3 size={18} />
-            EDITAR
+            <Edit3 size={18} /> EDITAR
           </button>
         ) : (
           <div className="flex gap-4">
@@ -111,15 +161,13 @@ export const AdmHomeEdit = () => {
               onClick={handleSave}
               className="flex items-center cursor-pointer gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
             >
-              <Save size={18} />
-              SALVAR
+              <Save size={18} /> SALVAR
             </button>
             <button
               onClick={handleCancel}
               className="flex items-center gap-2 cursor-pointer bg-gray-400 hover:bg-gray-500 text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
             >
-              <X size={18} />
-              CANCELAR
+              <X size={18} /> CANCELAR
             </button>
           </div>
         )}

@@ -38,6 +38,10 @@ export const AdmAboutEdit = () => {
   };
 
   return (
+    <main className="flex-1 p-8">
+    <h1 className="text-3xl font-bold text-emerald-900 mb-6 border-b-2 border-emerald-700 pb-2">
+        SOBRE
+      </h1>
     <div className="w-full min-h-screen bg-white flex flex-col items-center px-6 py-12 relative">
       {/* Imagem editável */}
       <div className="mb-10 flex flex-col items-center">
@@ -172,5 +176,6 @@ export const AdmAboutEdit = () => {
         </div>
       )}
     </div>
+    </main>
   );
 };

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../components/Button";
  
 export const NewEdition = () => {
-  const patrocinadores = ["/patr1.svg", "/patr2.svg", "/patr3.svg", "/patr4.svg", "/patr5.svg"];
+  const patrocinadores = ["/patr1.svg", "/patr2.svg", "/patr3.svg"];
  
   return (
     <div className="w-full min-h-screen bg-black font-sans text-white relative overflow-hidden">

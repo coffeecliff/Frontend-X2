@@ -1,24 +1,23 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, UserCircle} from "lucide-react";
-
+import { Menu, X, UserCircle } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
- 
+
 export const PublicNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
- 
+
   const navLink = [
     { to: "/", label: "Home" },
     { to: "/games", label: "Jogos" },
     { to: "/about", label: "Sobre" },
     { to: "/login", label: "Login" },
   ];
- 
+
   const isActive = (path) => location.pathname === path;
   const isNewEdition = location.pathname === "/newedition";
- 
+
   return (
     <>
       <nav
@@ -42,7 +41,7 @@ export const PublicNavbar = () => {
                 <div className="absolute inset-1 bg-gradient-to-r rounded-xl blur opacity-30 md:rounded-b-xl"></div>
               </div>
             </Link>
- 
+
             {/* Links Desktop */}
             <div className="flex items-center space-x-3 md:space-x-4">
               {navLink.slice(0, -1).map((link) => (
@@ -62,7 +61,17 @@ export const PublicNavbar = () => {
                   {link.label}
                 </Link>
               ))}
- 
+
+              {/* 🔹 Botão Seção ADM para usuários admin */}
+              {user?.type === "adm" && (
+                <Link
+                  to="/admhomeedit"
+                  className="hidden sm:block font-extrabold transition-colors text-sm md:text-[20px] mr-12 text-white hover:text-accent"
+                >
+                  Seção ADM
+                </Link>
+              )}
+
               {/* Botão Login ou Logout */}
               {user ? (
                 <button
@@ -91,12 +100,15 @@ export const PublicNavbar = () => {
                   </button>
                 </Link>
               )}
-              <div className="flex items-center justify-center bg-white/10 p-2 rounded-full cursor-pointer hover:bg-white/20 transition">
-              <UserCircle size={28} />
+
+              {/* Ícone perfil */}
+              <Link to="/profile">
+                <div className="flex items-center justify-center bg-white/10 p-2 rounded-full cursor-pointer hover:bg-white/20 transition">
+                  <UserCircle size={28} />
+                </div>
+              </Link>
             </div>
-            </div>
-            
- 
+
             {/* Botão menu mobile */}
             <div className="md:hidden flex items-center ml-2">
               <button
@@ -113,7 +125,7 @@ export const PublicNavbar = () => {
               </button>
             </div>
           </div>
- 
+
           {/* Menu Mobile */}
           {isOpen && (
             <div className="md:hidden mt-4 transition-all duration-300">
@@ -124,6 +136,17 @@ export const PublicNavbar = () => {
                     : "bg-white/80 backdrop-blur-md"
                 }`}
               >
+                {/* 🔹 Botão ADM no menu mobile */}
+                {user?.type === "adm" && (
+                  <Link
+                    to="/admhomeedit"
+                    className="block px-3 py-1 rounded-lg text-white hover:text-accent hover:bg-light/5 font-semibold"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Seção ADM
+                  </Link>
+                )}
+                
                 {navLink.map((link) => (
                   <Link
                     key={link.to}
@@ -142,7 +165,9 @@ export const PublicNavbar = () => {
                     {link.label}
                   </Link>
                 ))}
- 
+
+                
+
                 {/* Logout no menu mobile */}
                 {user && (
                   <button
@@ -167,5 +192,3 @@ export const PublicNavbar = () => {
     </>
   );
 };
- 
- 

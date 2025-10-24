@@ -48,6 +48,10 @@ export const AdmSponsorEdit = () => {
   };
 
   return (
+    <main className="flex-1 p-8">
+    <h1 className="text-3xl font-bold text-emerald-900 mb-6 border-b-2 border-emerald-700 pb-2">
+        PATROCINADORES
+      </h1>
     <div className="min-h-screen flex flex-col items-center justify-start bg-white pt-10 px-6">
       {/* Logo principal */}
       <div className="flex flex-col items-center">
@@ -161,5 +165,6 @@ export const AdmSponsorEdit = () => {
         )}
       </div>
     </div>
+    </main>
   );
 };

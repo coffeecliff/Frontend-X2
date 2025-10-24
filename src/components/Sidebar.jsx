@@ -45,7 +45,7 @@ export const Sidebar = () => {
       ? [
           { to: '/admhomeedit', label: 'Home', icon: FaHome },
           { to: '/admgamesedit', label: 'Jogos', icon: RiFootballFill },
-          { to: '/admsponsoredit', label: 'Patrocínios', icon: FaRegHandshake },
+          { to: '/admsponsoredit', label: 'Patrocinadores', icon: FaRegHandshake },
           { to: '/admaboutedit', label: 'Sobre', icon: FaInfoCircle }
         ]
       : [
@@ -113,7 +113,7 @@ export const Sidebar = () => {
                 <UserRound className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-white font-bold">NOME</p>
+                <p className="text-white font-bold">{user?.name}</p>
                 {/* Tipo de usuário (psicólogo ou paciente) */}
                 <p className="text-xs text-white/60 capitalize font-semibold">Administrador</p>
               </div>
@@ -146,16 +146,17 @@ export const Sidebar = () => {
           </nav>
  
           {/* 📌 Botão de Logout */}
-          {/* <div className="p-4 border-t-2 border-white/70">
+          <div className="p-4 border-t-2 border-white/70">
+          <a href="/">
             <button
-              onClick={handleLogout}
               className="flex items-center space-x-3 w-full text-[17px] px-4 py-3 text-white 
               font-bold hover:text-white hover:bg-white/10 rounded-xl transition-colors cursor-pointer"
             >
               <LogOut size={30} />
               <span>Sair</span>
             </button>
-          </div> */}
+            </a>
+          </div> 
         </div>
       </div>
  
