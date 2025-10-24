@@ -76,7 +76,7 @@ const PublicRoute = ({ children }) => {
 
   // Redireciona conforme tipo de usuário
   if (user && isAuthPage) {
-    if (user.type === "psicologo") {
+    if (user.type === "adm") {
       return <Navigate to="/admhomeedit" replace />;
     } else {
       return <Navigate to="/" replace />; // paciente
@@ -106,7 +106,7 @@ const PublicRoute = ({ children }) => {
 const Dashboard = () => {
   const { user } = useAuth();
   // Retorna dashboard específico baseado no tipo do usuário
-  return user?.type === 'psicologo' ? <DashboardPsicologo /> : <DashboardPaciente />;
+  return user?.type === 'adm' ? <DashboardPsicologo /> : <DashboardPaciente />;
 };
  
 /* ==============================

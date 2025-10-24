@@ -4,90 +4,128 @@
  * @param {number} ms - Tempo em milissegundos para aguardar
  * @returns {Promise} Promise que resolve após o tempo especificado
  */
- const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
- /**
-  * Chaves para armazenamento no localStorage
-  * Cada entidade do sistema possui sua própria chave de armazenamento
-  * Prefixo 'lunysse_' evita conflitos com outros dados no localStorage
-  */
- const STORAGE_KEYS = {
-   USERS: 'lunysse_users',           // Usuários do sistema (psicólogos e pacientes)
-   PATIENTS: 'lunysse_patients',     // Dados detalhados dos pacientes
-   APPOINTMENTS: 'lunysse_appointments', // Agendamentos e sessões
-   REQUESTS: 'lunysse_requests'      // Solicitações de novos pacientes
- };
- 
- /**
-  * Função para recuperar dados do localStorage com tratamento de erro
-  * Tenta fazer parse do JSON armazenado, retorna dados padrão em caso de erro
-  * @param {string} key - Chave do localStorage
-  * @param {any} defaultData - Dados padrão caso não existam ou haja erro
-  * @returns {any} Dados recuperados ou dados padrão
-  */
- const getStorageData = (key, defaultData) => {
-   try {
-     const stored = localStorage.getItem(key);
-     return stored ? JSON.parse(stored) : defaultData;
-   } catch {
-     // Em caso de erro no parse JSON, retorna dados padrão
-     return defaultData;
-   }
- };
- 
- /**
-  * Função para salvar dados no localStorage
-  * Converte objeto JavaScript para JSON antes de armazenar
-  * @param {string} key - Chave do localStorage
-  * @param {any} data - Dados a serem salvos
-  */
- const setStorageData = (key, data) => {
-   localStorage.setItem(key, JSON.stringify(data));
- };
- 
- /**
-  * Dados iniciais dos usuários do sistema
-  * Inclui psicólogos e pacientes de teste para demonstração
-  * Cada usuário possui campos específicos baseados no seu tipo
-  */
- const initialUsers = [
-   // Psicólogos de teste com especialidades diferentes
-   { 
-     id: 2, 
-     email: 'ana@test.com', 
-     password: '123456', 
-     type: 'psicologo', 
-     name: 'Dra. Ana Costa', 
-     specialty: 'Terapia Cognitivo-Comportamental', 
-     crp: 'CRP 01/23456' 
-   },
-   { 
-     id: 3, 
-     email: 'carlos@test.com', 
-     password: '123456', 
-     type: 'psicologo', 
-     name: 'Dr. Carlos Mendes', 
-     specialty: 'Psicologia Infantil', 
-     crp: 'CRP 01/34567' 
-   },
-   { 
-     id: 4, 
-     email: 'lucia@test.com', 
-     password: '123456', 
-     type: 'psicologo', 
-     name: 'Dra. Lucia Ferreira', 
-     specialty: 'Terapia Familiar', 
-     crp: 'CRP 01/45678' 
-   },
-   // Paciente de teste
-   { 
-     id: 5, 
-     email: 'paciente@test.com', 
-     password: '123456', 
-     type: 'paciente', 
-     name: 'Maria Santos' 
-   }
- ];
+/**
+ * Chaves para armazenamento no localStorage
+ * Cada entidade do sistema possui sua própria chave de armazenamento
+ * Prefixo 'lunysse_' evita conflitos com outros dados no localStorage
+ */
+const STORAGE_KEYS = {
+  USERS: 'lunysse_users',            // Usuários do sistema (psicólogos e pacientes)
+  PATIENTS: 'lunysse_patients',      // Dados detalhados dos pacientes
+  APPOINTMENTS: 'lunysse_appointments', // Agendamentos e sessões
+  REQUESTS: 'lunysse_requests'       // Solicitações de novos pacientes
+};
+
+/**
+ * Função para recuperar dados do localStorage com tratamento de erro
+ * Tenta fazer parse do JSON armazenado, retorna dados padrão em caso de erro
+ * @param {string} key - Chave do localStorage
+ * @param {any} defaultData - Dados padrão caso não existam ou haja erro
+ * @returns {any} Dados recuperados ou dados padrão
+ */
+const getStorageData = (key, defaultData) => {
+  try {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : defaultData;
+  } catch {
+    // Em caso de erro no parse JSON, retorna dados padrão
+    return defaultData;
+  }
+};
+
+/**
+ * Função para salvar dados no localStorage
+ * Converte objeto JavaScript para JSON antes de armazenar
+ * @param {string} key - Chave do localStorage
+ * @param {any} data - Dados a serem salvos
+ */
+const setStorageData = (key, data) => {
+  localStorage.setItem(key, JSON.stringify(data));
+};
+
+/**
+ * Dados iniciais dos usuários do sistema
+ * Inclui psicólogos e pacientes de teste para demonstração
+ * Cada usuário possui campos específicos baseados no seu tipo
+ */
+const initialUsers = [
+  // Psicólogos de teste com especialidades diferentes
+  { 
+    id: 2, 
+    email: 'adm@test.com', 
+    password: '123456', 
+    type: 'adm', 
+    name: 'Administrador do Sistema', 
+    specialty: 'Terapia Cognitivo-Comportamental', 
+    crp: 'CRP 01/23456' 
+  },
+  { 
+    id: 3, 
+    email: 'carlos@test.com', 
+    password: '123456', 
+    type: 'psicologo', 
+    name: 'Dr. Carlos Mendes', 
+    specialty: 'Psicologia Infantil', 
+    crp: 'CRP 01/34567' 
+  },
+  { 
+    id: 4, 
+    email: 'lucia@test.com', 
+    password: '123456', 
+    type: 'psicologo', 
+    name: 'Dra. Lucia Ferreira', 
+    specialty: 'Terapia Familiar', 
+    crp: 'CRP 01/45678' 
+  },
+  // Paciente de teste
+  { 
+    id: 5, 
+    email: 'cliente@test.com', 
+    password: '123456', 
+    type: 'cliente', 
+    name: 'Maria Santos' 
+  }
+];
+
+/**
+ * 🔹 Controle de reset automático do mock
+ * Quando TRUE, os dados do localStorage serão substituídos sempre que o app for recarregado.
+ * Ideal para ambiente de desenvolvimento.
+ */
+const FORCE_RESET = true; // altere para false quando quiser preservar os dados
+
+// Recupera os dados atuais
+const currentUsers = getStorageData(STORAGE_KEYS.USERS, null);
+
+// Se não houver dados ou o modo de reset estiver ativo, sobrescreve com os novos
+if (!currentUsers || FORCE_RESET) {
+  setStorageData(STORAGE_KEYS.USERS, initialUsers);
+  console.log("🔄 Mock de usuários (lunysse_users) reinicializado.");
+}
+
+/**
+ * 🔧 Função opcional para reset manual do mock
+ * Pode ser importada e executada a qualquer momento
+ */
+export const resetMockData = () => {
+  setStorageData(STORAGE_KEYS.USERS, initialUsers);
+  setStorageData(STORAGE_KEYS.PATIENTS, []);
+  setStorageData(STORAGE_KEYS.APPOINTMENTS, []);
+  setStorageData(STORAGE_KEYS.REQUESTS, []);
+  console.log("✅ Mock data resetada com sucesso!");
+};
+
+// Exporta utilitários caso o resto do app use
+export {
+  delay,
+  STORAGE_KEYS,
+  getStorageData,
+  setStorageData,
+  initialUsers
+};
+
  
  /**
   * Dados iniciais dos pacientes cadastrados no sistema

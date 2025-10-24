@@ -41,7 +41,7 @@ export const Sidebar = () => {
 
   // 📌 Links de navegação, diferentes para psicólogo ou paciente
   const navLinks =
-    user?.type === 'psicologo'
+    user?.type === 'adm'
       ? [
           { to: '/admhomeedit', label: 'Home', icon: FaHome },
           { to: '/admgamesedit', label: 'Jogos', icon: RiFootballFill },
