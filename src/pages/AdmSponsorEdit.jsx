@@ -44,11 +44,11 @@ export const AdmSponsorEdit = () => {
 
   return (
     <main className="flex-1 p-8">
-      <h1 className="text-3xl font-bold text-accent mb-6 border-b-2 border-newaccent pb-2">
+      <h1 className="text-3xl font-bold text-accent mb-6 border-b-2 border-accent pb-2">
         PATROCINADORES
       </h1>
 
-      <div className="min-h-screen flex flex-col items-center justify-start bg-white pt-10 px-6">
+      <div className="min-h-screen flex flex-col items-center justify-start bg-dark pt-10 px-6">
         
         <div className="flex flex-col items-center">
           <img
@@ -58,7 +58,7 @@ export const AdmSponsorEdit = () => {
           />
         </div>
 
-        <h1 className="mt-6 text-2xl md:text-3xl font-extrabold tracking-widest text-newdark">
+        <h1 className="mt-6 text-2xl md:text-3xl font-extrabold tracking-widest text-accent">
           PATROCINADORES
         </h1>
 
@@ -71,15 +71,15 @@ export const AdmSponsorEdit = () => {
                     <img
                       src={patr.src}
                       alt={patr.alt}
-                      className="w-32 md:w-40 rounded-md border border-newaccent hover:scale-105 transition-transform duration-300"
+                      className="w-32 md:w-40 rounded-md border border-accent hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
-                    <div className="w-32 h-32 md:w-40 md:h-40 bg-gray-100 border-2 border-dashed border-newaccent flex items-center justify-center text-gray-500">
+                    <div className="w-32 h-32 md:w-40 md:h-40 bg-gray-100 border-2 border-dashed border-accent flex items-center justify-center text-gray-500">
                       Sem imagem
                     </div>
                   )}
 
-                  <div className="bg-newaccent rounded-2xl">
+                  <div className="bg-accent rounded-2xl">
                     <label
                       htmlFor={`file-input-${index}`}
                       className="cursor-pointer flex text-md text-white py-2 px-3 text-center hover:bg-yellow-600 rounded-2xl transition-colors"
@@ -105,7 +105,7 @@ export const AdmSponsorEdit = () => {
                       setPatrocinadores(newPatr);
                     }}
                     placeholder="Descrição da imagem"
-                    className="border border-newaccent rounded-md p-1 text-sm w-32"
+                    className="border border-accent rounded-md p-1 text-sm w-32"
                   />
 
                   <button
@@ -131,14 +131,14 @@ export const AdmSponsorEdit = () => {
             <>
               <button
                 onClick={handleAdd}
-                className="flex cursor-pointer items-center gap-2 bg-newaccent hover:bg-yellow-600 text-white font-bold px-5 py-2 rounded-lg shadow-md"
+                className="flex cursor-pointer items-center gap-2 bg-accent hover:bg-yellow-600 text-white font-bold px-5 py-2 rounded-lg shadow-md"
               >
                 <Plus size={18} /> ADICIONAR
               </button>
 
               <button
                 onClick={handleSave}
-                className="flex cursor-pointer items-center gap-2 bg-newdark hover:bg-black text-white font-bold px-5 py-2 rounded-lg shadow-md"
+                className="flex cursor-pointer items-center gap-2 bg-dark hover:bg-black text-white font-bold px-5 py-2 rounded-lg shadow-md"
               >
                 <Save size={18} /> SALVAR
               </button>
@@ -153,7 +153,7 @@ export const AdmSponsorEdit = () => {
           ) : (
             <button
               onClick={() => setEditing(true)}
-              className="flex cursor-pointer items-center gap-2 bg-newaccent hover:bg-yellow-600 text-white font-bold px-5 py-2 rounded-lg shadow-md"
+              className="flex cursor-pointer items-center gap-2 bg-accent hover:bg-yellow-600 text-white font-bold px-5 py-2 rounded-lg shadow-md"
             >
               <Edit3 size={18} /> EDITAR
             </button>

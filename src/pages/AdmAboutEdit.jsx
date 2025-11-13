@@ -37,11 +37,11 @@ export const AdmAboutEdit = () => {
   return (
     <main className="flex-1 p-8">
       {/* Título da página */}
-      <h1 className="text-3xl font-bold text-accent mb-6 border-b-2 border-accent pb-2">
+      <h1 className="text-3xl font-bold text- mb-6 border-b-2 border-accent pb-2">
         SOBRE
       </h1>
 
-      <div className="w-full min-h-screen bg-dark flex flex-col items-center px-6 py-12 relative text-light">
+      <div className="w-full min-h-screen bg-dark flex flex-col items-center px-6 py-12 relative text-white">
         
         {/* Imagem editável */}
         <div className="mb-10 flex flex-col items-center">

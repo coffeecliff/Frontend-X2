@@ -12,8 +12,12 @@
     --color-background: #0D0D0D; /* Fundo preto suave */
   
     /* Caso queira manter as novas também: */
-    --color-newaccent: #C89116;   /* amarelo */
-    --color-newdark: #000000;     /* preto */
+    --color-tableaccent: #C89116;   /* amarelo */
+    --color-tablemedium: #F0C42D;
+    --color-tabledark: #E1AD01;
+     /* cores da tabela jogos: */
+     --color-tablebackround:#FFF8E1;
+     --color-tableyellow:#F2C230
 }
 
 /* ==============================

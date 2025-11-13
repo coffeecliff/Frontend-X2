@@ -10,7 +10,7 @@ export const Sponsor = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-white pt-10">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-darki pt-10">
       {/* Logo principal */}
       <div className="flex flex-col items-center">
         <img
@@ -21,7 +21,7 @@ export const Sponsor = () => {
       </div>
 
       {/* Título */}
-      <h1 className="mt-6 text-2xl md:text-3xl font-extrabold tracking-widest text-[#0f3a32]">
+      <h1 className="mt-6 text-2xl md:text-3xl font-extrabold tracking-widest text-accent">
         PATROCINADORES
       </h1>
 

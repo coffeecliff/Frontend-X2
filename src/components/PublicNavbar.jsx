@@ -30,8 +30,8 @@ export const PublicNavbar = () => {
       <nav
         className={`backdrop-blur-md sticky top-0 z-50 border-white/20 transition-colors duration-500
         ${isNewEdition
-          ? "bg-gradient-to-r from-newaccent to-newdark text-yellow-200"
-          : "bg-dark text-white"
+          ? ""
+          : "to-yellow bg-gradient-to-r from-accent to-dark"
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 py-3 md:px-2 md:py-4">
@@ -107,7 +107,7 @@ export const PublicNavbar = () => {
               {/* Ícone perfil — aparece somente se o usuário estiver autenticado */}
               {user && (
                 <Link to="/profile">
-                  <div className="flex items-center justify-center bg-white/10 p-2 rounded-full cursor-pointer hover:bg-white/20 transition">
+                  <div className="flex items-center justify-center bg-white p-2 rounded-full cursor-pointer hover:bg-light transition-colors duration-300">
                     <UserCircle size={28} />
                   </div>
                 </Link>

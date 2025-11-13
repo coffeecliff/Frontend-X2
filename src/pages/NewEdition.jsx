@@ -53,7 +53,7 @@ export const NewEdition = () => {
       </section>
 
       {/* Faixa de patrocinadores */}
-      <section className="overflow-hidden bg-black py-8 border-t border-newaccent relative z-20">
+      <section className="overflow-hidden bg-black py-8 border-t border-accent relative z-20">
         <div className="flex animate-slide space-x-16 w-max pause">
           {patrocinadores.concat(patrocinadores).map((logo, i) => (
             <img
@@ -70,7 +70,7 @@ export const NewEdition = () => {
       <section className="py-16 text-center relative">
 
         {/* ✅ TÍTULO DO ÚLTIMO JOGO ✅ */}
-        <h2 className="text-newaccent text-2xl md:text-3xl font-extrabold mb-8 text-center tracking-wide">
+        <h2 className="text-accent text-2xl md:text-3xl font-extrabold mb-8 text-center tracking-wide">
           RESULTADO DO ÚLTIMO JOGO
         </h2>
 
@@ -87,10 +87,10 @@ export const NewEdition = () => {
 
           {/* GRUPO A */}
           <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-white/90">
-            <div className="bg-newdark text-white font-bold py-3 text-lg">GRUPO A</div>
+            <div className="bg-dark text-white font-bold py-3 text-lg">GRUPO A</div>
 
             <table className="w-full text-base text-center font-semibold">
-              <thead className="bg-newdark text-white">
+              <thead className="bg-dark text-white">
                 <tr>
                   <th className="p-3"></th>
                   <th className="p-3">V</th>
@@ -102,7 +102,7 @@ export const NewEdition = () => {
               </thead>
 
               <tbody>
-                {["#C89116", "#D6A43A", "#E3B95C", "#F0CA80"].map((color, i) => {
+                {["#F0C42D", "#E1AD01", "#F0C42D", "#E1AD01"].map((color, i) => {
                   const row = [
                     { flag: 'jp.svg', v: '2(1)', d: '0', gm: '4', sg: '2', pts: '8' },
                     { flag: 'ar.svg', v: '2', d: '1', gm: '6', sg: '1', pts: '6' },
@@ -129,10 +129,10 @@ export const NewEdition = () => {
 
           {/* GRUPO B */}
           <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-white/90">
-            <div className="bg-newdark text-white font-bold py-3 text-lg">GRUPO B</div>
+            <div className="bg-dark text-white font-bold py-3 text-lg">GRUPO B</div>
 
             <table className="w-full text-base text-center font-semibold">
-              <thead className="bg-newdark text-white">
+              <thead className="bg-dark text-white">
                 <tr>
                   <th className="p-3"></th>
                   <th className="p-3">V</th>
@@ -144,7 +144,7 @@ export const NewEdition = () => {
               </thead>
 
               <tbody>
-                {["#C89116", "#D6A43A", "#E3B95C", "#F0CA80"].map((color, i) => {
+                {["#F0C42D", "#E1AD01", "#F0C42D", "#E1AD01"].map((color, i) => {
                   const row = [
                     { flag: 'fr.svg', v: '3', d: '0', gm: '8', sg: '6', pts: '9' },
                     { flag: 'ger.svg', v: '2', d: '1', gm: '4', sg: '-1', pts: '6' },
@@ -176,7 +176,7 @@ export const NewEdition = () => {
 
         <div className="relative z-10">
 
-          <h2 className="text-newaccent text-2xl md:text-3xl font-extrabold mb-10 tracking-wide">
+          <h2 className="text-accent text-2xl md:text-3xl font-extrabold mb-10 tracking-wide">
             CLUBES DESTA EDIÇÃO
           </h2>
 

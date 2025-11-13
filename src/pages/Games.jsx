@@ -18,9 +18,9 @@ export const Games = () => {
   const CardJogo = ({ time1, placar1, placar2, time2, onClick }) => (
     <div
       onClick={onClick}
-      className="flex justify-between items-center bg-white rounded-xl shadow-md mb-2 p-3 cursor-pointer hover:bg-green-100 transition"
+      className="flex justify-between items-center bg-tablebackround rounded-xl shadow-md mb-2 p-3 cursor-pointer hover:bg-green-100 transition"
     >
-      <span className="text-xs font-bold text-red-700 bg-red-100 px-2 py-1 rounded-md">
+      <span className="text-xs font-bold text-black bg-tableyellow px-2 py-1 rounded-md">
         ENCERRADO
       </span>
       <div className="flex-1 flex justify-center items-center text-gray-800 font-semibold">
@@ -44,7 +44,7 @@ export const Games = () => {
         >
           ×
         </button>
-        <h2 className="text-2xl font-extrabold text-green-800 mb-4">Detalhes do Jogo</h2>
+        <h2 className="text-2xl font-extrabold text-dark-800 mb-4">Detalhes do Jogo</h2>
         <p className="text-gray-700 mb-4">
           <span className="font-bold">{jogo.time1}</span> {jogo.placar1} x {jogo.placar2}{" "}
           <span className="font-bold">{jogo.time2}</span>
@@ -61,35 +61,35 @@ export const Games = () => {
   );
 
   return (
-    <div className="w-full min-h-screen bg-green-50 flex flex-col items-center py-12 px-4 relative overflow-hidden">
+    <div className="w-full min-h-screen bg-dark flex flex-col items-center py-12 px-4 relative overflow-hidden">
       
       {/* Bolas decorativas */}
       <img
-        src="/Bolas.svg"
+        src="/BolasY.png"
         alt="Bola topo esquerdo grande"
-        className="absolute top-0 left-0 w-1/4 md:w-1/6 opacity-30"
+        className="absolute top-0 left-0 w-1/4 md:w-1/6 "
       />
       <img
-        src="/BolasR.svg"
+        src="/BolasYR.png"
         alt="Bola topo direito grande"
-        className="absolute top-0 right-0 w-1/4 md:w-1/6 opacity-30"
+        className="absolute top-0 right-0 w-1/4 md:w-1/6 "
       />
       <img
-        src="/Bolas.svg"
+        src="/BolasY.png"
         alt="Bola inferior esquerda"
-        className="absolute bottom-0 left-0 w-1/4 md:w-1/6 opacity-30"
+        className="absolute bottom-0 left-0 w-1/4 md:w-1/6 "
       />
       <img
-        src="/BolasR.svg"
+        src="/BolasYR.png"
         alt="Bola inferior direita"
         className="absolute bottom-0 right-0 w-1/4 md:w-1/6 opacity-30"
       />
 
       {/* Título */}
-      <h1 className="text-2xl font-extrabold text-green-900 text-center">
+      <h1 className="text-2xl font-extrabold text-white text-center">
         TABELA
       </h1>
-      <h2 className="text-lg font-bold text-green-700 mb-8 text-center">
+      <h2 className="text-lg font-bold text-white mb-8 text-center">
         DOS JOGOS
       </h2>
 
