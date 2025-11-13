@@ -5,7 +5,7 @@ export const About = () => {
       
       {/* Logo central */}
       <img
-        src="/X2logo.svg"
+        src="/X2logoY.svg"
         alt="Logo"
         className="h-42 mb-16 drop-shadow-lg"
       />

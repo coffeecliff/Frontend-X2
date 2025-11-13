@@ -3,7 +3,7 @@ import { Edit3, Save, X, ZoomIn } from "lucide-react";
 
 export const AdmAboutEdit = () => {
   const [content, setContent] = useState({
-    image: "/X2logo.svg",
+    image: "/X2logoY.svg",
     title: "▶ TORNEIO X2 FUTEBOL JUVENIL – REGULAMENTO (2010 A 2015)",
     description1:
       "O torneio acontecerá no dia 16 de novembro de 2025, com objetivo de promover o desenvolvimento esportivo, social e a integração entre atletas nascidos entre 2010 e 2013.",
@@ -37,12 +37,12 @@ export const AdmAboutEdit = () => {
   return (
     <main className="flex-1 p-8">
       {/* Título da página */}
-      <h1 className="text-3xl font-bold text- mb-6 border-b-2 border-accent pb-2">
+      <h1 className="text-3xl font-bold text-accent mb-6 border-b-2 border-accent pb-2">
         SOBRE
       </h1>
 
       <div className="w-full min-h-screen bg-dark flex flex-col items-center px-6 py-12 relative text-white">
-        
+
         {/* Imagem editável */}
         <div className="mb-10 flex flex-col items-center">
           <div
@@ -50,7 +50,7 @@ export const AdmAboutEdit = () => {
             onClick={() => !editing && setShowImageModal(true)}
           >
             <img
-              src={content.image || "/X2logo.svg"}
+              src={content.image || "/X2logoY.svg"}
               alt="Imagem do evento"
               className="h-32 md:h-40 rounded-lg shadow-lg object-contain transition-transform duration-300 group-hover:scale-105"
             />
@@ -83,10 +83,10 @@ export const AdmAboutEdit = () => {
                 type="text"
                 value={content.title}
                 onChange={(e) => setContent({ ...content, title: e.target.value })}
-                className="w-full font-bold text-accent mb-2 border-b border-accent bg-transparent focus:outline-none"
+                className="w-full font-bold text-white mb-2 border-b border-accent bg-transparent focus:outline-none"
               />
             ) : (
-              <h2 className="font-bold text-accent mb-2">{content.title}</h2>
+              <h2 className="font-bold text-white mb-2">{content.title}</h2>
             )}
 
             {editing ? (
@@ -96,7 +96,7 @@ export const AdmAboutEdit = () => {
                   onChange={(e) =>
                     setContent({ ...content, description1: e.target.value })
                   }
-                  className="w-full border border-accent bg-dark text-light p-2 rounded-md mb-2"
+                  className="w-full border border-accent bg-dark text-white p-2 rounded-md mb-2"
                   rows={3}
                 />
                 <textarea
@@ -104,7 +104,7 @@ export const AdmAboutEdit = () => {
                   onChange={(e) =>
                     setContent({ ...content, description2: e.target.value })
                   }
-                  className="w-full border border-accent bg-dark text-light p-2 rounded-md"
+                  className="w-full border border-accent bg-dark text-white p-2 rounded-md"
                   rows={3}
                 />
               </>
@@ -116,12 +116,13 @@ export const AdmAboutEdit = () => {
             )}
           </section>
 
-          {/* Seções fixas (ajustadas para a nova paleta) */}
+          {/* Seções fixas (agora em branco) */}
           <section>
-            <h2 className="font-bold text-accent mb-2">▶ SISTEMA DE DISPUTA</h2>
+            <h2 className="font-bold text-white mb-2">▶ SISTEMA DE DISPUTA</h2>
             <p>O campeonato terá dois grupos de 4 times...</p>
           </section>
         </div>
+
 
         {/* Botões */}
         <div className="mt-10 flex gap-4">
@@ -162,7 +163,7 @@ export const AdmAboutEdit = () => {
           >
             <div className="relative">
               <img
-                src={content.image || "/X2logo.svg"}
+                src={content.image || "/X2logoY.svg"}
                 alt="Pré-visualização"
                 className="max-h-[80vh] max-w-[90vw] rounded-lg shadow-2xl"
               />
