@@ -16,7 +16,6 @@ import { Home } from '../pages/Home';
 import { About } from '../pages/About';
 import { Login } from '../pages/Login';
 import { Games } from '../pages/Games';
-import { NewEdition } from '../pages/NewEdition';
 // import { Register } from '../pages/Register';
 // import { NotFound } from '../pages/NotFound';
 
@@ -30,6 +29,7 @@ import { AdmSponsorEdit } from '../pages/AdmSponsorEdit';
 import { Register } from '../pages/Register';
 import { Profile } from '../pages/Profile';
 import { ManagerDashboard } from "../pages/ManagerDashboard";
+import { Moments } from '../pages/Moments'
 
 // import { DashboardPaciente } from '../pages/DashboardPaciente';
 // import { Agendamento } from '../pages/Agendamentos';
@@ -133,7 +133,7 @@ export const AppRoutes = () => {
            ============================== */}
         <Route path="/" element={
           <PublicRoute>
-            <NewEdition />
+            <Home />
           </PublicRoute>
         } />
         <Route path="/about" element={
@@ -149,6 +149,11 @@ export const AppRoutes = () => {
         <Route path="/register" element={
           <PublicRoute>
             <Register />
+          </PublicRoute>
+        } />
+        <Route path="/moments" element={
+          <PublicRoute>
+            <Moments />
           </PublicRoute>
         } />
         <Route path="/profile" element={
