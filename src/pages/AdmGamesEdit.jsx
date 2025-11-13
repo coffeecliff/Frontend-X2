@@ -1,7 +1,6 @@
 // src/pages/GamesEdit.jsx
 import { useState } from "react";
 import { Edit3, Save, X } from "lucide-react";
-import { main } from "framer-motion/client";
 
 export const AdmGamesEdit = () => {
   const [editing, setEditing] = useState(false);
@@ -25,48 +24,49 @@ export const AdmGamesEdit = () => {
     setEditing(false);
   };
 
-  const handleCancel = () => {
-    window.location.reload();
-  };
+  const handleCancel = () => window.location.reload();
 
   const CardJogo = ({ jogo }) => (
-    <div className="flex justify-between items-center bg-white rounded-xl shadow-md mb-2 p-3 transition">
-      <span className="text-xs font-bold text-red-700 bg-red-100 px-2 py-1 rounded-md">
+    <div className="flex justify-between items-center bg-[#FFF8E1] rounded-xl shadow-md mb-2 p-3 border border-black/20">
+      <span className="text-xs font-bold text-black bg-[#F2C230] px-2 py-1 rounded-md shadow">
         ENCERRADO
       </span>
-      <div className="flex-1 flex justify-center items-center text-gray-800 font-semibold">
+
+      <div className="flex-1 flex justify-center items-center text-black font-semibold">
         {editing ? (
           <>
             <input
               type="text"
               value={jogo.time1}
               onChange={(e) => handleChange(jogo.id, "time1", e.target.value)}
-              className="w-24 text-center text-black border border-gray-300 rounded-md p-1 mx-1"
+              className="w-24 text-center text-black border border-black/40 rounded-md p-1 mx-1 bg-white"
             />
             <input
               type="number"
               value={jogo.placar1}
               onChange={(e) => handleChange(jogo.id, "placar1", e.target.value)}
-              className="w-12 text-center text-black border border-gray-300 rounded-md p-1 mx-1"
+              className="w-12 text-center text-black border border-black/40 rounded-md p-1 mx-1 bg-white"
             />
+
             <span className="font-bold mx-1">x</span>
+
             <input
               type="number"
               value={jogo.placar2}
               onChange={(e) => handleChange(jogo.id, "placar2", e.target.value)}
-              className="w-12 text-center text-black border border-gray-300 rounded-md p-1 mx-1"
+              className="w-12 text-center text-black border border-black/40 rounded-md p-1 mx-1 bg-white"
             />
             <input
               type="text"
               value={jogo.time2}
               onChange={(e) => handleChange(jogo.id, "time2", e.target.value)}
-              className="w-24 text-center text-black border border-gray-300 rounded-md p-1 mx-1"
+              className="w-24 text-center text-black border border-black/40 rounded-md p-1 mx-1 bg-white"
             />
           </>
         ) : (
           <>
             <span>{jogo.time1}</span>
-            <span className="mx-3 text-gray-800 font-bold">
+            <span className="mx-3 font-bold">
               {jogo.placar1} x {jogo.placar2}
             </span>
             <span>{jogo.time2}</span>
@@ -78,85 +78,61 @@ export const AdmGamesEdit = () => {
 
   return (
     <main className="flex-1 p-8">
-    <h1 className="text-3xl font-bold text-emerald-900 mb-6 border-b-2 border-emerald-700 pb-2">
+      <h1 className="text-3xl font-bold text-accent mb-6 border-b-2 border-accent pb-2">
         JOGOS
       </h1>
-    <div className="w-full min-h-screen bg-green-50 flex flex-col items-center py-12 px-4 relative overflow-hidden">
-      
-      {/* Bolas decorativas */}
-      <img
-        src="/Bolas.svg"
-        alt="Bola topo esquerdo grande"
-        className="absolute top-0 left-0 w-1/4 md:w-1/6 opacity-30"
-      />
-      <img
-        src="/BolasR.svg"
-        alt="Bola topo direito grande"
-        className="absolute top-0 right-0 w-1/4 md:w-1/6 opacity-30"
-      />
-      <img
-        src="/Bolas.svg"
-        alt="Bola inferior esquerda"
-        className="absolute bottom-0 left-0 w-1/4 md:w-1/6 opacity-30"
-      />
-      <img
-        src="/BolasR.svg"
-        alt="Bola inferior direita"
-        className="absolute bottom-0 right-0 w-1/4 md:w-1/6 opacity-30"
-      />
 
-      {/* Título */}
-      <h1 className="text-2xl font-extrabold text-green-900 text-center">
-        TABELA
-      </h1>
-      <h2 className="text-lg font-bold text-green-700 mb-8 text-center">
-        DOS JOGOS
-      </h2>
+      <div className="w-full min-h-screen bg-[#FFF8E1] flex flex-col items-center py-12 px-4 relative overflow-hidden">
 
-      {/* Primeira tabela */}
-      <div className="relative z-10 w-full max-w-3xl bg-white/50 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
-        {jogos.map((jogo) => (
-          <CardJogo key={jogo.id} jogo={jogo} />
-        ))}
-      </div>
+        <h1 className="text-2xl font-extrabold text-black text-center">
+          TABELA
+        </h1>
+        <h2 className="text-lg font-bold text-black/70 mb-8 text-center">
+          DOS JOGOS
+        </h2>
 
-      {/* Segunda tabela (pode ser duplicada ou outro grupo) */}
-      <div className="relative z-10 w-full max-w-3xl bg-white/50 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
-        {jogos.map((jogo) => (
-          <CardJogo key={jogo.id + "-b"} jogo={jogo} />
-        ))}
-      </div>
+        <div className="relative z-10 w-full max-w-3xl bg-white/40 border border-black/20 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
+          {jogos.map((jogo) => (
+            <CardJogo key={jogo.id} jogo={jogo} />
+          ))}
+        </div>
 
-      {/* Botões de ação */}
-      <div className="flex justify-center mt-6">
-        {!editing ? (
-          <button
-            onClick={() => setEditing(true)}
-            className="flex cursor-pointer items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
-          >
-            <Edit3 size={18} />
-            EDITAR
-          </button>
-        ) : (
-          <div className="flex gap-4">
+        <div className="relative z-10 w-full max-w-3xl bg-white/40 border border-black/20 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
+          {jogos.map((jogo) => (
+            <CardJogo key={jogo.id + "-b"} jogo={jogo} />
+          ))}
+        </div>
+
+        <div className="flex justify-center mt-6">
+          {!editing ? (
             <button
-              onClick={handleSave}
-              className="flex cursor-pointer items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
+              onClick={() => setEditing(true)}
+              className="flex items-center gap-2 bg-[#F2C230] hover:bg-[#E5B21D] text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
             >
-              <Save size={18} />
-              SALVAR
+              <Edit3 size={18} />
+              EDITAR
             </button>
-            <button
-              onClick={handleCancel}
-              className="flex cursor-pointer items-center gap-2 bg-gray-400 hover:bg-gray-500 text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
-            >
-              <X size={18} />
-              CANCELAR
-            </button>
-          </div>
-        )}
+          ) : (
+            <div className="flex gap-4">
+              <button
+                onClick={handleSave}
+                className="flex items-center gap-2 bg-[#FFDA59] hover:bg-[#FFCA28] text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
+              >
+                <Save size={18} />
+                SALVAR
+              </button>
+
+              <button
+                onClick={handleCancel}
+                className="flex items-center gap-2 bg-black/70 hover:bg-black text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
+              >
+                <X size={18} />
+                CANCELAR
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </main>
   );
 };

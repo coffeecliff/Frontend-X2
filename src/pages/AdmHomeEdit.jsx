@@ -21,13 +21,11 @@ export const AdmHomeEdit = () => {
 
   const [grupos, setGrupos] = useState(initialData);
 
-  // 🔹 Carrega dados do localStorage
   useEffect(() => {
     const saved = localStorage.getItem("admHomeData");
     if (saved) setGrupos(JSON.parse(saved));
   }, []);
 
-  // 🔹 Salva no localStorage
   const handleSave = () => {
     localStorage.setItem("admHomeData", JSON.stringify(grupos));
     setEditing(false);
@@ -57,15 +55,22 @@ export const AdmHomeEdit = () => {
     setEditing(false);
   };
 
-  const bgCores = ["bg-[#5BC060]", "bg-[#61C466]", "bg-[#69CA6C]", "bg-[#70D072]"];
+  // ✅ Nova paleta de tons amarelos
+  const bgCores = [
+    "bg-[#F9D64A]",
+    "bg-[#F7C934]",
+    "bg-[#F2C230]",
+    "bg-[#E5B21D]",
+  ];
 
   const renderTabela = (grupoNome, grupoDados) => (
-    <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-white/90">
-      <div className="bg-[#19326C] text-white items-center justify-center flex font-bold py-3 text-lg">
+    <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-[#FFF8E1] border border-black/20">
+      <div className="bg-black text-[#F2C230] flex font-bold py-3 text-lg justify-center">
         {`GRUPO ${grupoNome}`}
       </div>
+
       <table className="w-full text-base text-center font-semibold">
-        <thead className="bg-[#19326C] text-white">
+        <thead className="bg-black text-[#F2C230]">
           <tr>
             <th className="p-3"></th>
             <th className="p-3">V</th>
@@ -75,10 +80,12 @@ export const AdmHomeEdit = () => {
             <th className="p-3">Pontos</th>
           </tr>
         </thead>
+
         <tbody>
           {grupoDados.map((time, i) => (
-            <tr key={i} className={`text-white ${bgCores[i % bgCores.length]}`}>
-              <td className="flex items-center justify-center py-3 mr-4 relative">
+            <tr key={i} className={`text-black ${bgCores[i % bgCores.length]}`}>
+              <td className="flex items-center justify-center py-3 relative">
+
                 <img
                   src={time.flag}
                   alt={time.nome}
@@ -88,6 +95,7 @@ export const AdmHomeEdit = () => {
                     if (input) input.click();
                   }}
                 />
+
                 {editing && (
                   <>
                     <input
@@ -99,7 +107,7 @@ export const AdmHomeEdit = () => {
                     />
                     <ImagePlus
                       size={18}
-                      className="cursor-pointer text-white"
+                      className="cursor-pointer text-black"
                       onClick={() => {
                         const input = document.getElementById(`flag-${grupoNome}-${i}`);
                         if (input) input.click();
@@ -116,7 +124,7 @@ export const AdmHomeEdit = () => {
                       type="text"
                       value={time[campo]}
                       onChange={(e) => handleChange(grupoNome, i, campo, e.target.value)}
-                      className="w-12 text-center text-black rounded-md p-1"
+                      className="w-12 text-center text-black border border-black/40 rounded-md p-1 bg-white"
                     />
                   ) : (
                     time[campo]
@@ -132,12 +140,13 @@ export const AdmHomeEdit = () => {
 
   return (
     <main className="flex-1 p-8">
-      <h1 className="text-3xl font-bold text-emerald-900 mb-6 border-b-2 border-emerald-700 pb-2">
+      {/* Título */}
+      <h1 className="text-3xl font-bold text-accent mb-6 border-b-2 border-accent pb-2">
         HOME
       </h1>
 
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-extrabold text-emerald-800">
+        <h2 className="text-2xl font-extrabold text-accent">
           RESULTADO DO ÚLTIMO JOGO
         </h2>
       </div>
@@ -147,11 +156,12 @@ export const AdmHomeEdit = () => {
         {renderTabela("B", grupos.B)}
       </div>
 
+      {/* Botões */}
       <div className="flex justify-center mt-10">
         {!editing ? (
           <button
             onClick={() => setEditing(true)}
-            className="flex items-center gap-2 cursor-pointer bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
+            className="flex items-center gap-2 bg-[#F2C230] hover:bg-[#E5B21D] text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
           >
             <Edit3 size={18} /> EDITAR
           </button>
@@ -159,13 +169,14 @@ export const AdmHomeEdit = () => {
           <div className="flex gap-4">
             <button
               onClick={handleSave}
-              className="flex items-center cursor-pointer gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
+              className="flex items-center gap-2 bg-[#FFDA59] hover:bg-[#FFCA28] text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
             >
               <Save size={18} /> SALVAR
             </button>
+
             <button
               onClick={handleCancel}
-              className="flex items-center gap-2 cursor-pointer bg-gray-400 hover:bg-gray-500 text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
+              className="flex items-center gap-2 bg-black/70 hover:bg-black text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
             >
               <X size={18} /> CANCELAR
             </button>
