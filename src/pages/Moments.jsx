@@ -21,7 +21,7 @@ export const Moments = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-accent to-dark flex flex-col items-center py-12 px-4 md:px-16">
+    <div className="min-h-screen bg-dark flex flex-col items-center py-12 px-4 md:px-16">
       <h1 className="text-3xl md:text-4xl font-semibold mb-10 text-white tracking-wide">
         Momentos Históricos & Histórias Inspiradoras ⚽
       </h1>
@@ -48,10 +48,10 @@ export const Moments = () => {
             </div>
 
             <div className="md:w-1/2 text-center md:text-left">
-              <h2 className="text-lg md:text-xl font-semibold text- mb-2 uppercase tracking-wide">
+              <h2 className="text-lg md:text-xl font-semibold text-momentext mb-2 uppercase tracking-wide">
                 {item.titulo}
               </h2>
-              <p className="text-[#4a3b33] text-base leading-relaxed max-w-md mx-auto md:mx-0">
+              <p className="text-white/60 text-base leading-relaxed max-w-md mx-auto md:mx-0">
                 {item.texto}
               </p>
             </div>
