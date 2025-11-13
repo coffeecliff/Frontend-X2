@@ -82,12 +82,12 @@ export const AdmGamesEdit = () => {
         JOGOS
       </h1>
 
-      <div className="w-full min-h-screen bg-[#FFF8E1] flex flex-col items-center py-12 px-4 relative overflow-hidden">
+      <div className="w-full min-h-screen bg-dark flex flex-col items-center py-12 px-4 relative overflow-hidden">
 
-        <h1 className="text-2xl font-extrabold text-black text-center">
+        <h1 className="text-2xl font-extrabold text-white text-center">
           TABELA
         </h1>
-        <h2 className="text-lg font-bold text-black/70 mb-8 text-center">
+        <h2 className="text-lg font-bold text-white mb-8 text-center">
           DOS JOGOS
         </h2>
 

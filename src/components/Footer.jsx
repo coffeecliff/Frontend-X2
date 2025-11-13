@@ -2,7 +2,7 @@ import React from "react";
 
 export const Footer = () => {
     return (
-      <footer className="w-full text-sm  text-gray-700">
+      <footer className="w-full text-sm  text-white/80">
         <div className="max-w-7xl mx-auto px-6 py-7 flex flex-wrap justify-center md:justify-between items-center space-y-2 md:space-y-0">
           
           {/* Links */}
@@ -16,7 +16,7 @@ export const Footer = () => {
   
           {/* Idioma */}
           <div className="relative">
-            <select className="bg-transparent border-none text-gray-700 focus:outline-none cursor-pointer">
+            <select className="bg-transparent border-none text-white/80 focus:outline-none cursor-pointer">
               <option>Português</option>
               <option>English</option>
               <option>Español</option>

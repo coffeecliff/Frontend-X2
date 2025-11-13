@@ -40,7 +40,7 @@ export const Login = () => {
             {/* Imagem decorativa esquerda (só no desktop) */}
             <div className="hidden md:flex flex-shrink-0 w-80 h-80 overflow-hidden mb-100">
                 <img
-                    src="/Bolas.svg"
+                    src="/BolasY.png"
                     alt="Imagem decorativa"
                     className="w-full h-full object-contain"
                 />
@@ -54,7 +54,7 @@ export const Login = () => {
                     <div className="h-24 relative flex items-center justify-center rounded-t-2xl">
                         <div className="absolute -bottom-14 w-34 h-34 rounded-full overflow-hidden">
                             <img
-                                src="/Loginicon.svg"
+                                src="/LoginYicon.png"
                                 alt="Foto do usuário"
                                 className="w-full h-full object-cover"
                             />
@@ -102,7 +102,7 @@ export const Login = () => {
             {/* Imagem decorativa direita (só no desktop) */}
             <div className="hidden md:flex flex-shrink-0 w-80 h-80 overflow-hidden mt-120">
                 <img
-                    src="/BolasR.svg"
+                    src="/BolasYR.png"
                     alt="Imagem decorativa"
                     className="w-full h-full object-contain"
                 />

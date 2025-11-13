@@ -57,20 +57,20 @@ export const AdmHomeEdit = () => {
 
   // ✅ Nova paleta de tons amarelos
   const bgCores = [
-    "bg-[#F9D64A]",
-    "bg-[#F7C934]",
-    "bg-[#F2C230]",
-    "bg-[#E5B21D]",
+    "bg-[#E1AD01]",
+    "bg-[#F0C42D]",
+    "bg-[#E1AD01]",
+    "bg-[#F0C42D]",
   ];
 
   const renderTabela = (grupoNome, grupoDados) => (
     <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-[#FFF8E1] border border-black/20">
-      <div className="bg-black text-[#F2C230] flex font-bold py-3 text-lg justify-center">
+      <div className="bg-black text-white flex font-bold py-3 text-lg justify-center">
         {`GRUPO ${grupoNome}`}
       </div>
 
       <table className="w-full text-base text-center font-semibold">
-        <thead className="bg-black text-[#F2C230]">
+        <thead className="bg-black text-white">
           <tr>
             <th className="p-3"></th>
             <th className="p-3">V</th>
@@ -83,7 +83,7 @@ export const AdmHomeEdit = () => {
 
         <tbody>
           {grupoDados.map((time, i) => (
-            <tr key={i} className={`text-black ${bgCores[i % bgCores.length]}`}>
+            <tr key={i} className={`text-white ${bgCores[i % bgCores.length]}`}>
               <td className="flex items-center justify-center py-3 relative">
 
                 <img
