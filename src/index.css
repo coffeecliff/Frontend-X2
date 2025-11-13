@@ -10,14 +10,16 @@
     --color-light: #F2C440;      /* Ouro claro */
     --color-accent: #D9A019;     /* Ouro médio/dourado */
     --color-background: #0D0D0D; /* Fundo preto suave */
-  
+
+    --color-momentext:#FFF
+
     /* Caso queira manter as novas também: */
     --color-tableaccent: #C89116;   /* amarelo */
     --color-tablemedium: #F0C42D;
     --color-tabledark: #E1AD01;
      /* cores da tabela jogos: */
-     --color-tablebackround:#FFF8E1;
-     --color-tableyellow:#F2C230
+    --color-tablebackround:#FFF8E1;
+    --color-tableyellow:#F2C230
 }
 
 /* ==============================
