@@ -48,10 +48,10 @@ export const Moments = () => {
             </div>
 
             <div className="md:w-1/2 text-center md:text-left">
-              <h2 className="text-lg md:text-xl font-semibold text-momentstext mb-2 uppercase tracking-wide">
+              <h2 className="text-lg md:text-xl font-semibold text-momentext mb-2 uppercase tracking-wide">
                 {item.titulo}
               </h2>
-              <p className="text-momentext/60 text-base leading-relaxed max-w-md mx-auto md:mx-0">
+              <p className="text-white/60 text-base leading-relaxed max-w-md mx-auto md:mx-0">
                 {item.texto}
               </p>
             </div>
