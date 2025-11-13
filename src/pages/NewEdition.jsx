@@ -1,22 +1,22 @@
 // src/pages/NewEdition.jsx
 import { Link } from "react-router-dom";
 import { Button } from "../components/Button";
- 
+
 export const NewEdition = () => {
   const patrocinadores = ["/patr1.svg", "/patr2.svg", "/patr3.svg"];
- 
+
   return (
     <div className="w-full min-h-screen bg-black font-sans text-white relative overflow-hidden">
+
       {/* Seção principal */}
       <section className="relative flex flex-col md:flex-row items-center justify-between px-8 md:px-20 py-12">
-        {/* Texto à esquerda */}
         <div className="relative z-20 max-w-lg flex flex-col items-start text-left space-y-3">
           <img
             src="/novaedicao.svg"
             alt="3ª Edição - 18 de Novembro"
             className="w-72 md:w-96 h-auto mb-4"
           />
- 
+
           <ul className="text-white text-lg font-bold leading-relaxed space-y-1">
             <li>• PRÊMIOS MELHORES</li>
             <li>• TIMES BRASILEIROS</li>
@@ -27,21 +27,12 @@ export const NewEdition = () => {
             <li>• 24 ATLETAS</li>
             <li>• 8 CLUBES</li>
           </ul>
- 
+
           <div className="mt-6">
-            <Link to="/">
-              <Button
-                className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-3 rounded-lg
-                           font-extrabold shadow-md hover:from-yellow-300 hover:to-yellow-400
-                           hover:shadow-yellow-500/50 transition-all duration-300"
-              >
-                VOLTAR PARA HOME
-              </Button>
-            </Link>
+
           </div>
         </div>
- 
-        {/* Imagem diagonal à direita */}
+
         <div className="absolute right-0 top-0 h-full w-full md:w-1/2 overflow-hidden">
           <img
             src="/estadio.svg"
@@ -52,8 +43,7 @@ export const NewEdition = () => {
             }}
           />
         </div>
- 
-        {/* Fundo diagonal preto à esquerda */}
+
         <div
           className="absolute left-0 top-0 h-full w-full md:w-1/2 bg-black z-10"
           style={{
@@ -61,8 +51,8 @@ export const NewEdition = () => {
           }}
         ></div>
       </section>
- 
-      {/* Faixa de patrocinadores - agora com carrossel */}
+
+      {/* Faixa de patrocinadores */}
       <section className="overflow-hidden bg-black py-8 border-t border-newaccent relative z-20">
         <div className="flex animate-slide space-x-16 w-max pause">
           {patrocinadores.concat(patrocinadores).map((logo, i) => (
@@ -75,25 +65,123 @@ export const NewEdition = () => {
           ))}
         </div>
       </section>
- 
-      {/* Seção dos clubes */}
-      <section className="relative bg-black py-16 text-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="/fundonewedition.svg"
-            alt="Fundo dourado dos clubes"
-            className="w-full h-full object-cover opacity-40"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b"></div>
+
+      {/** ✅✅✅  TABELAS INSERIDAS AQUI ✅✅✅ */}
+      <section className="py-16 text-center relative">
+
+        {/* ✅ TÍTULO DO ÚLTIMO JOGO ✅ */}
+        <h2 className="text-newaccent text-2xl md:text-3xl font-extrabold mb-8 text-center tracking-wide">
+          RESULTADO DO ÚLTIMO JOGO
+        </h2>
+
+        {/* Fundo da tabela */}
+        <div
+          className="absolute inset-0 w-full h-full bg-center bg-cover object-cover z-0"
+          style={{ backgroundImage: "url('/fundonewedition.svg')" }}
+        >
+          <div className="absolute inset-0 bg-black/60"></div>
         </div>
- 
+
+        {/* Tabelas */}
+        <div className="relative flex flex-col justify-center gap-10 items-center z-10">
+
+          {/* GRUPO A */}
+          <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-white/90">
+            <div className="bg-newdark text-white font-bold py-3 text-lg">GRUPO A</div>
+
+            <table className="w-full text-base text-center font-semibold">
+              <thead className="bg-newdark text-white">
+                <tr>
+                  <th className="p-3"></th>
+                  <th className="p-3">V</th>
+                  <th className="p-3">D</th>
+                  <th className="p-3">GM</th>
+                  <th className="p-3">SG</th>
+                  <th className="p-3">Pontos</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {["#C89116", "#D6A43A", "#E3B95C", "#F0CA80"].map((color, i) => {
+                  const row = [
+                    { flag: 'jp.svg', v: '2(1)', d: '0', gm: '4', sg: '2', pts: '8' },
+                    { flag: 'ar.svg', v: '2', d: '1', gm: '6', sg: '1', pts: '6' },
+                    { flag: 'ma.svg', v: '1', d: '1(1)', gm: '7', sg: '2', pts: '4' },
+                    { flag: 'br.svg', v: '0', d: '3', gm: '2', sg: '-2', pts: '0' }
+                  ][i];
+
+                  return (
+                    <tr key={row.flag} className="text-white" style={{ backgroundColor: color }}>
+                      <td className="flex items-center justify-center py-3">
+                        <img src={`/${row.flag}`} alt={row.flag} className="h-6" />
+                      </td>
+                      <td className="py-3">{row.v}</td>
+                      <td className="py-3">{row.d}</td>
+                      <td className="py-3">{row.gm}</td>
+                      <td className="py-3">{row.sg}</td>
+                      <td className="py-3">{row.pts}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* GRUPO B */}
+          <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-white/90">
+            <div className="bg-newdark text-white font-bold py-3 text-lg">GRUPO B</div>
+
+            <table className="w-full text-base text-center font-semibold">
+              <thead className="bg-newdark text-white">
+                <tr>
+                  <th className="p-3"></th>
+                  <th className="p-3">V</th>
+                  <th className="p-3">D</th>
+                  <th className="p-3">GM</th>
+                  <th className="p-3">SG</th>
+                  <th className="p-3">Pontos</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {["#C89116", "#D6A43A", "#E3B95C", "#F0CA80"].map((color, i) => {
+                  const row = [
+                    { flag: 'fr.svg', v: '3', d: '0', gm: '8', sg: '6', pts: '9' },
+                    { flag: 'ger.svg', v: '2', d: '1', gm: '4', sg: '-1', pts: '6' },
+                    { flag: 'mx.svg', v: '1', d: '2', gm: '3', sg: '-1', pts: '3' },
+                    { flag: 'pt.svg', v: '0', d: '3', gm: '1', sg: '-4', pts: '0' }
+                  ][i];
+
+                  return (
+                    <tr key={row.flag} className="text-white" style={{ backgroundColor: color }}>
+                      <td className="flex items-center justify-center py-3">
+                        <img src={`/${row.flag}`} alt={row.flag} className="h-6" />
+                      </td>
+                      <td className="py-3">{row.v}</td>
+                      <td className="py-3">{row.d}</td>
+                      <td className="py-3">{row.gm}</td>
+                      <td className="py-3">{row.sg}</td>
+                      <td className="py-3">{row.pts}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ✅ Seção dos clubes */}
+      <section className="relative bg-black py-16 text-center overflow-hidden">
+
         <div className="relative z-10">
+
           <h2 className="text-newaccent text-2xl md:text-3xl font-extrabold mb-10 tracking-wide">
             CLUBES DESTA EDIÇÃO
           </h2>
- 
+
           <div className="flex flex-col items-center gap-6">
-            {/* Linha 1 */}
+
             <div className="flex justify-center gap-10 md:gap-16">
               {[
                 ["fluminense.svg", "FLUMINENSE"],
@@ -106,8 +194,7 @@ export const NewEdition = () => {
                 </div>
               ))}
             </div>
- 
-            {/* Linha 2 */}
+
             <div className="flex justify-center gap-10 md:gap-16">
               {[
                 ["flamengo.svg", "FLAMENGO"],
@@ -120,8 +207,7 @@ export const NewEdition = () => {
                 </div>
               ))}
             </div>
- 
-            {/* Linha 3 */}
+
             <div className="flex justify-center gap-10 md:gap-16">
               {[
                 ["atletico.svg", "ATLÉTICO MG"],
@@ -133,11 +219,10 @@ export const NewEdition = () => {
                 </div>
               ))}
             </div>
+
           </div>
         </div>
       </section>
     </div>
   );
 };
- 
- 

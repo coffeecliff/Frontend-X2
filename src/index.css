@@ -5,13 +5,23 @@
    Paleta de cores personalizada
    ============================== */
 @theme {
-  --color-dark: #0C4740;       /* Turqueza Escuro */
-  --color-medium: #006D61;     /* Turqueza Escuro mais claro */
-  --color-light: #02B765;      /* verde Vívido */
-  --color-accent: #7ED957;     /* Verde Folha */
-  --color-background: #FCFFFA; /* Verde claro para fundo */
-  --color-newaccent:#C89116; /*amarelo*/
-  --color-newdark:#000; /*preto*/
+  /*--color-dark: #0C4740;       /* Turqueza Escuro */
+  /*--color-medium: #006D61;     /* Turqueza Escuro mais claro */
+  /*--color-light: #02B765;      /* verde Vívido */
+  /*--color-accent: #7ED957;     /* Verde Folha */
+  /*--color-background: #FCFFFA; /* Verde claro para fundo */
+  /*--color-newaccent:#C89116; /*amarelo*/
+  /*--color-newdark:#000; /*preto*/
+  
+    --color-dark: #000000;       /* Preto puro */
+    --color-medium: #1A1A1A;     /* Preto suave */
+    --color-light: #F2C440;      /* Ouro claro */
+    --color-accent: #D9A019;     /* Ouro médio/dourado */
+    --color-background: #0D0D0D; /* Fundo preto suave */
+  
+    /* Caso queira manter as novas também: */
+    --color-newaccent: #C89116;   /* amarelo */
+    --color-newdark: #000000;     /* preto */
 }
 
 /* ==============================
