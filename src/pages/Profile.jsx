@@ -61,7 +61,7 @@ export const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] bg-green-0 text-accent p-6">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] bg-green-0 text-black p-6">
       <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-center mb-6">
           Meu Perfil
