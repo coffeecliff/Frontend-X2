@@ -86,7 +86,7 @@ export const Home = () => {
         <div className="relative flex flex-col justify-center gap-10 items-center z-10">
 
           {/* GRUPO A */}
-          <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-white/90">
+          <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-black border">
             <div className="bg-newdark text-white font-bold py-3 text-lg">GRUPO A</div>
 
             <table className="w-full text-base text-center font-semibold">
@@ -128,7 +128,7 @@ export const Home = () => {
           </div>
 
           {/* GRUPO B */}
-          <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-white/90">
+          <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-black border">
             <div className="bg-newdark text-white font-bold py-3 text-lg">GRUPO B</div>
 
             <table className="w-full text-base text-center font-semibold">
