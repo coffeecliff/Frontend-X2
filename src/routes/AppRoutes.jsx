@@ -43,29 +43,32 @@ import { Moments } from '../pages/Moments'
 /* ==============================
    Componente de rota protegida
    ============================== */
-const ProtectedRoute = ({ children }) => {
-  const { user, loading } = useAuth(); // Obtém usuário e estado de carregamento
-
-  if (loading) return <LoadingSpinner size="lg" />; // Mostra spinner enquanto carrega
-  if (!user) return <Navigate to="/login" replace />; // Redireciona não autenticados para login
-
-  return (
-    <>
-      <navbar>
-        <PrivateNavbar />
-      </navbar>
-
-
-      <div className="min-h-screen flex">
-
-        <Sidebar /> {/* Sidebar lateral sempre visível */}
-        <main className="flex-1 lg:ml-64 p-8">
-          {children} {/* Conteúdo da página protegida */}
-        </main>
-      </div>
-    </>
-  );
-};
+   const ProtectedRoute = ({ children, allowedRoles }) => {
+    const { user, loading } = useAuth();
+  
+    if (loading) return <LoadingSpinner size="lg" />;
+    if (!user) return <Navigate to="/login" replace />;
+  
+    // Se a rota exige tipo específico (ex: gerente)
+    if (allowedRoles && !allowedRoles.includes(user.type)) {
+      return <Navigate to="/" replace />; 
+    }
+  
+    return (
+      <>
+        <navbar>
+          <PrivateNavbar />
+        </navbar>
+  
+        <div className="min-h-screen flex">
+          <Sidebar />
+          <main className="flex-1 lg:ml-64 p-8">
+            {children}
+          </main>
+        </div>
+      </>
+    );
+  };  
 <Route
   path="/manager"
   element={
