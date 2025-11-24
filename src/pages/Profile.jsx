@@ -61,7 +61,7 @@ export const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] bg-green-50 text-green-900 p-6">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] bg-green-0 text-black p-6">
       <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-center mb-6">
           Meu Perfil
@@ -69,7 +69,7 @@ export const Profile = () => {
 
         {/* 🔹 Foto de perfil */}
         <div className="flex flex-col items-center mb-6">
-          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-green-500 shadow-md">
+          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-accent shadow-md">
             {profileImage ? (
               <img src={profileImage} alt="Foto de perfil" className="w-full h-full object-cover" />
             ) : (
