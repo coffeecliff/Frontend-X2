@@ -14,7 +14,7 @@ export const About = () => {
       <div className="max-w-3xl text-sm md:text-base text-justify space-y-6 text-white">
         
         <section>
-          <h2 className="font-bold text-white mb-2">
+          <h2 className="font-bold text-light mb-2">
             ▶ TORNEIO X2 FUTEBOL JUVENIL – REGULAMENTO (2010 A 2015)
           </h2>
           <p>
@@ -28,7 +28,7 @@ export const About = () => {
         </section>
 
         <section>
-          <h2 className="font-bold text-white mb-2">▶ SISTEMA DE DISPUTA</h2>
+          <h2 className="font-bold text-light mb-2">▶ SISTEMA DE DISPUTA</h2>
           <p>
             O campeonato terá dois grupos de 4 times. Os dois melhores de cada grupo avançam às semifinais.
           </p>
@@ -44,7 +44,7 @@ export const About = () => {
         </section>
 
         <section>
-          <h2 className="font-bold text-white mb-2">▶ REGRAS DE JOGO</h2>
+          <h2 className="font-bold text-light mb-2">▶ REGRAS DE JOGO</h2>
           <ul className="list-disc ml-6">
             <li>Jogos em campo society (Arena Faisqueira).</li>
             <li>Fase de grupos: 2 tempos de 7 min (intervalo de 2).</li>
@@ -55,7 +55,7 @@ export const About = () => {
         </section>
 
         <section>
-          <h2 className="font-bold text-white mb-2">▶ CONDUTA E PENALIDADES</h2>
+          <h2 className="font-bold text-light mb-2">▶ CONDUTA E PENALIDADES</h2>
           <ul className="list-disc ml-6">
             <li>Cartão amarelo: advertência.</li>
             <li>Cartão vermelho: 2 min fora ou até a equipe sofrer gol. (Dois vermelhos = 3 min).</li>
@@ -67,7 +67,7 @@ export const About = () => {
         </section>
 
         <section>
-          <h2 className="font-bold text-white mb-2">▶ PREMIAÇÃO</h2>
+          <h2 className="font-bold text-light mb-2">▶ PREMIAÇÃO</h2>
           <ul className="list-disc ml-6">
             <li>Troféu e medalhas para campeão e vice.</li>
             <li>Troféu para artilheiro e goleiro menos vazado.</li>

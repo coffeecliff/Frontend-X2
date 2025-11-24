@@ -43,7 +43,7 @@ export const PrivateNavbar = () => {
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
             <div className="flex items-center gap-2 font-bold text-xl">
-              <span className="text-emerald-400">X2</span>
+              <span className="text-light">X2</span>
               <span>SISTEMA ADM</span>
             </div>
           </div>

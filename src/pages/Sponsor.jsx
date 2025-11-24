@@ -14,7 +14,7 @@ export const Sponsor = () => {
       {/* Logo principal */}
       <div className="flex flex-col items-center">
         <img
-          img src="/X2logo.svg"
+          img src="/X2logoY.svg"
           alt="Logo"
           className="w-68 h-68 object-contain drop-shadow-xl"
         />

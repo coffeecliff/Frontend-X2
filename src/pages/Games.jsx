@@ -18,9 +18,9 @@ export const Games = () => {
   const CardJogo = ({ time1, placar1, placar2, time2, onClick }) => (
     <div
       onClick={onClick}
-      className="flex justify-between items-center bg-tablebackround rounded-xl shadow-md mb-2 p-3 cursor-pointer hover:bg-green-100 transition"
+      className="flex justify-between items-center bg-tablebackround rounded-xl shadow-md mb-2 p-3 cursor-pointer hover:bg-white transition"
     >
-      <span className="text-xs font-bold text-black bg-tableyellow px-2 py-1 rounded-md">
+      <span className="text-xs font-bold text-black bg-light px-2 py-1 rounded-md">
         ENCERRADO
       </span>
       <div className="flex-1 flex justify-center items-center text-gray-800 font-semibold">
