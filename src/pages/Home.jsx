@@ -53,7 +53,7 @@ export const Home = () => {
       </section>
 
       {/* Faixa de patrocinadores */}
-      <section className="overflow-hidden bg-black py-8 border-t border-newaccent relative z-20">
+      <section className="overflow-hidden bg-black py-8 border-t border-accent relative z-20">
         <div className="flex animate-slide space-x-16 w-max pause">
           {patrocinadores.concat(patrocinadores).map((logo, i) => (
             <img
@@ -70,7 +70,7 @@ export const Home = () => {
       <section className="py-16 text-center relative">
 
         {/* ✅ TÍTULO DO ÚLTIMO JOGO ✅ */}
-        <h2 className="text-newaccent text-2xl md:text-3xl font-extrabold mb-8 text-center tracking-wide">
+        <h2 className="text-accent text-2xl md:text-3xl font-extrabold mb-8 text-center tracking-wide">
           RESULTADO DO ÚLTIMO JOGO
         </h2>
 
@@ -87,10 +87,10 @@ export const Home = () => {
 
           {/* GRUPO A */}
           <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-black border">
-            <div className="bg-newdark text-white font-bold py-3 text-lg">GRUPO A</div>
+            <div className="bg-tablebg text-white font-bold py-3 text-lg">GRUPO A</div>
 
             <table className="w-full text-base text-center font-semibold">
-              <thead className="bg-newdark text-white">
+              <thead className="bg-tablebg text-white">
                 <tr>
                   <th className="p-3"></th>
                   <th className="p-3">V</th>
@@ -102,7 +102,7 @@ export const Home = () => {
               </thead>
 
               <tbody>
-                {["#C89116", "#D6A43A", "#E3B95C", "#F0CA80"].map((color, i) => {
+                {["bg-tableaccent", "bg-tablemedium", "bg-tableaccent", "bg-tablemedium"].map((bgClass, i) => {
                   const row = [
                     { flag: 'jp.svg', v: '2(1)', d: '0', gm: '4', sg: '2', pts: '8' },
                     { flag: 'ar.svg', v: '2', d: '1', gm: '6', sg: '1', pts: '6' },
@@ -111,7 +111,7 @@ export const Home = () => {
                   ][i];
 
                   return (
-                    <tr key={row.flag} className="text-white" style={{ backgroundColor: color }}>
+                    <tr key={row.flag} className={`text-white ${bgClass}`}>
                       <td className="flex items-center justify-center py-3">
                         <img src={`/${row.flag}`} alt={row.flag} className="h-6" />
                       </td>
@@ -129,10 +129,10 @@ export const Home = () => {
 
           {/* GRUPO B */}
           <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-black border">
-            <div className="bg-newdark text-white font-bold py-3 text-lg">GRUPO B</div>
+            <div className="bg-tablebg text-white font-bold py-3 text-lg">GRUPO B</div>
 
             <table className="w-full text-base text-center font-semibold">
-              <thead className="bg-newdark text-white">
+              <thead className="bg-tablebg text-white">
                 <tr>
                   <th className="p-3"></th>
                   <th className="p-3">V</th>
@@ -144,16 +144,16 @@ export const Home = () => {
               </thead>
 
               <tbody>
-                {["#C89116", "#D6A43A", "#E3B95C", "#F0CA80"].map((color, i) => {
+                {["bg-tableaccent", "bg-tablemedium", "bg-tableaccent", "bg-tablemedium"].map((bgClass, i) => {
                   const row = [
-                    { flag: 'fr.svg', v: '3', d: '0', gm: '8', sg: '6', pts: '9' },
-                    { flag: 'ger.svg', v: '2', d: '1', gm: '4', sg: '-1', pts: '6' },
-                    { flag: 'mx.svg', v: '1', d: '2', gm: '3', sg: '-1', pts: '3' },
-                    { flag: 'pt.svg', v: '0', d: '3', gm: '1', sg: '-4', pts: '0' }
+                    { flag: 'jp.svg', v: '2(1)', d: '0', gm: '4', sg: '2', pts: '8' },
+                    { flag: 'ar.svg', v: '2', d: '1', gm: '6', sg: '1', pts: '6' },
+                    { flag: 'ma.svg', v: '1', d: '1(1)', gm: '7', sg: '2', pts: '4' },
+                    { flag: 'br.svg', v: '0', d: '3', gm: '2', sg: '-2', pts: '0' }
                   ][i];
 
                   return (
-                    <tr key={row.flag} className="text-white" style={{ backgroundColor: color }}>
+                    <tr key={row.flag} className={`text-white ${bgClass}`}>
                       <td className="flex items-center justify-center py-3">
                         <img src={`/${row.flag}`} alt={row.flag} className="h-6" />
                       </td>
@@ -176,7 +176,7 @@ export const Home = () => {
 
         <div className="relative z-10">
 
-          <h2 className="text-newaccent text-2xl md:text-3xl font-extrabold mb-10 tracking-wide">
+          <h2 className="text-accent text-2xl md:text-3xl font-extrabold mb-10 tracking-wide">
             CLUBES DESTA EDIÇÃO
           </h2>
 
@@ -226,3 +226,4 @@ export const Home = () => {
     </div>
   );
 };
+
