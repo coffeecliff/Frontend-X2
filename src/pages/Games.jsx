@@ -18,9 +18,9 @@ export const Games = () => {
   const CardJogo = ({ time1, placar1, placar2, time2, onClick }) => (
     <div
       onClick={onClick}
-      className="flex justify-between items-center bg-tablebackround rounded-xl shadow-md mb-2 p-3 cursor-pointer hover:bg-white transition"
+      className="flex justify-between items-center bg-light rounded-xl shadow-md mb-2 p-3 cursor-pointer hover:bg-white transition"
     >
-      <span className="text-xs font-bold text-black bg-light px-2 py-1 rounded-md">
+      <span className="text-xs font-bold text-black bg-accent px-2 py-1 rounded-md">
         ENCERRADO
       </span>
       <div className="flex-1 flex justify-center items-center text-gray-800 font-semibold">
@@ -94,7 +94,7 @@ export const Games = () => {
       </h2>
 
       {/* Primeira tabela */}
-      <div className="relative z-10 w-full max-w-3xl bg-white/50 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
+      <div className="relative z-10 w-full max-w-3xl bg-white/85 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
         {jogos.map((jogo) => (
           <CardJogo
             key={jogo.id}
@@ -105,7 +105,7 @@ export const Games = () => {
       </div>
 
       {/* Segunda tabela */}
-      <div className="relative z-10 w-full max-w-3xl bg-white/50 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
+      <div className="relative z-10 w-full max-w-3xl bg-white/85 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
         {jogos.map((jogo) => (
           <CardJogo
             key={jogo.id + "-b"}
