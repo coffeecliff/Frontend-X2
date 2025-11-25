@@ -17,9 +17,9 @@ export const Footer = () => {
           {/* Idioma */}
           <div className="relative">
             <select className="bg-transparent border-none text-white/80 focus:outline-none cursor-pointer">
-              <option>Português</option>
-              <option>English</option>
-              <option>Español</option>
+              <option className="text-black/80">Português</option>
+              <option className="text-black/80">English</option>
+              <option className="text-black/80">Español</option>
             </select>
           </div>
         </div>

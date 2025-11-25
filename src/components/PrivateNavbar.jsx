@@ -13,7 +13,6 @@ export const PrivateNavbar = () => {
   // Links privados do sistema admin
   const navLink = [
     { to: "/admhomeedit", label: "Editar" },
-    { to: "/admusers", label: "Usuários ADM" },
     { to: "/admsettings", label: "Configurações" },
   ];
 
