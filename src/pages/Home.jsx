@@ -28,7 +28,7 @@ export const Home = () => {
             <li>• 8 CLUBES         </li>
           </ul>
 
-          <div className="mt-6"></div>
+          <div className="mt-"></div>
         </div>
 
         <div className="absolute right-0 top-0 h-full w-full md:w-1/2 overflow-hidden">

@@ -52,7 +52,7 @@ export const AdmSponsorEdit = () => {
         
         <div className="flex flex-col items-center">
           <img
-            src="/X2logo.svg"
+            src="/X2logoY.svg"
             alt="Logo"
             className="w-64 h-64 object-contain drop-shadow-xl"
           />
