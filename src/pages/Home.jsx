@@ -75,11 +75,7 @@ export const Home = () => {
           className="absolute left-0 top-0 h-full object-contain opacity-npointer-events-none"
         />
 
-        {/* Fundo direito */}
-        <img
-          src="bg"
-          className="absolute right-0 top-0 h-full object-contain opacity-20 pointer-events-none"
-        />
+        
 
         <div className="relative z-10">
           <h2 className="text-accent text-2xl md:text-3xl font-extrabold mb-8 tracking-wide">
