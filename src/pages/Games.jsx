@@ -82,7 +82,7 @@ export const Games = () => {
       <img
         src="/BolasYR.png"
         alt="Bola inferior direita"
-        className="absolute bottom-0 right-0 w-1/4 md:w-1/6 opacity-30"
+        className="absolute bottom-0 right-0 w-1/4 md:w-1/6"
       />
 
       {/* Título */}
