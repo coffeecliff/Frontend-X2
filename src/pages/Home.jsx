@@ -28,9 +28,7 @@ export const Home = () => {
             <li>• 8 CLUBES         </li>
           </ul>
 
-          <div className="mt-6">
-
-          </div>
+          <div className="mt-6"></div>
         </div>
 
         <div className="absolute right-0 top-0 h-full w-full md:w-1/2 overflow-hidden">
@@ -52,9 +50,9 @@ export const Home = () => {
         ></div>
       </section>
 
-      {/* Faixa de patrocinadores */}
+      {/* PATROCINADORES */}
       <section className="overflow-hidden bg-black py-8 border-t border-accent relative z-20">
-        <div className="flex animate-slide space-x-16 w-max pause">
+        <div className="flex animate-slide space-x-16 w-max">
           {patrocinadores.concat(patrocinadores).map((logo, i) => (
             <img
               key={i}
@@ -66,113 +64,130 @@ export const Home = () => {
         </div>
       </section>
 
-      {/** ✅✅✅  TABELAS INSERIDAS AQUI ✅✅✅ */}
-      <section className="py-16 text-center relative">
+      {/* ====================== */}
+      {/*     TABELAS + FUNDO    */}
+      {/* ====================== */}
+      <section className="py-16 text-center relative overflow-hidden bg-black">
 
-        {/* ✅ TÍTULO DO ÚLTIMO JOGO ✅ */}
-        <h2 className="text-accent text-2xl md:text-3xl font-extrabold mb-8 text-center tracking-wide">
-          RESULTADO DO ÚLTIMO JOGO
-        </h2>
+        {/* Fundo esquerdo */}
+        <img
+          src="/fundohomeL.svg"
+          className="absolute left-0 top-0 h-full object-contain opacity-npointer-events-none"
+        />
 
-        {/* Fundo da tabela */}
-        <div
-          className="absolute inset-0 w-full h-full bg-center bg-cover object-cover z-0"
-          style={{ backgroundImage: "url('/fundonewedition.svg')" }}
-        >
-          <div className="absolute inset-0 bg-black/60"></div>
-        </div>
+        {/* Fundo direito */}
+        <img
+          src="bg"
+          className="absolute right-0 top-0 h-full object-contain opacity-20 pointer-events-none"
+        />
 
-        {/* Tabelas */}
-        <div className="relative flex flex-col justify-center gap-10 items-center z-10">
+        <div className="relative z-10">
+          <h2 className="text-accent text-2xl md:text-3xl font-extrabold mb-8 tracking-wide">
+            RESULTADO DO ÚLTIMO JOGO
+          </h2>
 
-          {/* GRUPO A */}
-          <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-black border">
-            <div className="bg-tablebg text-white font-bold py-3 text-lg">GRUPO A</div>
+          <div className="flex flex-col justify-center gap-10 items-center z-10">
 
-            <table className="w-full text-base text-center font-semibold">
-              <thead className="bg-tablebg text-white">
-                <tr>
-                  <th className="p-3"></th>
-                  <th className="p-3">V</th>
-                  <th className="p-3">D</th>
-                  <th className="p-3">GM</th>
-                  <th className="p-3">SG</th>
-                  <th className="p-3">Pontos</th>
-                </tr>
-              </thead>
+            {/* GRUPO A */}
+            <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-black border">
+              <div className="bg-tablebg text-white font-bold py-3 text-lg">GRUPO A</div>
 
-              <tbody>
-                {["bg-tableaccent", "bg-tablemedium", "bg-tableaccent", "bg-tablemedium"].map((bgClass, i) => {
-                  const row = [
-                    { flag: 'jp.svg', v: '2(1)', d: '0', gm: '4', sg: '2', pts: '8' },
-                    { flag: 'ar.svg', v: '2', d: '1', gm: '6', sg: '1', pts: '6' },
-                    { flag: 'ma.svg', v: '1', d: '1(1)', gm: '7', sg: '2', pts: '4' },
-                    { flag: 'br.svg', v: '0', d: '3', gm: '2', sg: '-2', pts: '0' }
-                  ][i];
+              <table className="w-full text-base text-center font-semibold">
+                <thead className="bg-tablebg text-white">
+                  <tr>
+                    <th className="p-3"></th>
+                    <th className="p-3">V</th>
+                    <th className="p-3">D</th>
+                    <th className="p-3">GM</th>
+                    <th className="p-3">SG</th>
+                    <th className="p-3">Pontos</th>
+                  </tr>
+                </thead>
 
-                  return (
-                    <tr key={row.flag} className={`text-white ${bgClass}`}>
-                      <td className="flex items-center justify-center py-3">
-                        <img src={`/${row.flag}`} alt={row.flag} className="h-6" />
-                      </td>
-                      <td className="py-3">{row.v}</td>
-                      <td className="py-3">{row.d}</td>
-                      <td className="py-3">{row.gm}</td>
-                      <td className="py-3">{row.sg}</td>
-                      <td className="py-3">{row.pts}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                <tbody>
+                  {["bg-tableaccent", "bg-tablemedium", "bg-tableaccent", "bg-tablemedium"].map((bgClass, i) => {
+                    const row = [
+                      { flag: 'jp.svg', v: '2(1)', d: '0', gm: '4', sg: '2', pts: '8' },
+                      { flag: 'ar.svg', v: '2', d: '1', gm: '6', sg: '1', pts: '6' },
+                      { flag: 'ma.svg', v: '1', d: '1(1)', gm: '7', sg: '2', pts: '4' },
+                      { flag: 'br.svg', v: '0', d: '3', gm: '2', sg: '-2', pts: '0' }
+                    ][i];
 
-          {/* GRUPO B */}
-          <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-black border">
-            <div className="bg-tablebg text-white font-bold py-3 text-lg">GRUPO B</div>
+                    return (
+                      <tr key={row.flag} className={`text-white ${bgClass}`}>
+                        <td className="flex items-center justify-center py-3">
+                          <img src={`/${row.flag}`} className="h-6" />
+                        </td>
+                        <td className="py-3">{row.v}</td>
+                        <td className="py-3">{row.d}</td>
+                        <td className="py-3">{row.gm}</td>
+                        <td className="py-3">{row.sg}</td>
+                        <td className="py-3">{row.pts}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
 
-            <table className="w-full text-base text-center font-semibold">
-              <thead className="bg-tablebg text-white">
-                <tr>
-                  <th className="p-3"></th>
-                  <th className="p-3">V</th>
-                  <th className="p-3">D</th>
-                  <th className="p-3">GM</th>
-                  <th className="p-3">SG</th>
-                  <th className="p-3">Pontos</th>
-                </tr>
-              </thead>
+            {/* GRUPO B */}
+            <div className="rounded-lg shadow-lg overflow-hidden w-[500px] mx-auto bg-black border">
+              <div className="bg-tablebg text-white font-bold py-3 text-lg">GRUPO B</div>
 
-              <tbody>
-                {["bg-tableaccent", "bg-tablemedium", "bg-tableaccent", "bg-tablemedium"].map((bgClass, i) => {
-                  const row = [
-                    { flag: 'jp.svg', v: '2(1)', d: '0', gm: '4', sg: '2', pts: '8' },
-                    { flag: 'ar.svg', v: '2', d: '1', gm: '6', sg: '1', pts: '6' },
-                    { flag: 'ma.svg', v: '1', d: '1(1)', gm: '7', sg: '2', pts: '4' },
-                    { flag: 'br.svg', v: '0', d: '3', gm: '2', sg: '-2', pts: '0' }
-                  ][i];
+              <table className="w-full text-base text-center font-semibold">
+                <thead className="bg-tablebg text-white">
+                  <tr>
+                    <th className="p-3"></th>
+                    <th className="p-3">V</th>
+                    <th className="p-3">D</th>
+                    <th className="p-3">GM</th>
+                    <th className="p-3">SG</th>
+                    <th className="p-3">Pontos</th>
+                  </tr>
+                </thead>
 
-                  return (
-                    <tr key={row.flag} className={`text-white ${bgClass}`}>
-                      <td className="flex items-center justify-center py-3">
-                        <img src={`/${row.flag}`} alt={row.flag} className="h-6" />
-                      </td>
-                      <td className="py-3">{row.v}</td>
-                      <td className="py-3">{row.d}</td>
-                      <td className="py-3">{row.gm}</td>
-                      <td className="py-3">{row.sg}</td>
-                      <td className="py-3">{row.pts}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                <tbody>
+                  {["bg-tableaccent", "bg-tablemedium", "bg-tableaccent", "bg-tablemedium"].map((bgClass, i) => {
+                    const row = [
+                      { flag: 'jp.svg', v: '2(1)', d: '0', gm: '4', sg: '2', pts: '8' },
+                      { flag: 'ar.svg', v: '2', d: '1', gm: '6', sg: '1', pts: '6' },
+                      { flag: 'ma.svg', v: '1', d: '1(1)', gm: '7', sg: '2', pts: '4' },
+                      { flag: 'br.svg', v: '0', d: '3', gm: '2', sg: '-2', pts: '0' }
+                    ][i];
+
+                    return (
+                      <tr key={row.flag} className={`text-white ${bgClass}`}>
+                        <td className="flex items-center justify-center py-3">
+                          <img src={`/${row.flag}`} className="h-6" />
+                        </td>
+                        <td className="py-3">{row.v}</td>
+                        <td className="py-3">{row.d}</td>
+                        <td className="py-3">{row.gm}</td>
+                        <td className="py-3">{row.sg}</td>
+                        <td className="py-3">{row.pts}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* ✅ Seção dos clubes */}
+      {/* ====================== */}
+      {/*     CLUBES + FUNDO     */}
+      {/* ====================== */}
       <section className="relative bg-black py-16 text-center overflow-hidden">
+
+    
+
+        {/* Fundo direito */}
+        <img
+          src="/fundohomeR.svg"
+          className="absolute right-0 top-0 h-full object-contain opacity pointer-events-none"
+        />
 
         <div className="relative z-10">
 
@@ -189,7 +204,7 @@ export const Home = () => {
                 ["internacional.svg", "INTERNACIONAL"],
               ].map(([src, nome]) => (
                 <div key={nome} className="flex flex-col items-center">
-                  <img src={`/${src}`} alt={nome} className="h-20 md:h-24 mb-2" />
+                  <img src={`/${src}`} className="h-20 md:h-24 mb-2" />
                   <span className="text-white font-semibold">{nome}</span>
                 </div>
               ))}
@@ -202,7 +217,7 @@ export const Home = () => {
                 ["corinthians.svg", "CORINTHIANS"],
               ].map(([src, nome]) => (
                 <div key={nome} className="flex flex-col items-center">
-                  <img src={`/${src}`} alt={nome} className="h-20 md:h-24 mb-2" />
+                  <img src={`/${src}`} className="h-20 md:h-24 mb-2" />
                   <span className="text-white font-semibold">{nome}</span>
                 </div>
               ))}
@@ -214,7 +229,7 @@ export const Home = () => {
                 ["cruzeiro.svg", "CRUZEIRO"],
               ].map(([src, nome]) => (
                 <div key={nome} className="flex flex-col items-center">
-                  <img src={`/${src}`} alt={nome} className="h-20 md:h-24 mb-2" />
+                  <img src={`/${src}`} className="h-20 md:h-24 mb-2" />
                   <span className="text-white font-semibold">{nome}</span>
                 </div>
               ))}
@@ -226,4 +241,3 @@ export const Home = () => {
     </div>
   );
 };
-
