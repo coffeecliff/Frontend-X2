@@ -73,7 +73,7 @@ export const Profile = () => {
             {profileImage ? (
               <img src={profileImage} alt="Foto de perfil" className="w-full h-full object-cover" />
             ) : (
-              <img src="/Loginicon.svg" alt="Usuário padrão" className="w-full h-full object-cover opacity-80" />
+              <img src="/LoginYicon.png" alt="Usuário padrão" className="w-full h-full object-cover opacity-80" />
             )}
           </div>
 
@@ -155,7 +155,7 @@ export const Profile = () => {
                     type: user?.type || "",
                   });
                 }}
-                className="w-full"
+                className="w-full cursor-pointer"
               >
                 Cancelar
               </Button>
