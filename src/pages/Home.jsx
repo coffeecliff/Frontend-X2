@@ -17,19 +17,23 @@ export const Home = () => {
             className="w-72 md:w-96 h-auto mb-4"
           />
 
-          <ul className="text-white text-lg font-bold leading-relaxed space-y-1">
-            <li>• PRÊMIOS MELHORES </li>
-            <li>• TIMES BRASILEIROS</li>
-            <li>• MELHORES JOGOS   </li>
-            <li>• MAIS ATRAÇÕES    </li>
-            <li>• MAIS DESAFIOS    </li>
-            <li>• MAIOR EDIÇÃO     </li>
-            <li>• 24 ATLETAS       </li>
-            <li>• 8 CLUBES         </li>
-          </ul>
+          <div className="flex gap-20 text-white text-[22px] font-bold leading-relaxed mt-6">
+            <ul className="space-y-3">
+              <li>• PRÊMIOS MELHORES</li>
+              <li>• TIMES BRASILEIROS</li>
+              <li>• MELHORES JOGOS</li>
+              <li>• MAIS ATRAÇÕES</li>
+            </ul>
 
-          <div className="mt-"></div>
+            <ul className="space-y-3">
+              <li>• MAIS DESAFIOS</li>
+              <li>• MAIOR EDIÇÃO</li>
+              <li>• 24 ATLETAS</li>
+              <li>• 8 CLUBES</li>
+            </ul>
+          </div>
         </div>
+
 
         <div className="absolute right-0 top-0 h-full w-full md:w-1/2 overflow-hidden">
           <img
@@ -75,7 +79,7 @@ export const Home = () => {
           className="absolute left-0 top-0 h-full object-contain opacity-npointer-events-none"
         />
 
-        
+
 
         <div className="relative z-10">
           <h2 className="text-accent text-2xl md:text-3xl font-extrabold mb-8 tracking-wide">
@@ -177,7 +181,7 @@ export const Home = () => {
       {/* ====================== */}
       <section className="relative bg-black py-16 text-center overflow-hidden">
 
-    
+
 
         {/* Fundo direito */}
         <img
