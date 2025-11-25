@@ -27,8 +27,8 @@ export const AdmGamesEdit = () => {
   const handleCancel = () => window.location.reload();
 
   const CardJogo = ({ jogo }) => (
-    <div className="flex justify-between items-center bg-[#FFF8E1] rounded-xl shadow-md mb-2 p-3 border border-black/20">
-      <span className="text-xs font-bold text-black bg-[#F2C230] px-2 py-1 rounded-md shadow">
+    <div className="flex justify-between items-center bg-white rounded-xl shadow-md mb-2 p-3 border border-black/20">
+      <span className="text-xs font-bold text-black bg-light px-2 py-1 rounded-md shadow">
         ENCERRADO
       </span>
 
@@ -91,13 +91,13 @@ export const AdmGamesEdit = () => {
           DOS JOGOS
         </h2>
 
-        <div className="relative z-10 w-full max-w-3xl bg-white/40 border border-black/20 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
+        <div className="relative z-10 w-full max-w-3xl bg-white/75 border border-black/20 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
           {jogos.map((jogo) => (
             <CardJogo key={jogo.id} jogo={jogo} />
           ))}
         </div>
 
-        <div className="relative z-10 w-full max-w-3xl bg-white/40 border border-black/20 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
+        <div className="relative z-10 w-full max-w-3xl bg-white/75 border border-black/20 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
           {jogos.map((jogo) => (
             <CardJogo key={jogo.id + "-b"} jogo={jogo} />
           ))}
@@ -107,7 +107,7 @@ export const AdmGamesEdit = () => {
           {!editing ? (
             <button
               onClick={() => setEditing(true)}
-              className="flex items-center gap-2 bg-[#F2C230] hover:bg-[#E5B21D] text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
+              className="flex items-center gap-2 bg-light hover:bg-light/80 text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
             >
               <Edit3 size={18} />
               EDITAR
@@ -116,7 +116,7 @@ export const AdmGamesEdit = () => {
             <div className="flex gap-4">
               <button
                 onClick={handleSave}
-                className="flex items-center gap-2 bg-[#FFDA59] hover:bg-[#FFCA28] text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
+                className="flex items-center gap-2 bg-light hover:bg-light/80 text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
               >
                 <Save size={18} />
                 SALVAR
