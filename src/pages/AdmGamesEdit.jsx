@@ -107,7 +107,7 @@ export const AdmGamesEdit = () => {
           {!editing ? (
             <button
               onClick={() => setEditing(true)}
-              className="flex items-center gap-2 bg-light hover:bg-light/80 text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
+              className="flex items-center gap-2 bg-light hover:bg-light/80 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
             >
               <Edit3 size={18} />
               EDITAR
@@ -116,7 +116,7 @@ export const AdmGamesEdit = () => {
             <div className="flex gap-4">
               <button
                 onClick={handleSave}
-                className="flex items-center gap-2 bg-light hover:bg-light/80 text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
+                className="flex items-center gap-2 bg-light hover:bg-light/80 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
               >
                 <Save size={18} />
                 SALVAR
@@ -124,7 +124,7 @@ export const AdmGamesEdit = () => {
 
               <button
                 onClick={handleCancel}
-                className="flex items-center gap-2 bg-black/70 hover:bg-black text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
+                className="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
               >
                 <X size={18} />
                 CANCELAR

@@ -14,8 +14,7 @@ import {
   LogOut,
   Calendar,
   UserRound,
-  MessageCircle,
-  Bell
+  User
 } from 'lucide-react';
 import { FaHome, FaInfoCircle } from "react-icons/fa"; 
 import { RiFootballFill } from "react-icons/ri";
@@ -45,6 +44,7 @@ export const Sidebar = () => {
       ? [
           { to: '/admhomeedit', label: 'Home', icon: FaHome },
           { to: '/admgamesedit', label: 'Jogos', icon: RiFootballFill },
+          { to: '/admplayersedit', label: 'Jogadores', icon: User },
           { to: '/admsponsoredit', label: 'Patrocinadores', icon: FaRegHandshake },
           { to: '/admaboutedit', label: 'Sobre', icon: FaInfoCircle }
         ]
