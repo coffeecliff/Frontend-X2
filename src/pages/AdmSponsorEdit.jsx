@@ -82,7 +82,7 @@ export const AdmSponsorEdit = () => {
                   <div className="bg-accent rounded-2xl">
                     <label
                       htmlFor={`file-input-${index}`}
-                      className="cursor-pointer flex text-md text-white py-2 px-3 text-center hover:bg-yellow-600 rounded-2xl transition-colors"
+                      className="flex cursor-pointer items-center gap-2 bg-light hover:bg-light/80 text-white font-bold px-5 py-2 rounded-lg shadow-md"
                     >
                       Escolher arquivo
                       <div className="pl-2"><ImagePlus /></div>
@@ -105,7 +105,7 @@ export const AdmSponsorEdit = () => {
                       setPatrocinadores(newPatr);
                     }}
                     placeholder="Descrição da imagem"
-                    className="border border-accent rounded-md p-1 text-sm w-32"
+                    className="border bg-white border-accent rounded-md p-1 text-sm w-32"
                   />
 
                   <button
@@ -131,21 +131,21 @@ export const AdmSponsorEdit = () => {
             <>
               <button
                 onClick={handleAdd}
-                className="flex cursor-pointer items-center gap-2 bg-accent hover:bg-yellow-600 text-white font-bold px-5 py-2 rounded-lg shadow-md"
+                className="flex items-center gap-2 bg-light hover:bg-light/80 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
               >
                 <Plus size={18} /> ADICIONAR
               </button>
 
               <button
                 onClick={handleSave}
-                className="flex cursor-pointer items-center gap-2 bg-dark hover:bg-black text-white font-bold px-5 py-2 rounded-lg shadow-md"
+                className="flex items-center gap-2 bg-light hover:bg-light/80 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
               >
                 <Save size={18} /> SALVAR
               </button>
 
               <button
                 onClick={() => setEditing(false)}
-                className="flex cursor-pointer items-center gap-2 bg-gray-400 hover:bg-gray-500 text-white font-bold px-5 py-2 rounded-lg shadow-md"
+                className="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
               >
                 <X size={18} /> CANCELAR
               </button>
@@ -153,7 +153,7 @@ export const AdmSponsorEdit = () => {
           ) : (
             <button
               onClick={() => setEditing(true)}
-              className="flex cursor-pointer items-center gap-2 bg-accent hover:bg-yellow-600 text-white font-bold px-5 py-2 rounded-lg shadow-md"
+              className="flex items-center gap-2 bg-light hover:bg-light/80 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
             >
               <Edit3 size={18} /> EDITAR
             </button>

@@ -63,7 +63,7 @@ export const AdmAboutEdit = () => {
           </div>
 
           {editing && (
-            <label className="mt-4 cursor-pointer bg-accent hover:bg-light text-black font-bold px-4 py-2 rounded-lg shadow-md transition">
+            <label className="flex items-center gap-2 bg-light hover:bg-light/80 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition mt-4">
               <input
                 type="file"
                 accept="image/*"
@@ -130,7 +130,7 @@ export const AdmAboutEdit = () => {
             <>
               <button
                 onClick={handleSave}
-                className="flex cursor-pointer items-center gap-2 bg-accent hover:bg-light text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
+                className="flex items-center gap-2 bg-light hover:bg-light/80 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
               >
                 <Save size={18} />
                 SALVAR
@@ -138,7 +138,7 @@ export const AdmAboutEdit = () => {
 
               <button
                 onClick={() => setEditing(false)}
-                className="flex cursor-pointer items-center gap-2 bg-gray-500 hover:bg-gray-600 text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
+                className="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
               >
                 <X size={18} />
                 CANCELAR
@@ -147,7 +147,7 @@ export const AdmAboutEdit = () => {
           ) : (
             <button
               onClick={() => setEditing(true)}
-              className="flex cursor-pointer items-center gap-2 bg-accent hover:bg-light text-black font-bold px-6 py-2 rounded-lg shadow-md transition"
+              className="flex items-center gap-2 bg-light hover:bg-light/80 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
             >
               <Edit3 size={18} />
               EDITAR
@@ -169,7 +169,7 @@ export const AdmAboutEdit = () => {
               />
               <button
                 onClick={() => setShowImageModal(false)}
-                className="absolute top-2 right-2 bg-light hover:bg-accent text-black font-bold rounded-full w-8 h-8 flex items-center justify-center shadow-md"
+                className="cursor-pointer absolute top-2 right-2 bg-light hover:bg-accent text-black font-bold rounded-full w-8 h-8 flex items-center justify-center shadow-md"
               >
                 ×
               </button>
