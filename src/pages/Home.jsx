@@ -7,7 +7,7 @@ export const Home = () => {
 
   return (
     <div className="w-full min-h-screen bg-black font-sans text-white relative overflow-hidden">
-
+  
       {/* Seção principal */}
       <section className="relative flex flex-col md:flex-row items-center justify-between px-8 md:px-20 py-12">
         <div className="relative z-20 max-w-lg flex flex-col items-start text-left space-y-3">
@@ -16,7 +16,7 @@ export const Home = () => {
             alt="3ª Edição - 18 de Novembro"
             className="w-72 md:w-96 h-auto mb-4"
           />
-
+  
           <div className="flex gap-20 text-white text-[22px] font-bold leading-relaxed mt-6">
             <ul className="space-y-3">
               <li>• PRÊMIOS MELHORES</li>
@@ -24,7 +24,7 @@ export const Home = () => {
               <li>• MELHORES JOGOS</li>
               <li>• MAIS ATRAÇÕES</li>
             </ul>
-
+  
             <ul className="space-y-3">
               <li>• MAIS DESAFIOS</li>
               <li>• MAIOR EDIÇÃO</li>
@@ -33,19 +33,23 @@ export const Home = () => {
             </ul>
           </div>
         </div>
-
-
-        <div className="absolute right-0 top-0 h-full w-full md:w-1/2 overflow-hidden">
+  
+        {/* 🔵 FUNDO DO ESTÁDIO COM LARGURA EDITÁVEL */}
+        <div
+          className="absolute right-0 top-0 h-full overflow-hidden pointer-events-none"
+          style={{ width: "60%" }} // ⬅️ ALTERE AQUÍ A PORCENTAGEM QUE VOCÊ QUISER
+        >
           <img
             src="/estadio.svg"
             alt="Estádio iluminado"
             className="h-full w-full object-cover brightness-90"
             style={{
-              clipPath: "polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%)",
+              clipPath: "polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)", // mantém seu corte original
             }}
           />
         </div>
-
+  
+        {/* 🔵 TRIÂNGULO PRETO EM CIMA (mantido como no seu código) */}
         <div
           className="absolute left-0 top-0 h-full w-full md:w-1/2 bg-black z-10"
           style={{
@@ -53,7 +57,7 @@ export const Home = () => {
           }}
         ></div>
       </section>
-
+    
       {/* PATROCINADORES */}
       <section className="overflow-hidden bg-black py-8 border-t border-accent relative z-20">
         <div className="flex animate-slide space-x-16 w-max">
