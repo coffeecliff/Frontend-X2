@@ -10,41 +10,31 @@ export const Games = () => {
     { id: 5, time1: "Time", placar1: 1, placar2: 0, time2: "Time" },
     { id: 6, time1: "Time", placar1: 1, placar2: 0, time2: "Time" },
   ];
-
-  const Box = () => (
-    <div className="w-28 h-6 border border-gray-400 rounded" />
-  );
-  
-  const Confronto = () => (
-    <div className="flex flex-col space-y-2">
-      <Box />
-      <Box />
-    </div>
-  );
   
   const TorneioBracket = () => {
     return (
-      <div className="w-full flex justify-center overflow-x-auto mt-10 mb-10">
-        <div className="grid grid-cols-4 gap-x-10">
+      <div className="w-full flex justify-center overflow-x-auto mt-10 mb-30 space-x-4">
+        <div className="grid grid-cols-1  ">
   
           {/* ==== COLUNA 1 ==== */}
           <div className="flex flex-col justify-between h-full space-y-10">
             {[1,2,3,4].map((num) => (
-              <div key={num} className="flex items-center space-x-2">
+              <div key={num} className="flex items-center space-x-1">
                 <span className="text-white text-xl font-bold w-6">{num}</span>
-                <div className="w-32 h-6 bg-white rounded-md shadow" />
-                <div className="w-6 h-1 bg-white" />
-                <div className="w-32 h-6 bg-white rounded-md shadow" />
+                <div className="w-45 h-10  bg-white rounded-md shadow" />
+                <div className="w-5 h-1 bg-white" />
+                <div className="w-45 h-10 bg-white rounded-md shadow" />
               </div>
             ))}
           </div>
-  
+          </div>
+          <div className="grid grid-cols-3 gap-x-5">
           {/* ==== COLUNA 2 ==== */}
           <div className="flex flex-col justify-evenly">
             {[1,2,3,4].map((i) => (
               <div key={i} className="flex items-center">
                 <div className="w-6 h-1 bg-white" />
-                <div className="w-32 h-6 bg-white rounded-md shadow ml-2" />
+                <div className="w-45 h-10 bg-white rounded-md shadow ml-2" />
               </div>
             ))}
           </div>
@@ -54,7 +44,7 @@ export const Games = () => {
             {[1,2].map((i) => (
               <div key={i} className="flex items-center">
                 <div className="w-6 h-1 bg-white" />
-                <div className="w-32 h-6 bg-white rounded-md shadow ml-2" />
+                <div className="w-45 h-10 bg-white rounded-md shadow ml-2" />
               </div>
             ))}
           </div>
@@ -63,11 +53,12 @@ export const Games = () => {
           <div className="flex flex-col justify-center">
             <div className="flex items-center">
               <div className="w-6 h-1 bg-white" />
-              <div className="w-32 h-6 bg-white rounded-md shadow ml-2" />
+              <div className="w-45 h-10 bg-white rounded-md shadow ml-2" />
+            </div>
             </div>
           </div>
   
-        </div>
+        
       </div>
     );
   };
@@ -148,14 +139,22 @@ export const Games = () => {
 
       {/* Título */}
       <h1 className="text-2xl font-extrabold text-white text-center">
+        CHAVEAMENTO
+      </h1>
+      <h2 className="text-lg font-bold text-white mb-8 text-center">
+        DO TORNEIO
+      </h2>
+
+      {/* Tabela estilo torneio */}
+      <TorneioBracket />
+
+      {/* Título */}
+      <h1 className="text-2xl font-extrabold text-white text-center">
         TABELA
       </h1>
       <h2 className="text-lg font-bold text-white mb-8 text-center">
         DOS JOGOS
       </h2>
-
-      {/* Tabela estilo torneio */}
-      <TorneioBracket />
 
       {/* Primeira tabela */}
       <div className="relative z-10 w-full max-w-3xl bg-white/75 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
