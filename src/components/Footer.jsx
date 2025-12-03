@@ -1,4 +1,5 @@
 import React from "react";
+import {Instagram} from 'lucide-react'
 
 export const Footer = () => {
     return (
@@ -12,6 +13,8 @@ export const Footer = () => {
             <a href="#" className="hover:underline">Diretrizes da Comunidade</a>
             <a href="#" className="hover:underline">Política dos Cookies</a>
             <a href="#" className="hover:underline">Enviar feedback</a>
+            <a href="https://www.instagram.com/x2.jogosjuvenis?igsh=Z29wbHhzbnl3anpn"><Instagram  className="size-5"/></a>
+            
           </div>
   
           {/* Idioma */}

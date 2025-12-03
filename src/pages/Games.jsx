@@ -11,40 +11,64 @@ export const Games = () => {
     { id: 6, time1: "Time", placar1: 1, placar2: 0, time2: "Time" },
   ];
   
-  const TorneioBracket = () => {
+  const TorneioBracket = ({ dados }) => {
+
+    // EXEMPLO: caso ainda não tenha o GET, colocamos textos placeholder
+    // Quando fizer o GET, basta passar "dados" como props com os nomes reais
+    const col1 = dados?.col1 || ["Time A", "Time B", "Time C", "Time D", "Time E", "Time F", "Time G", "Time H"];
+    const col2 = dados?.col2 || ["Vencedor 1", "Vencedor 2", "Vencedor 3", "Vencedor 4"];
+    const col3 = dados?.col3 || ["Semi 1", "Semi 2"];
+    const col4 = dados?.col4 || ["Finalista"];
+  
     return (
       <div className="w-full flex justify-center overflow-x-auto mt-10 mb-30 space-x-4">
-        <div className="grid grid-cols-1  ">
-  
+        <div className="grid grid-cols-1">
+          
           {/* ==== COLUNA 1 ==== */}
           <div className="flex flex-col justify-between h-full space-y-10">
-            {[1,2,3,4].map((num) => (
+            {[1,2,3,4].map((num, idx) => (
               <div key={num} className="flex items-center space-x-1">
                 <span className="text-white text-xl font-bold w-6">{num}</span>
-                <div className="w-45 h-10  bg-white rounded-md shadow" />
+  
+                {/* Box esquerda */}
+                <div className="w-45 h-10 bg-white rounded-md shadow flex items-center px-2 text-black text-sm">
+                  {col1[idx] || ""}
+                </div>
+  
                 <div className="w-5 h-1 bg-white" />
-                <div className="w-45 h-10 bg-white rounded-md shadow" />
+  
+                {/* Box direita */}
+                <div className="w-45 h-10 bg-white rounded-md shadow flex items-center px-2 text-black text-sm">
+                  {col1[idx + 4] || "—"}
+                </div>
               </div>
             ))}
           </div>
-          </div>
-          <div className="grid grid-cols-3 gap-x-5">
+        </div>
+  
+        {/* Colunas 2, 3, 4 */}
+        <div className="grid grid-cols-3 gap-x-5">
+  
           {/* ==== COLUNA 2 ==== */}
           <div className="flex flex-col justify-evenly">
-            {[1,2,3,4].map((i) => (
+            {[0,1,2,3].map((i) => (
               <div key={i} className="flex items-center">
                 <div className="w-6 h-1 bg-white" />
-                <div className="w-45 h-10 bg-white rounded-md shadow ml-2" />
+                <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm">
+                  {col2[i] || ""}
+                </div>
               </div>
             ))}
           </div>
   
           {/* ==== COLUNA 3 (SEMIFINAL) ==== */}
           <div className="flex flex-col justify-evenly">
-            {[1,2].map((i) => (
+            {[0,1].map((i) => (
               <div key={i} className="flex items-center">
                 <div className="w-6 h-1 bg-white" />
-                <div className="w-45 h-10 bg-white rounded-md shadow ml-2" />
+                <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm">
+                  {col3[i] || ""}
+                </div>
               </div>
             ))}
           </div>
@@ -53,15 +77,17 @@ export const Games = () => {
           <div className="flex flex-col justify-center">
             <div className="flex items-center">
               <div className="w-6 h-1 bg-white" />
-              <div className="w-45 h-10 bg-white rounded-md shadow ml-2" />
-            </div>
+              <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm">
+                {col4[0] || ""}
+              </div>
             </div>
           </div>
   
-        
+        </div>
       </div>
     );
   };
+  
 
   // Estado do jogo selecionado
   const [jogoSelecionado, setJogoSelecionado] = useState(null);

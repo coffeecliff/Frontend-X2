@@ -14,7 +14,9 @@ import {
   LogOut,
   Calendar,
   UserRound,
-  User
+  User,
+  Users,
+  Contact
 } from 'lucide-react';
 import { FaHome, FaInfoCircle } from "react-icons/fa"; 
 import { RiFootballFill } from "react-icons/ri";
@@ -45,12 +47,12 @@ export const Sidebar = () => {
           { to: '/admhomeedit', label: 'Home', icon: FaHome },
           { to: '/admgamesedit', label: 'Jogos', icon: RiFootballFill },
           { to: '/admplayersedit', label: 'Jogadores', icon: User },
+          { to: '/admteamsedit', label: 'Times', icon: Users },
           { to: '/admsponsoredit', label: 'Patrocinadores', icon: FaRegHandshake },
           { to: '/admaboutedit', label: 'Sobre', icon: FaInfoCircle }
         ]
       : [
-          { to: '/admhomeedit', label: 'Dashboard', icon: FaHome },
-          { to: '/agendamento', label: 'Solicitar Sessão', icon: Calendar }
+
         ];
  
   // 📌 Função para verificar se o link é o atual

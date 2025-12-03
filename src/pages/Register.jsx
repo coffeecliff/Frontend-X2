@@ -113,17 +113,6 @@ export const Register = () => {
             required
           />
  
-          {userType === "cliente" && (
-            <Input
-              label="Data de Nascimento"
-              type="date"
-              value={formData.birthDate}
-              onChange={handleInputChange("birthDate")}
-              placeholder="Digite a sua data de nascimento"
-              required
-            />
-          )}
- 
           {userType === "administrador" && (
             <>              
             </>

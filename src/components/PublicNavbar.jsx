@@ -13,7 +13,7 @@ export const PublicNavbar = () => {
     { to: "/", label: "Home" },
     { to: "/games", label: "Jogos" },
     { to: "/about", label: "Sobre" },
-    { to: "/contatc", label: "Contato" }, // ⭐ ADICIONADO
+    { to: "/contact", label: "Contato" }, // ⭐ ADICIONADO
     { to: "/login", label: "Login" },
   ];
 
