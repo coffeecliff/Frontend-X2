@@ -10,6 +10,58 @@ export const Games = () => {
     { id: 5, time1: "Time", placar1: 1, placar2: 0, time2: "Time" },
     { id: 6, time1: "Time", placar1: 1, placar2: 0, time2: "Time" },
   ];
+  
+  const TorneioBracket = () => {
+    return (
+      <div className="w-full flex justify-center overflow-x-auto mt-10 mb-30 space-x-4">
+        <div className="grid grid-cols-1  ">
+  
+          {/* ==== COLUNA 1 ==== */}
+          <div className="flex flex-col justify-between h-full space-y-10">
+            {[1,2,3,4].map((num) => (
+              <div key={num} className="flex items-center space-x-1">
+                <span className="text-white text-xl font-bold w-6">{num}</span>
+                <div className="w-45 h-10  bg-white rounded-md shadow" />
+                <div className="w-5 h-1 bg-white" />
+                <div className="w-45 h-10 bg-white rounded-md shadow" />
+              </div>
+            ))}
+          </div>
+          </div>
+          <div className="grid grid-cols-3 gap-x-5">
+          {/* ==== COLUNA 2 ==== */}
+          <div className="flex flex-col justify-evenly">
+            {[1,2,3,4].map((i) => (
+              <div key={i} className="flex items-center">
+                <div className="w-6 h-1 bg-white" />
+                <div className="w-45 h-10 bg-white rounded-md shadow ml-2" />
+              </div>
+            ))}
+          </div>
+  
+          {/* ==== COLUNA 3 (SEMIFINAL) ==== */}
+          <div className="flex flex-col justify-evenly">
+            {[1,2].map((i) => (
+              <div key={i} className="flex items-center">
+                <div className="w-6 h-1 bg-white" />
+                <div className="w-45 h-10 bg-white rounded-md shadow ml-2" />
+              </div>
+            ))}
+          </div>
+  
+          {/* ==== COLUNA 4 (FINAL) ==== */}
+          <div className="flex flex-col justify-center">
+            <div className="flex items-center">
+              <div className="w-6 h-1 bg-white" />
+              <div className="w-45 h-10 bg-white rounded-md shadow ml-2" />
+            </div>
+            </div>
+          </div>
+  
+        
+      </div>
+    );
+  };
 
   // Estado do jogo selecionado
   const [jogoSelecionado, setJogoSelecionado] = useState(null);
@@ -84,6 +136,17 @@ export const Games = () => {
         alt="Bola inferior direita"
         className="absolute bottom-0 right-0 w-1/4 md:w-1/6"
       />
+
+      {/* Título */}
+      <h1 className="text-2xl font-extrabold text-white text-center">
+        CHAVEAMENTO
+      </h1>
+      <h2 className="text-lg font-bold text-white mb-8 text-center">
+        DO TORNEIO
+      </h2>
+
+      {/* Tabela estilo torneio */}
+      <TorneioBracket />
 
       {/* Título */}
       <h1 className="text-2xl font-extrabold text-white text-center">
