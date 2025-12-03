@@ -90,10 +90,10 @@
  
    { 
      id: 6, 
-     email: 'gerente@test.com', 
+     email: 'clientex2@test.com', 
      password: '123456', 
-     type: 'manager', 
-     name: 'Gerente Master' 
+     type: 'client', 
+     name: 'Cliente' 
    }
    
  ];

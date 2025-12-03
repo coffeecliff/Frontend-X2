@@ -16,6 +16,7 @@ import { Home } from '../pages/Home';
 import { About } from '../pages/About';
 import { Login } from '../pages/Login';
 import { Games } from '../pages/Games';
+import { Contact } from '../pages/Contact';
 // import { Register } from '../pages/Register';
 // import { NotFound } from '../pages/NotFound';
 
@@ -28,7 +29,7 @@ import { Sponsor } from '../pages/Sponsor';
 import { AdmSponsorEdit } from '../pages/AdmSponsorEdit';
 import { Register } from '../pages/Register';
 import { Profile } from '../pages/Profile';
-import { ManagerDashboard } from "../pages/ManagerDashboard";
+import { ClientDashboard } from "../pages/ClientDashboard";
 import { Moments } from '../pages/Moments'
 
 // import { DashboardPaciente } from '../pages/DashboardPaciente';
@@ -70,10 +71,10 @@ import { Moments } from '../pages/Moments'
     );
   };  
 <Route
-  path="/manager"
+  path="/client"
   element={
-    <ProtectedRoute allowedRoles={["manager"]}>
-      <ManagerDashboard />
+    <ProtectedRoute allowedRoles={["client"]}>
+      <ClientDashboard />
     </ProtectedRoute>
   }
 />
@@ -172,6 +173,11 @@ export const AppRoutes = () => {
         <Route path="/sponsor" element={
           <PublicRoute>
             <Sponsor />
+          </PublicRoute>
+        } />
+          <Route path="/contact" element={
+          <PublicRoute>
+            <Contact />
           </PublicRoute>
         } />
         {/* ==============================

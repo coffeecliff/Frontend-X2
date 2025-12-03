@@ -1,25 +1,25 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom"; // ✅ importamos useNavigate
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, UserCircle } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 export const PublicNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate(); // ✅ inicializa o hook
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
 
   const navLink = [
     { to: "/", label: "Home" },
     { to: "/games", label: "Jogos" },
     { to: "/about", label: "Sobre" },
+    { to: "/contatc", label: "Contato" }, // ⭐ ADICIONADO
     { to: "/login", label: "Login" },
   ];
 
   const isActive = (path) => location.pathname === path;
   const isNewEdition = location.pathname === "/newedition";
 
-  // ✅ Função para logout com redirecionamento
   const handleLogout = () => {
     logout();
     navigate("/login");
@@ -29,14 +29,12 @@ export const PublicNavbar = () => {
     <>
       <nav
         className={`backdrop-blur-md sticky top-0 z-50 border-white/20 transition-colors duration-500
-        ${isNewEdition
-          ? ""
-          : "to-yellow bg-gradient-to-r from-accent to-dark"
-          }`}
+        ${isNewEdition ? "" : "to-yellow bg-gradient-to-r from-accent to-dark"}`}
       >
         <div className="max-w-7xl mx-auto px-4 py-3 md:px-2 md:py-4">
           <div className="flex items-center justify-between">
-            {/* Logotipo */}
+
+            {/* Logo */}
             <Link to="/">
               <div className="flex items-center relative">
                 <img
@@ -54,20 +52,21 @@ export const PublicNavbar = () => {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`hidden sm:block font-extrabold transition-colors text-sm md:text-[20px] mr-12 ${isActive(link.to)
-                    ? isNewEdition
-                      ? "text-yellow-300"
-                      : "text-accent"
-                    : isNewEdition
+                  className={`hidden sm:block font-extrabold transition-colors text-sm md:text-[20px] mr-12 ${
+                    isActive(link.to)
+                      ? isNewEdition
+                        ? "text-yellow-300"
+                        : "text-accent"
+                      : isNewEdition
                       ? "text-yellow-100 hover:text-yellow-300"
                       : "text-white hover:text-accent"
-                    }`}
+                  }`}
                 >
                   {link.label}
                 </Link>
               ))}
 
-              {/* 🔹 Botão Seção ADM */}
+              {/* Seção ADM */}
               {user?.type === "adm" && (
                 <Link
                   to="/admhomeedit"
@@ -77,14 +76,15 @@ export const PublicNavbar = () => {
                 </Link>
               )}
 
-              {/* Botão Login ou Logout */}
+              {/* Botão Login / Logout */}
               {user ? (
                 <button
-                  onClick={handleLogout} // ✅ usa handleLogout
+                  onClick={handleLogout}
                   className={`cursor-pointer border-3 px-4 py-1 md:px-8 rounded-lg font-bold hover:shadow-lg transition-all duration-300 text-sm md:text-base
-                    ${isNewEdition
-                      ? "border-yellow-300 text-yellow-200 hover:text-yellow-100"
-                      : "border-accent text-accent"
+                    ${
+                      isNewEdition
+                        ? "border-yellow-300 text-yellow-200 hover:text-yellow-100"
+                        : "border-accent text-accent"
                     }`}
                 >
                   Logout
@@ -93,9 +93,10 @@ export const PublicNavbar = () => {
                 <Link to="/login">
                   <button
                     className={`cursor-pointer border-3 px-4 py-1 md:px-8 rounded-lg font-bold hover:shadow-lg transition-all duration-300 text-sm md:text-base
-                      ${isNewEdition
-                        ? "border-yellow-300 text-yellow-200 hover:text-yellow-100"
-                        : "border-accent text-accent"
+                      ${
+                        isNewEdition
+                          ? "border-yellow-300 text-yellow-200 hover:text-yellow-100"
+                          : "border-accent text-accent"
                       }`}
                   >
                     <span className="hidden sm:inline">Entrar</span>
@@ -104,7 +105,7 @@ export const PublicNavbar = () => {
                 </Link>
               )}
 
-              {/* Ícone perfil — aparece somente se o usuário estiver autenticado */}
+              {/* Ícone perfil */}
               {user && (
                 <Link to="/profile">
                   <div className="flex items-center justify-center bg-white p-2 rounded-full cursor-pointer hover:bg-light transition-colors duration-300">
@@ -118,12 +119,11 @@ export const PublicNavbar = () => {
             <div className="md:hidden flex items-center ml-2">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`transition-colors ${isNewEdition
-                  ? "text-yellow-200 hover:text-yellow-100"
-                  : "text-white hover:text-accent"
-                  }`}
-                aria-label="Menu"
-                aria-expanded={isOpen}
+                className={`transition-colors ${
+                  isNewEdition
+                    ? "text-yellow-200 hover:text-yellow-100"
+                    : "text-white hover:text-accent"
+                }`}
               >
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -134,12 +134,13 @@ export const PublicNavbar = () => {
           {isOpen && (
             <div className="md:hidden mt-4 transition-all duration-300">
               <div
-                className={`px-2 pt-2 pb-2 space-y-1 rounded-lg ${isNewEdition
-                  ? "bg-newdark/70"
-                  : "bg-white/80 backdrop-blur-md"
-                  }`}
+                className={`px-2 pt-2 pb-2 space-y-1 rounded-lg ${
+                  isNewEdition
+                    ? "bg-newdark/70"
+                    : "bg-white/80 backdrop-blur-md"
+                }`}
               >
-                {/* 🔹 Botão ADM no menu mobile */}
+                {/* Seção ADM mobile */}
                 {user?.type === "adm" && (
                   <Link
                     to="/admhomeedit"
@@ -154,31 +155,32 @@ export const PublicNavbar = () => {
                   <Link
                     key={link.to}
                     to={link.to}
-                    className={`block px-3 py-1 rounded-lg transition-colors ${isActive(link.to)
-                      ? isNewEdition
-                        ? "text-yellow-300 bg-yellow-100/10 font-semibold"
-                        : "text-accent bg-light/10 font-semibold"
-                      : isNewEdition
+                    className={`block px-3 py-1 rounded-lg transition-colors ${
+                      isActive(link.to)
+                        ? isNewEdition
+                          ? "text-yellow-300 bg-yellow-100/10 font-semibold"
+                          : "text-accent bg-light/10 font-semibold"
+                        : isNewEdition
                         ? "text-yellow-100 hover:text-yellow-300 hover:bg-yellow-100/5"
                         : "text-dark/70 hover:text-accent hover:bg-light/5"
-                      }`}
+                    }`}
                     onClick={() => setIsOpen(false)}
                   >
                     {link.label}
                   </Link>
                 ))}
 
-                {/* ✅ Logout no menu mobile com redirecionamento */}
                 {user && (
                   <button
                     onClick={() => {
                       handleLogout();
                       setIsOpen(false);
                     }}
-                    className={`w-full text-left px-3 py-1 rounded-lg transition-colors ${isNewEdition
-                      ? "text-yellow-300 hover:bg-yellow-100/10"
-                      : "text-red-600 hover:bg-red-100"
-                      }`}
+                    className={`w-full text-left px-3 py-1 rounded-lg transition-colors ${
+                      isNewEdition
+                        ? "text-yellow-300 hover:bg-yellow-100/10"
+                        : "text-red-600 hover:bg-red-100"
+                    }`}
                   >
                     Logout
                   </button>

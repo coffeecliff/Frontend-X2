@@ -2,7 +2,7 @@ import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export const ManagerDashboard = () => {
+export const ClientDashboard = () => {
   const { user } = useAuth();
   const [admins, setAdmins] = useState([]);
 
