@@ -31,7 +31,7 @@ export const Input = ({
         <input
           id={inputId}
           type={inputType} // Define o tipo considerando a visibilidade da senha
-          className={`w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-dark placeholder-dark/60 focus:outline-none focus:ring-2 focus:ring-light focus:border-transparent transition-colors ${error ? 'border-red-500' : ''} ${className}`}
+          className={`w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-dark placeholder-dark/60 focus:outline-none focus:ring-2 focus:ring-light focus:border-transparent transition-colors ${error ? 'border-red-500' : ''} ${className}`}
           aria-invalid={error ? 'true' : 'false'} // Acessibilidade para erro
           aria-describedby={errorId} // Relaciona o input com a mensagem de erro
           {...props}
@@ -40,7 +40,7 @@ export const Input = ({
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)} // Alterna visibilidade da senha
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-dark/60 hover:text-dark transition-colors"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-gray-100 border border-gray-300 transition-colors"
             aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'} // Acessibilidade
             tabIndex={0}
           >

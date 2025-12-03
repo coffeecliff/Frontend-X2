@@ -48,7 +48,7 @@ export const Login = () => {
 
             {/* Card de Login */}
             <div className="flex flex-col items-center justify-center w-full max-w-md mx-0 md:mx-12 my-8 md:my-0">
-                <div className="glassmorphism shadow-lg w-full overflow-hidden rounded-2xl">
+                <div className="bg-white shadow-lg w-full overflow-hidden rounded-2xl">
 
                     {/* Cabeçalho */}
                     <div className="h-24 relative flex items-center justify-center rounded-t-2xl">

@@ -56,7 +56,7 @@ export const Register = () => {
        {/* Imagem decorativa esquerda */}
        <div className="flex-shrink-0 w-80 h-80 overflow-hidden mb-100 absolute mr-270 ">
                 <img
-                    src="/Bolas.svg"
+                    src="/BolasY.png"
                     alt="Imagem decorativa"
                     className="w-full h-full object-contain"
                 />
@@ -145,7 +145,7 @@ export const Register = () => {
             {/* Imagem decorativa esquerda */}
             <div className="flex-shrink-0 w-80 h-80 overflow-hidden mt-100 mb-30 absolute ml-270">
                 <img
-                    src="/BolasR.svg"
+                    src="/BolasYR.png"
                     alt="Imagem decorativa"
                     className="w-full h-full object-contain"
                 />

@@ -153,7 +153,7 @@ export const Sidebar = () => {
               font-bold hover:text-white hover:bg-white/10 rounded-xl transition-colors cursor-pointer"
             >
               <LogOut size={30} />
-              <span>Sair</span>
+              <span>Ver as páginas</span>
             </button>
             </a>
           </div> 

@@ -139,49 +139,13 @@ export const AdmHomeEdit = () => {
   );
 
   return (
-    <main className="flex-1 p-8 bg-dark">
+    <main className="flex-1 p-8 ">
       {/* Título */}
       <h1 className="text-3xl font-bold text-accent mb-6 border-b-2 border-accent pb-2">
         HOME
       </h1>
-
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-extrabold text-accent">
-          RESULTADO DO ÚLTIMO JOGO
-        </h2>
-      </div>
-
-      <div className="flex flex-col lg:flex-row justify-center items-start gap-8">
-        {renderTabela("A", grupos.A)}
-        {renderTabela("B", grupos.B)}
-      </div>
-
-      {/* Botões */}
-      <div className="flex justify-center mt-10">
-        {!editing ? (
-          <button
-            onClick={() => setEditing(true)}
-            className="flex items-center gap-2 bg-light hover:bg-light/80 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
-          >
-            <Edit3 size={18} /> EDITAR
-          </button>
-        ) : (
-          <div className="flex gap-4">
-            <button
-              onClick={handleSave}
-              className="flex items-center gap-2 bg-light hover:bg-light/80 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
-            >
-              <Save size={18} /> SALVAR
-            </button>
-
-            <button
-              onClick={handleCancel}
-              className="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 cursor-pointer text-white font-bold px-6 py-2 rounded-lg shadow-md transition"
-            >
-              <X size={18} /> CANCELAR
-            </button>
-          </div>
-        )}
+    <div className="bg-black">
+      
       </div>
     </main>
   );
