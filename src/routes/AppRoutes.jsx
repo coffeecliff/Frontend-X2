@@ -33,6 +33,7 @@ import { ClientDashboard } from "../pages/ClientDashboard";
 import { Moments } from '../pages/Moments'
 import { AdmPlayersEdit } from '../pages/AdmPlayersEdit';
 import { AdmTeamsEdit } from '../pages/AdmTeamsEdit';
+import { AdmMatchesEdit } from '../pages/AdmMatchesEdit';
 
 // import { DashboardPaciente } from '../pages/DashboardPaciente';
 // import { Agendamento } from '../pages/Agendamentos';
@@ -213,6 +214,11 @@ export const AppRoutes = () => {
         <Route path="/admteamsedit" element={
           <ProtectedRoute>
             <AdmTeamsEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+          </ProtectedRoute>
+        } />
+        <Route path="/admmatchesedit" element={
+          <ProtectedRoute>
+            <AdmMatchesEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
           </ProtectedRoute>
         } />
 
