@@ -3,10 +3,11 @@ import { Edit3, Save, X, ImagePlus, PlusCircle } from "lucide-react";
 
 export const AdmPlayersEdit = () => {
   const [search, setSearch] = useState("");
+  const [order, setOrder] = useState("az");
 
   const [players, setPlayers] = useState([
-    { id: 1, nome: "João Silva", idade: 22, time: "Flamengo", foto: null },
-    { id: 2, nome: "Carlos Pereira", idade: 28, time: "Corinthians", foto: null },
+    { id: 1, nome: "João Silva", nascimento: "2003-05-10", time: "FLAMENGO", foto: null },
+    { id: 2, nome: "Carlos Pereira", nascimento: "1999-08-22", time: "CORINTHIANS", foto: null },
   ]);
 
   const [editingId, setEditingId] = useState(null);
@@ -14,7 +15,7 @@ export const AdmPlayersEdit = () => {
 
   const [newPlayer, setNewPlayer] = useState({
     nome: "",
-    idade: "",
+    nascimento: "",
     time: "",
     foto: null,
   });
@@ -49,20 +50,27 @@ export const AdmPlayersEdit = () => {
     const playerToAdd = {
       id,
       nome: newPlayer.nome,
-      idade: newPlayer.idade,
+      nascimento: newPlayer.nascimento,
       time: newPlayer.time,
       foto: newPlayer.foto,
     };
 
     setPlayers((prev) => [...prev, playerToAdd]);
 
-    setNewPlayer({ nome: "", idade: "", time: "", foto: null });
+    setNewPlayer({ nome: "", nascimento: "", time: "", foto: null });
     setAdding(false);
   };
 
+  // FILTRAR
   const filtered = players.filter((p) =>
     p.nome.toLowerCase().includes(search.toLowerCase())
   );
+
+  // ORDENAR
+  const sorted = [...filtered].sort((a, b) => {
+    if (order === "az") return a.nome.localeCompare(b.nome);
+    else return b.nome.localeCompare(a.nome);
+  });
 
   return (
     <main className="flex-1 p-8">
@@ -84,14 +92,10 @@ export const AdmPlayersEdit = () => {
           <h2 className="text-xl mb-3 font-semibold">Novo Jogador</h2>
 
           <div className="flex gap-4 items-center">
-
             {/* Foto */}
             <div className="relative">
               <img
-                src={
-                  newPlayer.foto ||
-                  "https://via.placeholder.com/80?text=Foto"
-                }
+                src={newPlayer.foto || "https://via.placeholder.com/80?text=Foto"}
                 className="w-20 h-20 rounded object-cover border border-neutral-600"
               />
 
@@ -116,24 +120,34 @@ export const AdmPlayersEdit = () => {
                 }
               />
 
+              {/* DATA DE NASCIMENTO */}
               <input
+                type="date"
                 className="p-2 rounded bg-black border border-neutral-700 text-white"
-                placeholder="Idade"
-                type="number"
-                value={newPlayer.idade}
+                value={newPlayer.nascimento}
                 onChange={(e) =>
-                  setNewPlayer({ ...newPlayer, idade: e.target.value })
+                  setNewPlayer({ ...newPlayer, nascimento: e.target.value })
                 }
               />
 
-              <input
+              {/* TIME */}
+              <select
                 className="p-2 rounded bg-black border border-neutral-700 text-white"
-                placeholder="Time"
                 value={newPlayer.time}
                 onChange={(e) =>
                   setNewPlayer({ ...newPlayer, time: e.target.value })
                 }
-              />
+              >
+                <option value="">Selecione o time</option>
+                <option value="FLUMINENSE">FLUMINENSE</option>
+                <option value="PALMEIRAS">PALMEIRAS</option>
+                <option value="INTERNACIONAL">INTERNACIONAL</option>
+                <option value="FLAMENGO">FLAMENGO</option>
+                <option value="GRÊMIO">GRÊMIO</option>
+                <option value="CORINTHIANS">CORINTHIANS</option>
+                <option value="ATLÉTICO MG">ATLÉTICO MG</option>
+                <option value="CRUZEIRO">CRUZEIRO</option>
+              </select>
             </div>
 
             <button
@@ -146,18 +160,28 @@ export const AdmPlayersEdit = () => {
         </div>
       )}
 
-      {/* FILTRO */}
+      {/* PESQUISA */}
       <input
         type="text"
         placeholder="Pesquisar jogador..."
-        className="w-full p-2 rounded bg-neutral-900 text-white mb-4"
+        className="w-full p-2 mb-3 rounded bg-neutral-900 text-white border border-neutral-700"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
 
+      {/* ORDENAR */}
+      <select
+        className="p-2 mb-4 rounded bg-black border border-neutral-700 text-white"
+        value={order}
+        onChange={(e) => setOrder(e.target.value)}
+      >
+        <option value="az">A → Z</option>
+        <option value="za">Z → A</option>
+      </select>
+
       {/* LISTA */}
       <div className="space-y-4">
-        {filtered.map((player) => (
+        {sorted.map((player) => (
           <div
             key={player.id}
             className="bg-neutral-900 p-4 rounded-lg border border-neutral-700 flex gap-4 items-center"
@@ -165,10 +189,7 @@ export const AdmPlayersEdit = () => {
             {/* FOTO */}
             <div className="relative">
               <img
-                src={
-                  player.foto ||
-                  "https://via.placeholder.com/80?text=Foto"
-                }
+                src={player.foto || "https://via.placeholder.com/80?text=Foto"}
                 className="w-20 h-20 rounded object-cover border border-neutral-600"
               />
 
@@ -185,7 +206,6 @@ export const AdmPlayersEdit = () => {
               </label>
             </div>
 
-            {/* CAMPOS */}
             <div className="flex-1 grid grid-cols-3 gap-3">
               <input
                 className="p-2 rounded bg-black border border-neutral-700 text-white"
@@ -196,24 +216,34 @@ export const AdmPlayersEdit = () => {
                 }
               />
 
+              {/* EDITAR DATA */}
               <input
+                type="date"
                 className="p-2 rounded bg-black border border-neutral-700 text-white"
-                type="number"
-                value={player.idade}
+                value={player.nascimento}
                 disabled={editingId !== player.id}
                 onChange={(e) =>
-                  handleChange(player.id, "idade", e.target.value)
+                  handleChange(player.id, "nascimento", e.target.value)
                 }
               />
 
-              <input
+              <select
                 className="p-2 rounded bg-black border border-neutral-700 text-white"
                 value={player.time}
                 disabled={editingId !== player.id}
                 onChange={(e) =>
                   handleChange(player.id, "time", e.target.value)
                 }
-              />
+              >
+                <option value="FLUMINENSE">FLUMINENSE</option>
+                <option value="PALMEIRAS">PALMEIRAS</option>
+                <option value="INTERNACIONAL">INTERNACIONAL</option>
+                <option value="FLAMENGO">FLAMENGO</option>
+                <option value="GRÊMIO">GRÊMIO</option>
+                <option value="CORINTHIANS">CORINTHIANS</option>
+                <option value="ATLÉTICO MG">ATLÉTICO MG</option>
+                <option value="CRUZEIRO">CRUZEIRO</option>
+              </select>
             </div>
 
             {/* BOTÕES */}
