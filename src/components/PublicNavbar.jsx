@@ -9,11 +9,16 @@ export const PublicNavbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
 
+  // ⭐ NAVIGATION ATUALIZADA — CONTATO SOME PARA ADM
   const navLink = [
     { to: "/", label: "Home" },
     { to: "/games", label: "Jogos" },
     { to: "/about", label: "Sobre" },
-    { to: "/contact", label: "Contato" }, // ⭐ ADICIONADO
+
+    ...(user?.type !== "adm"
+      ? [{ to: "/contact", label: "Contato" }]
+      : []),
+
     { to: "/login", label: "Login" },
   ];
 
@@ -140,6 +145,7 @@ export const PublicNavbar = () => {
                     : "bg-white/80 backdrop-blur-md"
                 }`}
               >
+
                 {/* Seção ADM mobile */}
                 {user?.type === "adm" && (
                   <Link
