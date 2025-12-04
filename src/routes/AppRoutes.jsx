@@ -31,6 +31,8 @@ import { Register } from '../pages/Register';
 import { Profile } from '../pages/Profile';
 import { ClientDashboard } from "../pages/ClientDashboard";
 import { Moments } from '../pages/Moments'
+import { AdmPlayersEdit } from '../pages/AdmPlayersEdit';
+import { AdmTeamsEdit } from '../pages/AdmTeamsEdit';
 
 // import { DashboardPaciente } from '../pages/DashboardPaciente';
 // import { Agendamento } from '../pages/Agendamentos';
@@ -201,6 +203,16 @@ export const AppRoutes = () => {
         <Route path="/admsponsoredit" element={
           <ProtectedRoute>
             <AdmSponsorEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+          </ProtectedRoute>
+        } />
+        <Route path="/admplayersedit" element={
+          <ProtectedRoute>
+            <AdmPlayersEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+          </ProtectedRoute>
+        } />
+        <Route path="/admteamsedit" element={
+          <ProtectedRoute>
+            <AdmTeamsEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
           </ProtectedRoute>
         } />
 
