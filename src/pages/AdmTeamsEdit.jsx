@@ -1,15 +1,89 @@
-import { useState, useEffect } from "react";
-import { Edit3, Save, X, ImagePlus } from "lucide-react";
+import { useState } from "react";
+import { Plus, Trash2, Users } from "lucide-react";
 
 export const AdmTeamsEdit = () => {
+    const [teams, setTeams] = useState([]);
+    const [newTeamName, setNewTeamName] = useState("");
+
+    const addTeam = () => {
+        if (!newTeamName.trim()) return;
+        setTeams((prev) => [...prev, { id: Date.now(), name: newTeamName }]);
+        setNewTeamName("");
+    };
+
+    const removeTeam = (id) => {
+        setTeams((prev) => prev.filter((t) => t.id !== id));
+    };
+
     return (
-        <main className="flex-1 p-8 ">
+        <main className="flex-1 p-8">
             {/* Título */}
             <h1 className="text-3xl font-bold text-accent mb-6 border-b-2 border-accent pb-2">
                 TIMES
             </h1>
-            <div className="bg-black">
 
+            <p className="text-white text-sm mt-2 mb-6">
+                <span className="font-semibold">Equipes</span><br />
+                {teams.length} equipes cadastradas
+            </p>
+
+            <div className="space-y-8">
+                {/* Criar nova equipe */}
+                <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                    <h2 className="text-lg font-semibold mb-4">Nova Equipe</h2>
+                    <div className="flex gap-3">
+                        <input
+                            className="flex-1 px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-accent/40"
+                            placeholder="Nome da equipe"
+                            value={newTeamName}
+                            onChange={(e) => setNewTeamName(e.target.value)}
+                            onKeyDown={(e) => e.key === "Enter" && addTeam()}
+                        />
+                        <button
+                            onClick={addTeam}
+                            className="cursor-pointer px-5 py-3 bg-accent text-white rounded-xl hover:bg-accent/80 flex items-center gap-2 transition font-medium"
+                        >
+                            <Plus size={18} />
+                            Adicionar
+                        </button>
+                    </div>
+                </div>
+
+                {/* Lista de equipes */}
+                <div className="bg-white rounded-2xl border border-gray-200">
+                    <div className="px-6 py-4 border-b border-gray-100">
+                        <h2 className="text-lg font-semibold">Equipes Cadastradas</h2>
+                    </div>
+
+                    <div className="divide-y divide-gray-100">
+                        {teams.length === 0 ? (
+                            <div className="px-6 py-12 text-center">
+                                <Users className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                                <p className="text-gray-500 text-sm">
+                                    Nenhuma equipe cadastrada ainda
+                                </p>
+                            </div>
+                        ) : (
+                            teams.map((team) => (
+                                <div
+                                    key={team.id}
+                                    className="px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition"
+                                >
+                                    <span className="font-medium text-gray-900">
+                                        {team.name}
+                                    </span>
+
+                                    <button
+                                        onClick={() => removeTeam(team.id)}
+                                        className="cursor-pointer text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition"
+                                    >
+                                        <Trash2 size={18} />
+                                    </button>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
             </div>
         </main>
     );
