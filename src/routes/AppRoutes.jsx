@@ -34,6 +34,7 @@ import { Moments } from '../pages/Moments'
 import { AdmPlayersEdit } from '../pages/AdmPlayersEdit';
 import { AdmTeamsEdit } from '../pages/AdmTeamsEdit';
 import { AdmMatchesEdit } from '../pages/AdmMatchesEdit';
+import { AdmGroupsEdit } from '../pages/AdmGroupsEdit';
 
 // import { DashboardPaciente } from '../pages/DashboardPaciente';
 // import { Agendamento } from '../pages/Agendamentos';
@@ -188,37 +189,42 @@ export const AppRoutes = () => {
            ============================== */}
         <Route path="/admhomeedit" element={
           <ProtectedRoute>
-            <AdmHomeEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+            <AdmHomeEdit /> 
           </ProtectedRoute>
         } />
         <Route path="/admgamesedit" element={
           <ProtectedRoute>
-            <AdmGamesEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+            <AdmGamesEdit /> 
           </ProtectedRoute>
         } />
         <Route path="/admaboutedit" element={
           <ProtectedRoute>
-            <AdmAboutEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+            <AdmAboutEdit /> 
           </ProtectedRoute>
         } />
         <Route path="/admsponsoredit" element={
           <ProtectedRoute>
-            <AdmSponsorEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+            <AdmSponsorEdit /> 
           </ProtectedRoute>
         } />
         <Route path="/admplayersedit" element={
           <ProtectedRoute>
-            <AdmPlayersEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+            <AdmPlayersEdit /> 
           </ProtectedRoute>
         } />
         <Route path="/admteamsedit" element={
           <ProtectedRoute>
-            <AdmTeamsEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+            <AdmTeamsEdit /> 
           </ProtectedRoute>
         } />
         <Route path="/admmatchesedit" element={
           <ProtectedRoute>
-            <AdmMatchesEdit /> {/* Escolhe dashboard de psicólogo ou paciente */}
+            <AdmMatchesEdit /> 
+          </ProtectedRoute>
+        } />
+        <Route path="/admgroupsedit" element={
+          <ProtectedRoute>
+            <AdmGroupsEdit /> 
           </ProtectedRoute>
         } />
 

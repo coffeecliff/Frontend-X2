@@ -26,8 +26,8 @@ export const AdmMatchesEdit = () => {
             id: 1,
             team1: { id: 1, name: "Time A" },
             team2: { id: 2, name: "Time B" },
-            goals1: "",
-            goals2: "",
+            goals1: "0",
+            goals2: "0",
             status: "pending",
             draw: false,
             winner: null,
@@ -39,8 +39,8 @@ export const AdmMatchesEdit = () => {
             id: 2,
             team1: { id: 3, name: "Time C" },
             team2: { id: 4, name: "Time D" },
-            goals1: "",
-            goals2: "",
+            goals1: "0",
+            goals2: "0",
             status: "pending",
             draw: false,
             winner: null,
@@ -99,8 +99,8 @@ export const AdmMatchesEdit = () => {
                         status: "pending",
                         draw: false,
                         winner: null,
-                        goals1: "",
-                        goals2: ""
+                        goals1: "0",
+                        goals2: "0"
                     }
                     : match
             )
@@ -109,17 +109,17 @@ export const AdmMatchesEdit = () => {
 
     const addMatch = (newMatch) => {
         setMatches((prev) => [
-            ...prev,
             {
                 id: prev.length + 1,
                 createdAt: new Date(),
                 status: "pending",
                 draw: false,
                 winner: null,
-                goals1: "",
-                goals2: "",
+                goals1: "0",
+                goals2: "0",
                 ...newMatch
-            }
+            },
+            ...prev // ← AGORA A PARTIDA NOVA FICA EM CIMA
         ]);
     };
 
@@ -288,27 +288,27 @@ export const AdmMatchesEdit = () => {
                             {/* INPUTS DE GOLS */}
                             {match.status === "pending" && (
                                 <div>
-                                <div className="justify-center flex mt-4"><h1>Gols</h1></div>
-                                <div className="mt-4 flex justify-center gap-6">
-                                    
-                                    <input
-                                        type="number"
-                                        className="w-16 px-2 py-1 border rounded text-center"
-                                        value={match.goals1}
-                                        onChange={(e) =>
-                                            updateGoals(match.id, e.target.value, match.goals2)
-                                        }
-                                    />
+                                    <div className="justify-center flex mt-4"><h1>Gols</h1></div>
+                                    <div className="mt-4 flex justify-center gap-6">
 
-                                    <input
-                                        type="number"
-                                        className="w-16 px-2 py-1 border rounded text-center"
-                                        value={match.goals2}
-                                        onChange={(e) =>
-                                            updateGoals(match.id, match.goals1, e.target.value)
-                                        }
-                                    />
-                                </div>
+                                        <input
+                                            type="number"
+                                            className="w-16 px-2 py-1 border rounded text-center"
+                                            value={match.goals1}
+                                            onChange={(e) =>
+                                                updateGoals(match.id, e.target.value, match.goals2)
+                                            }
+                                        />
+
+                                        <input
+                                            type="number"
+                                            className="w-16 px-2 py-1 border rounded text-center"
+                                            value={match.goals2}
+                                            onChange={(e) =>
+                                                updateGoals(match.id, match.goals1, e.target.value)
+                                            }
+                                        />
+                                    </div>
                                 </div>
                             )}
 

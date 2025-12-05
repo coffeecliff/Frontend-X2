@@ -16,7 +16,8 @@ import {
   UserRound,
   User,
   Users,
-  Contact
+  Group,
+  Award
 } from 'lucide-react';
 import { FaHome, FaInfoCircle } from "react-icons/fa";
 import { RiFootballFill } from "react-icons/ri";
@@ -57,9 +58,9 @@ export const Sidebar = () => {
   const funcLinks =
     user?.type === 'adm'
       ? [
-        { to: '/admhomeedit', label: 'Home', icon: FaHome },
         { to: '/admteamsedit', label: 'Editar Times', icon: Users },
-        { to: '/admMatchesedit', label: 'Editar Partidas', icon: User }
+        { to: '/admgroupsedit', label: 'Editar Grupos', icon: Group },
+        { to: '/admmatchesedit', label: 'Editar Partidas', icon: Award }
       ]
       : [
 
