@@ -1,24 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Edit3, Save, X, ImagePlus, PlusCircle } from "lucide-react";
+import { mockApi } from "../services/mockApi";
 
 export const AdmPlayersEdit = () => {
   const [search, setSearch] = useState("");
   const [order, setOrder] = useState("az");
-
-  const [players, setPlayers] = useState([
-    { id: 1, nome: "João Silva", nascimento: "2003-05-10", time: "FLAMENGO", foto: null },
-    { id: 2, nome: "Carlos Pereira", nascimento: "1999-08-22", time: "CORINTHIANS", foto: null },
-  ]);
-
+  const [players, setPlayers] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [adding, setAdding] = useState(false);
 
   const [newPlayer, setNewPlayer] = useState({
     nome: "",
-    nascimento: "",
-    time: "",
+    data_nascimento: "",
+    time_nome: "",
     foto: null,
   });
+
+  // Mapear nome do time para ID
+  const timeMap = {
+    "FLUMINENSE": 1,
+    "PALMEIRAS": 3,
+    "INTERNACIONAL": 1,
+    "FLAMENGO": 1,
+    "GRÊMIO": 2,
+    "CORINTHIANS": 2,
+    "ATLÉTICO MG": 3,
+    "CRUZEIRO": 4,
+  };
+
+  const timeReverseMap = {
+    1: "FLAMENGO",
+    2: "CORINTHIANS",
+    3: "PALMEIRAS",
+    4: "SÃO PAULO",
+  };
+
+  useEffect(() => {
+    const loadPlayers = async () => {
+      try {
+        const data = await mockApi.getJogadores();
+        // Mapear time_id para time_nome se não existir
+        const mappedData = data.map((player) => ({
+          ...player,
+          time_nome: player.time_nome || timeReverseMap[player.time_id] || "SEM TIME",
+          nascimento: player.data_nascimento,
+        }));
+        setPlayers(mappedData);
+      } catch (error) {
+        console.error("Erro ao carregar jogadores:", error);
+      }
+    };
+
+    loadPlayers();
+  }, []);
 
   const handleChange = (id, field, value) => {
     setPlayers((prev) =>
@@ -50,14 +84,16 @@ export const AdmPlayersEdit = () => {
     const playerToAdd = {
       id,
       nome: newPlayer.nome,
-      nascimento: newPlayer.nascimento,
-      time: newPlayer.time,
+      data_nascimento: newPlayer.data_nascimento,
+      time_nome: newPlayer.time_nome,
+      time_id: timeMap[newPlayer.time_nome] || 1,
+      nascimento: newPlayer.data_nascimento,
       foto: newPlayer.foto,
     };
 
     setPlayers((prev) => [...prev, playerToAdd]);
 
-    setNewPlayer({ nome: "", nascimento: "", time: "", foto: null });
+    setNewPlayer({ nome: "", data_nascimento: "", time_nome: "", foto: null });
     setAdding(false);
   };
 
@@ -124,18 +160,18 @@ export const AdmPlayersEdit = () => {
               <input
                 type="date"
                 className="p-2 rounded bg-black border border-neutral-700 text-white"
-                value={newPlayer.nascimento}
+                value={newPlayer.data_nascimento}
                 onChange={(e) =>
-                  setNewPlayer({ ...newPlayer, nascimento: e.target.value })
+                  setNewPlayer({ ...newPlayer, data_nascimento: e.target.value })
                 }
               />
 
               {/* TIME */}
               <select
                 className="p-2 rounded bg-black border border-neutral-700 text-white"
-                value={newPlayer.time}
+                value={newPlayer.time_nome}
                 onChange={(e) =>
-                  setNewPlayer({ ...newPlayer, time: e.target.value })
+                  setNewPlayer({ ...newPlayer, time_nome: e.target.value })
                 }
               >
                 <option value="">Selecione o time</option>
@@ -229,10 +265,10 @@ export const AdmPlayersEdit = () => {
 
               <select
                 className="p-2 rounded bg-black border border-neutral-700 text-white"
-                value={player.time}
+                value={player.time_nome}
                 disabled={editingId !== player.id}
                 onChange={(e) =>
-                  handleChange(player.id, "time", e.target.value)
+                  handleChange(player.id, "time_nome", e.target.value)
                 }
               >
                 <option value="FLUMINENSE">FLUMINENSE</option>

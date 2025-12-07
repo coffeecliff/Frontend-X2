@@ -1,9 +1,25 @@
 // src/pages/NewEdition.jsx
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Button } from "../components/Button";
+import { mockApi } from "../services/mockApi";
 
 export const Home = () => {
+  const [tabelaData, setTabelaData] = useState([]);
   const patrocinadores = ["/patr1.svg", "/patr2.svg", "/patr3.svg"];
+
+  useEffect(() => {
+    const loadTabela = async () => {
+      try {
+        const data = await mockApi.getTabela();
+        setTabelaData(data);
+      } catch (error) {
+        console.error("Erro ao carregar tabela:", error);
+      }
+    };
+
+    loadTabela();
+  }, []);
 
   return (
     <div className="w-full min-h-screen bg-black font-sans text-white relative overflow-hidden">
@@ -122,27 +138,24 @@ export const Home = () => {
                 </thead>
 
                 <tbody>
-                  {["bg-tableaccent", "bg-tablemedium", "bg-tableaccent", "bg-tablemedium"].map((bgClass, i) => {
-                    const row = [
-                      { flag: 'jp.svg', v: '2(1)', d: '0', gm: '4', sg: '2', pts: '8' },
-                      { flag: 'ar.svg', v: '2', d: '1', gm: '6', sg: '1', pts: '6' },
-                      { flag: 'ma.svg', v: '1', d: '1(1)', gm: '7', sg: '2', pts: '4' },
-                      { flag: 'br.svg', v: '0', d: '3', gm: '2', sg: '-2', pts: '0' }
-                    ][i];
-
-                    return (
-                      <tr key={row.flag} className={`text-white ${bgClass}`}>
-                        <td className="flex items-center justify-center py-3">
-                          <img src={`/${row.flag}`} className="h-6" />
-                        </td>
-                        <td className="py-3">{row.v}</td>
-                        <td className="py-3">{row.d}</td>
-                        <td className="py-3">{row.gm}</td>
-                        <td className="py-3">{row.sg}</td>
-                        <td className="py-3">{row.pts}</td>
-                      </tr>
-                    );
-                  })}
+                  {tabelaData
+                    .filter((item) => item.grupo === 'A')
+                    .sort((a, b) => a.posicao - b.posicao)
+                    .map((item, i) => {
+                      const bgClass = i % 2 === 0 ? "bg-tableaccent" : "bg-tablemedium";
+                      return (
+                        <tr key={item.id} className={`text-white ${bgClass}`}>
+                          <td className="flex items-center justify-center py-3">
+                            <img src={`/${item.flag}`} className="h-6" alt={item.flag} />
+                          </td>
+                          <td className="py-3">{item.vitorias}</td>
+                          <td className="py-3">{item.derrotas}</td>
+                          <td className="py-3">{item.gols_pro}</td>
+                          <td className="py-3">{item.saldo_gols}</td>
+                          <td className="py-3">{item.pontos}</td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
@@ -164,27 +177,24 @@ export const Home = () => {
                 </thead>
 
                 <tbody>
-                  {["bg-tableaccent", "bg-tablemedium", "bg-tableaccent", "bg-tablemedium"].map((bgClass, i) => {
-                    const row = [
-                      { flag: 'jp.svg', v: '2(1)', d: '0', gm: '4', sg: '2', pts: '8' },
-                      { flag: 'ar.svg', v: '2', d: '1', gm: '6', sg: '1', pts: '6' },
-                      { flag: 'ma.svg', v: '1', d: '1(1)', gm: '7', sg: '2', pts: '4' },
-                      { flag: 'br.svg', v: '0', d: '3', gm: '2', sg: '-2', pts: '0' }
-                    ][i];
-
-                    return (
-                      <tr key={row.flag} className={`text-white ${bgClass}`}>
-                        <td className="flex items-center justify-center py-3">
-                          <img src={`/${row.flag}`} className="h-6" />
-                        </td>
-                        <td className="py-3">{row.v}</td>
-                        <td className="py-3">{row.d}</td>
-                        <td className="py-3">{row.gm}</td>
-                        <td className="py-3">{row.sg}</td>
-                        <td className="py-3">{row.pts}</td>
-                      </tr>
-                    );
-                  })}
+                  {tabelaData
+                    .filter((item) => item.grupo === 'B')
+                    .sort((a, b) => a.posicao - b.posicao)
+                    .map((item, i) => {
+                      const bgClass = i % 2 === 0 ? "bg-tableaccent" : "bg-tablemedium";
+                      return (
+                        <tr key={item.id} className={`text-white ${bgClass}`}>
+                          <td className="flex items-center justify-center py-3">
+                            <img src={`/${item.flag}`} className="h-6" alt={item.flag} />
+                          </td>
+                          <td className="py-3">{item.vitorias}</td>
+                          <td className="py-3">{item.derrotas}</td>
+                          <td className="py-3">{item.gols_pro}</td>
+                          <td className="py-3">{item.saldo_gols}</td>
+                          <td className="py-3">{item.pontos}</td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
