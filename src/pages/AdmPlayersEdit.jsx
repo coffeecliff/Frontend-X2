@@ -6,6 +6,7 @@ export const AdmPlayersEdit = () => {
   const [search, setSearch] = useState("");
   const [order, setOrder] = useState("az");
   const [players, setPlayers] = useState([]);
+  const [teams, setTeams] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [adding, setAdding] = useState(false);
 
@@ -16,42 +17,32 @@ export const AdmPlayersEdit = () => {
     foto: null,
   });
 
-  // Mapear nome do time para ID
-  const timeMap = {
-    "FLUMINENSE": 1,
-    "PALMEIRAS": 3,
-    "INTERNACIONAL": 1,
-    "FLAMENGO": 1,
-    "GRÊMIO": 2,
-    "CORINTHIANS": 2,
-    "ATLÉTICO MG": 3,
-    "CRUZEIRO": 4,
-  };
-
-  const timeReverseMap = {
-    1: "FLAMENGO",
-    2: "CORINTHIANS",
-    3: "PALMEIRAS",
-    4: "SÃO PAULO",
-  };
-
+  // Carregar times e jogadores ao montar o componente
   useEffect(() => {
-    const loadPlayers = async () => {
+    const loadData = async () => {
       try {
-        const data = await mockApi.getJogadores();
-        // Mapear time_id para time_nome se não existir
-        const mappedData = data.map((player) => ({
+        // Carregar times
+        const timesData = await mockApi.getTimes();
+        const mappedTeams = timesData.map((team) => ({
+          id: team.id,
+          name: team.nome,
+        }));
+        setTeams(mappedTeams);
+
+        // Carregar jogadores
+        const playersData = await mockApi.getJogadores();
+        const mappedPlayers = playersData.map((player) => ({
           ...player,
-          time_nome: player.time_nome || timeReverseMap[player.time_id] || "SEM TIME",
+          time_nome: player.time_nome || mappedTeams.find(t => t.id === player.time_id)?.name || "SEM TIME",
           nascimento: player.data_nascimento,
         }));
-        setPlayers(mappedData);
+        setPlayers(mappedPlayers);
       } catch (error) {
-        console.error("Erro ao carregar jogadores:", error);
+        console.error("Erro ao carregar dados:", error);
       }
     };
 
-    loadPlayers();
+    loadData();
   }, []);
 
   const handleChange = (id, field, value) => {
@@ -79,14 +70,20 @@ export const AdmPlayersEdit = () => {
   };
 
   const addPlayer = () => {
-    const id = Math.floor(Math.random() * 999999);
+    if (!newPlayer.nome || !newPlayer.data_nascimento || !newPlayer.time_nome) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+
+    const selectedTeam = teams.find((t) => t.name === newPlayer.time_nome);
+    const id = Math.max(...players.map((p) => p.id), 0) + 1;
 
     const playerToAdd = {
       id,
       nome: newPlayer.nome,
       data_nascimento: newPlayer.data_nascimento,
       time_nome: newPlayer.time_nome,
-      time_id: timeMap[newPlayer.time_nome] || 1,
+      time_id: selectedTeam?.id || 1,
       nascimento: newPlayer.data_nascimento,
       foto: newPlayer.foto,
     };
@@ -175,14 +172,11 @@ export const AdmPlayersEdit = () => {
                 }
               >
                 <option value="">Selecione o time</option>
-                <option value="FLUMINENSE">FLUMINENSE</option>
-                <option value="PALMEIRAS">PALMEIRAS</option>
-                <option value="INTERNACIONAL">INTERNACIONAL</option>
-                <option value="FLAMENGO">FLAMENGO</option>
-                <option value="GRÊMIO">GRÊMIO</option>
-                <option value="CORINTHIANS">CORINTHIANS</option>
-                <option value="ATLÉTICO MG">ATLÉTICO MG</option>
-                <option value="CRUZEIRO">CRUZEIRO</option>
+                {teams.map((team) => (
+                  <option key={team.id} value={team.name}>
+                    {team.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -271,14 +265,11 @@ export const AdmPlayersEdit = () => {
                   handleChange(player.id, "time_nome", e.target.value)
                 }
               >
-                <option value="FLUMINENSE">FLUMINENSE</option>
-                <option value="PALMEIRAS">PALMEIRAS</option>
-                <option value="INTERNACIONAL">INTERNACIONAL</option>
-                <option value="FLAMENGO">FLAMENGO</option>
-                <option value="GRÊMIO">GRÊMIO</option>
-                <option value="CORINTHIANS">CORINTHIANS</option>
-                <option value="ATLÉTICO MG">ATLÉTICO MG</option>
-                <option value="CRUZEIRO">CRUZEIRO</option>
+                {teams.map((team) => (
+                  <option key={team.id} value={team.name}>
+                    {team.name}
+                  </option>
+                ))}
               </select>
             </div>
 

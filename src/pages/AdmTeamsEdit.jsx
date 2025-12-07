@@ -1,13 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Trash2, Users } from "lucide-react";
+import { mockApi } from "../services/mockApi";
 
 export const AdmTeamsEdit = () => {
     const [teams, setTeams] = useState([]);
     const [newTeamName, setNewTeamName] = useState("");
 
+    // Carregar times ao montar o componente
+    useEffect(() => {
+        const loadTeams = async () => {
+            try {
+                const data = await mockApi.getTimes();
+                // Mapear estrutura: id, nome -> id, name
+                const mappedTeams = data.map((team) => ({
+                    id: team.id,
+                    name: team.nome,
+                    escudo: team.escudo,
+                }));
+                setTeams(mappedTeams);
+            } catch (error) {
+                console.error("Erro ao carregar times:", error);
+            }
+        };
+
+        loadTeams();
+    }, []);
+
     const addTeam = () => {
         if (!newTeamName.trim()) return;
-        setTeams((prev) => [...prev, { id: Date.now(), name: newTeamName }]);
+        
+        // Criar novo time com ID temporário (será sincronizado com mockApi depois)
+        const newTeam = {
+            id: Math.max(...teams.map((t) => t.id), 0) + 1,
+            name: newTeamName,
+            escudo: null,
+        };
+        
+        setTeams((prev) => [...prev, newTeam]);
         setNewTeamName("");
     };
 
@@ -23,18 +52,18 @@ export const AdmTeamsEdit = () => {
             </h1>
 
             <p className="text-white text-sm mt-2 mb-6">
-                <span className="font-semibold">Equipes</span><br />
-                {teams.length} equipes cadastradas
+                <span className="font-semibold">Times</span><br />
+                {teams.length} times cadastrados
             </p>
 
             <div className="space-y-8">
-                {/* Criar nova equipe */}
+                {/* Criar novo time */}
                 <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                    <h2 className="text-lg font-semibold mb-4">Nova Equipe</h2>
+                    <h2 className="text-lg font-semibold mb-4">Novo time</h2>
                     <div className="flex gap-3">
                         <input
                             className="flex-1 px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-accent/40"
-                            placeholder="Nome da equipe"
+                            placeholder="Nome do time"
                             value={newTeamName}
                             onChange={(e) => setNewTeamName(e.target.value)}
                             onKeyDown={(e) => e.key === "Enter" && addTeam()}
@@ -49,10 +78,10 @@ export const AdmTeamsEdit = () => {
                     </div>
                 </div>
 
-                {/* Lista de equipes */}
+                {/* Lista de times */}
                 <div className="bg-white rounded-2xl border border-gray-200">
                     <div className="px-6 py-4 border-b border-gray-100">
-                        <h2 className="text-lg font-semibold">Equipes Cadastradas</h2>
+                        <h2 className="text-lg font-semibold">Times cadastrados</h2>
                     </div>
 
                     <div className="divide-y divide-gray-100">
@@ -60,7 +89,7 @@ export const AdmTeamsEdit = () => {
                             <div className="px-6 py-12 text-center">
                                 <Users className="w-12 h-12 text-gray-300 mx-auto mb-4" />
                                 <p className="text-gray-500 text-sm">
-                                    Nenhuma equipe cadastrada ainda
+                                    Nenhum time cadastrado ainda
                                 </p>
                             </div>
                         ) : (
