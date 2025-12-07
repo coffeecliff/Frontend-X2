@@ -1,17 +1,20 @@
 // Importações
 import { AuthProvider } from "./context/AuthContext";
+import { TeamsProvider } from "./context/TeamsContext";
 import { AppRoutes } from "./routes/AppRoutes";
-import { Toaster } from "react-hot-toast"; // ✅ Import necessário
+import { Toaster } from "react-hot-toast"; 
 
 // Código principal
 function App() {
   return (
     <AuthProvider>
-      {/* Rotas principais */}
-      <AppRoutes />
+      <TeamsProvider>
+        {/* Rotas principais */}
+        <AppRoutes />
 
-      {/* ✅ Componente global de notificações */}
-      <Toaster position="top-right" reverseOrder={false} />
+        {/* ✅ Componente global de notificações */}
+        <Toaster position="top-right" reverseOrder={false} />
+      </TeamsProvider>
     </AuthProvider>
   );
 }

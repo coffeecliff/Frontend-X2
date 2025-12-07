@@ -1,112 +1,155 @@
 // src/pages/Games.jsx
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { TeamsContext } from "../context/TeamsContext";
+import { mockApi } from "../services/mockApi";
 
 export const Games = () => {
-  const jogos = [
-    { id: 1, time1: "Time", placar1: 2, placar2: 1, time2: "Time" },
-    { id: 2, time1: "Time", placar1: 0, placar2: 5, time2: "Time" },
-    { id: 3, time1: "Time", placar1: 5, placar2: 1, time2: "Time" },
-    { id: 4, time1: "Time", placar1: 2, placar2: 2, time2: "Time" },
-    { id: 5, time1: "Time", placar1: 1, placar2: 0, time2: "Time" },
-    { id: 6, time1: "Time", placar1: 1, placar2: 0, time2: "Time" },
-  ];
-  
-  const TorneioBracket = ({ dados }) => {
+  const { teams } = useContext(TeamsContext);
+  const [matches, setMatches] = useState([]);
+  const [groups, setGroups] = useState([]);
+  const [table, setTable] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    // EXEMPLO: caso ainda não tenha o GET, colocamos textos placeholder
-    // Quando fizer o GET, basta passar "dados" como props com os nomes reais
-    const col1 = dados?.col1 || ["Time A", "Time B", "Time C", "Time D", "Time E", "Time F", "Time G", "Time H"];
-    const col2 = dados?.col2 || ["Vencedor 1", "Vencedor 2", "Vencedor 3", "Vencedor 4"];
-    const col3 = dados?.col3 || ["Semi 1", "Semi 2"];
-    const col4 = dados?.col4 || ["Finalista"];
-  
+  // Carregar dados ao montar
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [matchesData, groupsData, tableData] = await Promise.all([
+          mockApi.getPartidas(),
+          mockApi.getGrupos?.() || Promise.resolve([]),
+          mockApi.getTabela(),
+        ]);
+        setMatches(matchesData);
+        setGroups(groupsData || []);
+        setTable(tableData);
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []);
+
+  // Filtrar apenas partidas finalizadas
+  const finishedMatches = matches.filter((m) => m.status === "finalizado");
+
+  // Obter 2 melhores times de cada grupo para semifinais
+  const getGroupWinners = () => {
+    const groupA = table.filter((t) => t.grupo === "A").sort((a, b) => b.pontos - a.pontos);
+    const groupB = table.filter((t) => t.grupo === "B").sort((a, b) => b.pontos - a.pontos);
+
+    return {
+      semifinal1_1: groupA[0]?.time_id ? teams.find((t) => t.id === groupA[0].time_id)?.name : "",
+      semifinal1_2: groupB[0]?.time_id ? teams.find((t) => t.id === groupB[0].time_id)?.name : "",
+      semifinal2_1: groupA[1]?.time_id ? teams.find((t) => t.id === groupA[1].time_id)?.name : "",
+      semifinal2_2: groupB[1]?.time_id ? teams.find((t) => t.id === groupB[1].time_id)?.name : "",
+    };
+  };
+
+  // Obter semifinalistas
+  const getSemifinalists = () => {
+    const semifinalMatches = finishedMatches.filter((m) => m.status === "finalizado");
+    // Últimas 2 partidas finalizadas são as semifinais
+    if (semifinalMatches.length >= 2) {
+      const semi1 = semifinalMatches[semifinalMatches.length - 2];
+      const semi2 = semifinalMatches[semifinalMatches.length - 1];
+      return {
+        finalist1: semi1?.gols_time1 > semi1?.gols_time2 ? semi1.time1_nome : semi1?.time2_nome,
+        finalist2: semi2?.gols_time1 > semi2?.gols_time2 ? semi2.time1_nome : semi2?.time2_nome,
+      };
+    }
+    return { finalist1: "", finalist2: "" };
+  };
+
+  const TorneioBracket = ({ dados }) => {
+    const col1 = dados?.col1 || [];
+    const col2 = dados?.col2 || [];
+    const col3 = dados?.col3 || [];
+    const col4 = dados?.col4 || [];
+
     return (
-      <div className="w-full flex justify-center overflow-x-auto mt-10 mb-30 space-x-4">
+      <div className="w-full flex justify-center overflow-x-auto mt-10 mb-10 space-x-4">
         <div className="grid grid-cols-1">
-          
-          {/* ==== COLUNA 1 ==== */}
+          {/* ==== COLUNA 1 (GRUPOS) ==== */}
           <div className="flex flex-col justify-between h-full space-y-10">
-            {[1,2,3,4].map((num, idx) => (
+            {[1, 2, 3, 4].map((num, idx) => (
               <div key={num} className="flex items-center space-x-1">
                 <span className="text-white text-xl font-bold w-6">{num}</span>
-  
+
                 {/* Box esquerda */}
-                <div className="w-45 h-10 bg-white rounded-md shadow flex items-center px-2 text-black text-sm">
+                <div className="w-45 h-10 bg-white rounded-md shadow flex items-center px-2 text-black text-sm font-semibold">
                   {col1[idx] || ""}
                 </div>
-  
+
                 <div className="w-5 h-1 bg-white" />
-  
+
                 {/* Box direita */}
-                <div className="w-45 h-10 bg-white rounded-md shadow flex items-center px-2 text-black text-sm">
-                  {col1[idx + 4] || "—"}
+                <div className="w-45 h-10 bg-white rounded-md shadow flex items-center px-2 text-black text-sm font-semibold">
+                  {col1[idx + 4] || ""}
                 </div>
               </div>
             ))}
           </div>
         </div>
-  
+
         {/* Colunas 2, 3, 4 */}
         <div className="grid grid-cols-3 gap-x-5">
-  
-          {/* ==== COLUNA 2 ==== */}
+          {/* ==== COLUNA 2 (OITAVAS) ==== */}
           <div className="flex flex-col justify-evenly">
-            {[0,1,2,3].map((i) => (
+            {[0, 1, 2, 3].map((i) => (
               <div key={i} className="flex items-center">
                 <div className="w-6 h-1 bg-white" />
-                <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm">
+                <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm font-semibold">
                   {col2[i] || ""}
                 </div>
               </div>
             ))}
           </div>
-  
+
           {/* ==== COLUNA 3 (SEMIFINAL) ==== */}
           <div className="flex flex-col justify-evenly">
-            {[0,1].map((i) => (
+            {[0, 1].map((i) => (
               <div key={i} className="flex items-center">
                 <div className="w-6 h-1 bg-white" />
-                <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm">
+                <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm font-semibold">
                   {col3[i] || ""}
                 </div>
               </div>
             ))}
           </div>
-  
+
           {/* ==== COLUNA 4 (FINAL) ==== */}
           <div className="flex flex-col justify-center">
             <div className="flex items-center">
               <div className="w-6 h-1 bg-white" />
-              <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm">
+              <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm font-semibold">
                 {col4[0] || ""}
               </div>
             </div>
           </div>
-  
         </div>
       </div>
     );
   };
-  
-
   // Estado do jogo selecionado
   const [jogoSelecionado, setJogoSelecionado] = useState(null);
 
   // Card de jogo clicável
-  const CardJogo = ({ time1, placar1, placar2, time2, onClick }) => (
+  const CardJogo = ({ time1_nome, gols_time1, gols_time2, time2_nome, onClick }) => (
     <div
       onClick={onClick}
       className="flex justify-between items-center bg-white rounded-xl shadow-md mb-2 p-3 cursor-pointer hover:bg-white/80 transition"
     >
       <span className="text-xs font-bold text-black bg-light px-2 py-1 rounded-md">
-        ENCERRADO
+        FINALIZADO
       </span>
       <div className="flex-1 flex justify-center items-center text-gray-800 font-semibold">
-        <span>{time1}</span>
+        <span>{time1_nome || "—"}</span>
         <span className="mx-3 text-gray-800 font-bold">
-          {placar1} x {placar2}
+          {gols_time1} x {gols_time2}
         </span>
-        <span>{time2}</span>
+        <span>{time2_nome || "—"}</span>
       </div>
       <span className="text-gray-400 text-lg">›</span>
     </div>
@@ -124,10 +167,10 @@ export const Games = () => {
         </button>
         <h2 className="text-2xl font-extrabold text-dark-800 mb-4">Detalhes do Jogo</h2>
         <p className="text-gray-700 mb-4">
-          <span className="font-bold">{jogo.time1}</span> {jogo.placar1} x {jogo.placar2}{" "}
-          <span className="font-bold">{jogo.time2}</span>
+          <span className="font-bold">{jogo.time1_nome}</span> {jogo.gols_time1} x {jogo.gols_time2}{" "}
+          <span className="font-bold">{jogo.time2_nome}</span>
         </p>
-        <p className="text-gray-500 text-sm mb-4">Status: Encerrado</p>
+        <p className="text-gray-500 text-sm mb-4">Status: Finalizado</p>
         <button
           onClick={onClose}
           className="bg-light text-white px-6 py-2 rounded-full cursor-pointer hover:bg-accent transition"
@@ -137,6 +180,14 @@ export const Games = () => {
       </div>
     </div>
   );
+
+  if (loading) {
+    return (
+      <div className="w-full min-h-screen bg-dark flex items-center justify-center">
+        <p className="text-white text-xl">Carregando chaveamento...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full min-h-screen bg-dark flex flex-col items-center py-12 px-4 relative overflow-hidden">
@@ -172,36 +223,78 @@ export const Games = () => {
       </h2>
 
       {/* Tabela estilo torneio */}
-      <TorneioBracket />
+      <TorneioBracket
+        dados={{
+          col1: table
+            .filter((t) => t.grupo === "A" || t.grupo === "B")
+            .sort((a, b) => a.grupo.localeCompare(b.grupo) || b.pontos - a.pontos)
+            .slice(0, 8)
+            .map((t) => teams.find((tm) => tm.id === t.time_id)?.name || "—"),
+          col2: Array(4).fill("—"),
+          col3: [getGroupWinners().semifinal1_1, getGroupWinners().semifinal2_1],
+          col4: [getSemifinalists().finalist1],
+        }}
+      />
 
       {/* Título */}
       <h1 className="text-2xl font-extrabold text-white text-center">
-        TABELA
+        PARTIDAS FINALIZADAS
       </h1>
       <h2 className="text-lg font-bold text-white mb-8 text-center">
-        DOS JOGOS
+        RESULTADOS
       </h2>
 
-      {/* Primeira tabela */}
+      {/* Partidas Finalizadas */}
       <div className="relative z-10 w-full max-w-3xl bg-white/75 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
-        {jogos.map((jogo) => (
-          <CardJogo
-            key={jogo.id}
-            {...jogo}
-            onClick={() => setJogoSelecionado(jogo)}
-          />
-        ))}
+        {finishedMatches.length === 0 ? (
+          <p className="text-gray-600 text-center py-6">Nenhuma partida finalizada ainda</p>
+        ) : (
+          finishedMatches.map((jogo) => (
+            <CardJogo
+              key={jogo.id}
+              time1_nome={jogo.time1_nome}
+              gols_time1={jogo.gols_time1}
+              gols_time2={jogo.gols_time2}
+              time2_nome={jogo.time2_nome}
+              onClick={() => setJogoSelecionado(jogo)}
+            />
+          ))
+        )}
       </div>
 
-      {/* Segunda tabela */}
+      {/* Partidas Agendadas */}
+      <h1 className="text-2xl font-extrabold text-white text-center">
+        PARTIDAS AGENDADAS
+      </h1>
+      <h2 className="text-lg font-bold text-white mb-8 text-center">
+        PRÓXIMOS JOGOS
+      </h2>
+
       <div className="relative z-10 w-full max-w-3xl bg-white/75 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
-        {jogos.map((jogo) => (
-          <CardJogo
-            key={jogo.id + "-b"}
-            {...jogo}
-            onClick={() => setJogoSelecionado(jogo)}
-          />
-        ))}
+        {matches.filter((m) => m.status === "agendado").length === 0 ? (
+          <p className="text-gray-600 text-center py-6">Nenhuma partida agendada</p>
+        ) : (
+          matches
+            .filter((m) => m.status === "agendado")
+            .map((jogo) => (
+              <div
+                key={jogo.id}
+                className="flex justify-between items-center bg-yellow-50 rounded-xl shadow-md mb-2 p-3 cursor-pointer hover:bg-yellow-100 transition"
+              >
+                <span className="text-xs font-bold text-yellow-900 bg-yellow-200 px-2 py-1 rounded-md">
+                  AGENDADO
+                </span>
+                <div className="flex-1 flex justify-center items-center text-gray-800 font-semibold">
+                  <span>{jogo.time1_nome || "—"}</span>
+                  <span className="mx-3 text-gray-800 font-bold">
+                    {jogo.gols_time1} x {jogo.gols_time2}
+                  </span>
+                  <span>{jogo.time2_nome || "—"}</span>
+                </div>
+                <span className="text-gray-400 text-lg">›</span>
+              </div>
+            ))
+        )}
       </div>
 
       {/* Modal */}

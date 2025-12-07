@@ -13,7 +13,6 @@ export const PrivateNavbar = () => {
   // Links privados do sistema admin
   const navLink = [
     { to: "/admhomeedit", label: "Editar" },
-    { to: "/admsettings", label: "Configurações" },
   ];
 
   const isActive = (path) => location.pathname === path;

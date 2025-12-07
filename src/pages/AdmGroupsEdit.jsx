@@ -1,41 +1,64 @@
-// src/pages/GamesEdit.jsx
-import { useState } from "react";
+// src/pages/AdmGroupsEdit.jsx
+import { useState, useEffect, useContext } from "react";
 import { Plus, Users, Trash2, Shuffle } from "lucide-react";
+import { TeamsContext } from "../context/TeamsContext";
+import { mockApi } from "../services/mockApi";
 
 export const AdmGroupsEdit = () => {
-  // ==== DADOS FIXOS EXEMPLO ====
-  const [teams] = useState([
-    { id: 1, name: "Time A" },
-    { id: 2, name: "Time B" },
-    { id: 3, name: "Time C" },
-    { id: 4, name: "Time D" },
-    { id: 5, name: "Time E" },
-  ]);
+  const { teams } = useContext(TeamsContext);
 
-  const [groups, setGroups] = useState([
-    { id: 1, name: "Grupo 1", teams: [{ id: 1, name: "Time A" }] },
-    { id: 2, name: "Grupo 2", teams: [{ id: 2, name: "Time B" }] },
-    { id: 3, name: "Grupo 3", teams: [] },
-  ]);
-
+  const [groups, setGroups] = useState([]);
   const [newGroupName, setNewGroupName] = useState("");
 
-  // ==== Funções reduzidas para versão fixa ====
+  // Carregar grupos ao montar o componente
+  useEffect(() => {
+    const loadGroups = async () => {
+      try {
+        const mockData = mockApi.getMockData();
+        // Se não houver grupos, criar os padrões
+        if (!mockData.grupos) {
+          mockData.grupos = [
+            { id: 1, name: "Grupo 1", teams: [] },
+            { id: 2, name: "Grupo 2", teams: [] },
+          ];
+        }
+        setGroups(mockData.grupos);
+      } catch (error) {
+        console.error("Erro ao carregar grupos:", error);
+      }
+    };
+
+    loadGroups();
+  }, []);
+
+  // ==== Funções com persistência ====
   const addGroup = () => {
     if (!newGroupName.trim()) return;
-    setGroups((prev) => [
-      ...prev,
-      {
-        id: prev.length + 1,
-        name: newGroupName,
-        teams: [],
-      },
-    ]);
+    
+    const newGroup = {
+      id: Math.max(...groups.map((g) => g.id), 0) + 1,
+      name: newGroupName,
+      teams: [],
+    };
+    
+    setGroups((prev) => [...prev, newGroup]);
+
+    // Persistir no mockApi
+    const mockData = mockApi.getMockData();
+    if (!mockData.grupos) mockData.grupos = [];
+    mockData.grupos.push(newGroup);
+
     setNewGroupName("");
   };
 
   const removeGroup = (groupId) => {
     setGroups((prev) => prev.filter((g) => g.id !== groupId));
+
+    // Persistir no mockApi
+    const mockData = mockApi.getMockData();
+    if (mockData.grupos) {
+      mockData.grupos = mockData.grupos.filter((g) => g.id !== groupId);
+    }
   };
 
   const addTeamToGroup = (groupId, teamId) => {
@@ -49,6 +72,16 @@ export const AdmGroupsEdit = () => {
           : g
       )
     );
+
+    // Persistir no mockApi
+    const mockData = mockApi.getMockData();
+    if (mockData.grupos) {
+      mockData.grupos = mockData.grupos.map((g) =>
+        g.id === groupId
+          ? { ...g, teams: [...(g.teams || []), team] }
+          : g
+      );
+    }
   };
 
   const removeTeamFromGroup = (groupId, teamId) => {
@@ -59,6 +92,16 @@ export const AdmGroupsEdit = () => {
           : g
       )
     );
+
+    // Persistir no mockApi
+    const mockData = mockApi.getMockData();
+    if (mockData.grupos) {
+      mockData.grupos = mockData.grupos.map((g) =>
+        g.id === groupId
+          ? { ...g, teams: (g.teams || []).filter((t) => t.id !== teamId) }
+          : g
+      );
+    }
   };
 
   return (
@@ -134,7 +177,7 @@ export const AdmGroupsEdit = () => {
                 <select
                   onChange={(e) => {
                     if (e.target.value) {
-                      addTeamToGroup(group.id, e.target.value);
+                      addTeamToGroup(group.id, parseInt(e.target.value));
                       e.target.value = "";
                     }
                   }}

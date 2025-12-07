@@ -1,47 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Plus, Trash2, Users } from "lucide-react";
-import { mockApi } from "../services/mockApi";
+import { TeamsContext } from "../context/TeamsContext";
 
 export const AdmTeamsEdit = () => {
-    const [teams, setTeams] = useState([]);
+    const { teams, addTeam, removeTeam, loading } = useContext(TeamsContext);
     const [newTeamName, setNewTeamName] = useState("");
 
-    // Carregar times ao montar o componente
-    useEffect(() => {
-        const loadTeams = async () => {
-            try {
-                const data = await mockApi.getTimes();
-                // Mapear estrutura: id, nome -> id, name
-                const mappedTeams = data.map((team) => ({
-                    id: team.id,
-                    name: team.nome,
-                    escudo: team.escudo,
-                }));
-                setTeams(mappedTeams);
-            } catch (error) {
-                console.error("Erro ao carregar times:", error);
-            }
-        };
-
-        loadTeams();
-    }, []);
-
-    const addTeam = () => {
+    const handleAddTeam = () => {
         if (!newTeamName.trim()) return;
-        
-        // Criar novo time com ID temporário (será sincronizado com mockApi depois)
-        const newTeam = {
-            id: Math.max(...teams.map((t) => t.id), 0) + 1,
-            name: newTeamName,
-            escudo: null,
-        };
-        
-        setTeams((prev) => [...prev, newTeam]);
+        addTeam(newTeamName);
         setNewTeamName("");
     };
 
-    const removeTeam = (id) => {
-        setTeams((prev) => prev.filter((t) => t.id !== id));
+    const handleRemoveTeam = (id) => {
+        removeTeam(id);
     };
 
     return (
@@ -66,10 +38,10 @@ export const AdmTeamsEdit = () => {
                             placeholder="Nome do time"
                             value={newTeamName}
                             onChange={(e) => setNewTeamName(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && addTeam()}
+                            onKeyDown={(e) => e.key === "Enter" && handleAddTeam()}
                         />
                         <button
-                            onClick={addTeam}
+                            onClick={handleAddTeam}
                             className="cursor-pointer px-5 py-3 bg-accent text-white rounded-xl hover:bg-accent/80 flex items-center gap-2 transition font-medium"
                         >
                             <Plus size={18} />
@@ -103,7 +75,7 @@ export const AdmTeamsEdit = () => {
                                     </span>
 
                                     <button
-                                        onClick={() => removeTeam(team.id)}
+                                        onClick={() => handleRemoveTeam(team.id)}
                                         className="cursor-pointer text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition"
                                     >
                                         <Trash2 size={18} />

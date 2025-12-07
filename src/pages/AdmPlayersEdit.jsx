@@ -1,14 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Edit3, Save, X, ImagePlus, PlusCircle } from "lucide-react";
 import { mockApi } from "../services/mockApi";
+import { TeamsContext } from "../context/TeamsContext";
+import { PlayerImage } from "../components/PlayerImage";
 
 export const AdmPlayersEdit = () => {
   const [search, setSearch] = useState("");
   const [order, setOrder] = useState("az");
   const [players, setPlayers] = useState([]);
-  const [teams, setTeams] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [adding, setAdding] = useState(false);
+
+  const { teams } = useContext(TeamsContext);
 
   const [newPlayer, setNewPlayer] = useState({
     nome: "",
@@ -17,38 +20,48 @@ export const AdmPlayersEdit = () => {
     foto: null,
   });
 
-  // Carregar times e jogadores ao montar o componente
+  // Carregar jogadores ao montar o componente
   useEffect(() => {
-    const loadData = async () => {
+    const loadPlayers = async () => {
       try {
-        // Carregar times
-        const timesData = await mockApi.getTimes();
-        const mappedTeams = timesData.map((team) => ({
-          id: team.id,
-          name: team.nome,
-        }));
-        setTeams(mappedTeams);
-
-        // Carregar jogadores
         const playersData = await mockApi.getJogadores();
         const mappedPlayers = playersData.map((player) => ({
           ...player,
-          time_nome: player.time_nome || mappedTeams.find(t => t.id === player.time_id)?.name || "SEM TIME",
+          time_nome: player.time_nome || teams.find(t => t.id === player.time_id)?.name || "SEM TIME",
           nascimento: player.data_nascimento,
         }));
         setPlayers(mappedPlayers);
       } catch (error) {
-        console.error("Erro ao carregar dados:", error);
+        console.error("Erro ao carregar jogadores:", error);
       }
     };
 
-    loadData();
-  }, []);
+    loadPlayers();
+  }, [teams]);
 
   const handleChange = (id, field, value) => {
     setPlayers((prev) =>
       prev.map((p) => (p.id === id ? { ...p, [field]: value } : p))
     );
+  };
+
+  const savePlayerChanges = (id) => {
+    const updatedPlayer = players.find(p => p.id === id);
+    if (!updatedPlayer) return;
+
+    const mockData = mockApi.getMockData();
+    const playerIndex = mockData.jogadores.findIndex(p => p.id === id);
+    
+    if (playerIndex !== -1) {
+      mockData.jogadores[playerIndex] = {
+        ...mockData.jogadores[playerIndex],
+        nome: updatedPlayer.nome,
+        data_nascimento: updatedPlayer.nascimento,
+        time_nome: updatedPlayer.time_nome,
+        time_id: teams.find(t => t.name === updatedPlayer.time_nome)?.id || mockData.jogadores[playerIndex].time_id,
+        foto: updatedPlayer.foto,
+      };
+    }
   };
 
   const handleImageUpload = (id, file) => {
@@ -90,6 +103,19 @@ export const AdmPlayersEdit = () => {
 
     setPlayers((prev) => [...prev, playerToAdd]);
 
+    // Persistir no mockApi
+    const mockData = mockApi.getMockData();
+    mockData.jogadores.push({
+      id,
+      nome: newPlayer.nome,
+      data_nascimento: newPlayer.data_nascimento,
+      time_id: selectedTeam?.id || 1,
+      time_nome: newPlayer.time_nome,
+      foto: newPlayer.foto,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    });
+
     setNewPlayer({ nome: "", data_nascimento: "", time_nome: "", foto: null });
     setAdding(false);
   };
@@ -127,10 +153,7 @@ export const AdmPlayersEdit = () => {
           <div className="flex gap-4 items-center">
             {/* Foto */}
             <div className="relative">
-              <img
-                src={newPlayer.foto || "https://via.placeholder.com/80?text=Foto"}
-                className="w-20 h-20 rounded object-cover border border-neutral-600"
-              />
+              <PlayerImage src={newPlayer.foto} alt="Novo jogador" />
 
               <label className="absolute bottom-0 right-0 bg-accent p-1 rounded cursor-pointer">
                 <ImagePlus size={18} />
@@ -218,10 +241,7 @@ export const AdmPlayersEdit = () => {
           >
             {/* FOTO */}
             <div className="relative">
-              <img
-                src={player.foto || "https://via.placeholder.com/80?text=Foto"}
-                className="w-20 h-20 rounded object-cover border border-neutral-600"
-              />
+              <PlayerImage src={player.foto} alt={player.nome} />
 
               <label className="absolute bottom-0 right-0 bg-accent p-1 rounded cursor-pointer">
                 <ImagePlus size={18} />
@@ -277,7 +297,10 @@ export const AdmPlayersEdit = () => {
             {editingId === player.id ? (
               <button
                 className="bg-green-600 px-3 py-2 rounded text-white flex items-center gap-1"
-                onClick={() => setEditingId(null)}
+                onClick={() => {
+                  savePlayerChanges(player.id);
+                  setEditingId(null);
+                }}
               >
                 <Save size={18} /> Salvar
               </button>
@@ -292,9 +315,11 @@ export const AdmPlayersEdit = () => {
 
             <button
               className="bg-red-600 px-3 py-2 cursor-pointer rounded text-white flex items-center gap-1"
-              onClick={() =>
-                setPlayers(players.filter((p) => p.id !== player.id))
-              }
+              onClick={() => {
+                setPlayers(players.filter((p) => p.id !== player.id));
+                const mockData = mockApi.getMockData();
+                mockData.jogadores = mockData.jogadores.filter((p) => p.id !== player.id);
+              }}
             >
               <X size={18} /> Remover
             </button>

@@ -153,34 +153,7 @@ let mockData = {
       updated_at: new Date().toISOString(),
     },
   ],
-  partidas: [
-    {
-      id: 1,
-      data_hora: new Date(Date.now() + 86400000).toISOString(),
-      local: "Maracanã",
-      placar_mandante: 0,
-      placar_visitante: 0,
-      time_mandante_id: 1,
-      time_visitante_id: 2,
-      time_mandante: { id: 1, nome: "Flamengo" },
-      time_visitante: { id: 2, nome: "Corinthians" },
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    },
-    {
-      id: 2,
-      data_hora: new Date(Date.now() + 172800000).toISOString(),
-      local: "Allianz Parque",
-      placar_mandante: 0,
-      placar_visitante: 0,
-      time_mandante_id: 3,
-      time_visitante_id: 4,
-      time_mandante: { id: 3, nome: "Palmeiras" },
-      time_visitante: { id: 4, nome: "São Paulo" },
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    },
-  ],
+  partidas: [],
   tabela: [
     // GRUPO A
     {
@@ -317,6 +290,22 @@ let mockData = {
       time_id: 4,
       grupo: 'B',
       flag: 'br.svg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    },
+  ],
+  grupos: [
+    {
+      id: 1,
+      name: "Grupo A",
+      teams: [1, 2, 3, 4],
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    },
+    {
+      id: 2,
+      name: "Grupo B",
+      teams: [1, 2, 3, 4],
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     },
@@ -899,6 +888,20 @@ async function getTabela(skip = 0, limit = 100) {
 }
 
 // ============================================================
+// 🔹 GRUPOS API
+// ============================================================
+
+/**
+ * GET /grupos
+ */
+async function getGrupos(skip = 0, limit = 100) {
+  await simulateNetworkDelay();
+
+  const grupos = (mockData.grupos || []).slice(skip, skip + limit);
+  return createResponse(grupos, 200);
+}
+
+// ============================================================
 // 🔹 PATROCINADORES API
 // ============================================================
 
@@ -1033,6 +1036,17 @@ function resetMockData() {
   location.reload();
 }
 
+/**
+ * Salva mockData no localStorage
+ */
+function saveMockDataSync() {
+  try {
+    localStorage.setItem("x2_football_mockData", JSON.stringify(mockData));
+  } catch (error) {
+    console.error("Erro ao salvar mockData:", error);
+  }
+}
+
 // ============================================================
 // 🔹 EXPORT (para Node.js e módulos)
 // ============================================================
@@ -1125,10 +1139,12 @@ export const mockApi = {
   getPartidas: async (skip, limit) => handleResponse(await getPartidas(skip, limit)),
   getPatrocinadores: async (skip, limit) => handleResponse(await getPatrocinadores(skip, limit)),
   getTabela: async (skip, limit) => handleResponse(await getTabela(skip, limit)),
+  getGrupos: async (skip, limit) => handleResponse(await getGrupos(skip, limit)),
   getCurrentUser,
   clearAuth,
   getMockData,
   resetMockData,
+  saveMockDataSync,
 };
 
 // Para interoperabilidade CommonJS (se alguém importar via require())
