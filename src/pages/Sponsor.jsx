@@ -11,10 +11,11 @@ export const Sponsor = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-darki pt-10">
+
       {/* Logo principal */}
       <div className="flex flex-col items-center">
         <img
-          img src="/X2logoY.svg"
+          src="/X2logoY.svg"
           alt="Logo"
           className="w-68 h-68 object-contain drop-shadow-xl"
         />
@@ -36,6 +37,7 @@ export const Sponsor = () => {
           />
         ))}
       </div>
+
     </div>
   );
-}
+};
