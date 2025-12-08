@@ -15,14 +15,13 @@ export const AdmGroupsEdit = () => {
     const loadGroups = async () => {
       try {
         const mockData = mockApi.getMockData();
-        // Se não houver grupos, criar os padrões
+        // Se não houver grupos, iniciar vazio
         if (!mockData.grupos) {
-          mockData.grupos = [
-            { id: 1, name: "Grupo 1", teams: [] },
-            { id: 2, name: "Grupo 2", teams: [] },
-          ];
+          mockData.grupos = [];
+          mockApi.saveMockDataSync();
         }
-        setGroups(mockData.grupos);
+        // Faz uma cópia para evitar referência duplicada
+        setGroups([...mockData.grupos]);
       } catch (error) {
         console.error("Erro ao carregar grupos:", error);
       }
@@ -35,45 +34,41 @@ export const AdmGroupsEdit = () => {
   const addGroup = () => {
     if (!newGroupName.trim()) return;
     
+    // 1. Atualizar mockApi PRIMEIRO
+    const mockData = mockApi.getMockData();
+    if (!mockData.grupos) mockData.grupos = [];
+    
     const newGroup = {
-      id: Math.max(...groups.map((g) => g.id), 0) + 1,
+      id: Math.max(...mockData.grupos.map((g) => g.id), 0) + 1,
       name: newGroupName,
       teams: [],
     };
     
-    setGroups((prev) => [...prev, newGroup]);
-
-    // Persistir no mockApi
-    const mockData = mockApi.getMockData();
-    if (!mockData.grupos) mockData.grupos = [];
     mockData.grupos.push(newGroup);
-
+    mockApi.saveMockDataSync();
+    
+    // 2. Depois atualizar o state React
+    setGroups([...mockData.grupos]);
     setNewGroupName("");
   };
 
   const removeGroup = (groupId) => {
-    setGroups((prev) => prev.filter((g) => g.id !== groupId));
-
-    // Persistir no mockApi
+    // 1. Atualizar mockApi PRIMEIRO
     const mockData = mockApi.getMockData();
     if (mockData.grupos) {
       mockData.grupos = mockData.grupos.filter((g) => g.id !== groupId);
+      mockApi.saveMockDataSync();
     }
+    
+    // 2. Depois atualizar o state React
+    setGroups([...mockData.grupos]);
   };
 
   const addTeamToGroup = (groupId, teamId) => {
     const team = teams.find((t) => t.id == teamId);
     if (!team) return;
 
-    setGroups((prev) =>
-      prev.map((g) =>
-        g.id === groupId
-          ? { ...g, teams: [...g.teams, team] }
-          : g
-      )
-    );
-
-    // Persistir no mockApi
+    // 1. Atualizar mockApi PRIMEIRO
     const mockData = mockApi.getMockData();
     if (mockData.grupos) {
       mockData.grupos = mockData.grupos.map((g) =>
@@ -81,19 +76,15 @@ export const AdmGroupsEdit = () => {
           ? { ...g, teams: [...(g.teams || []), team] }
           : g
       );
+      mockApi.saveMockDataSync();
     }
+
+    // 2. Depois atualizar o state React
+    setGroups([...mockData.grupos]);
   };
 
   const removeTeamFromGroup = (groupId, teamId) => {
-    setGroups((prev) =>
-      prev.map((g) =>
-        g.id === groupId
-          ? { ...g, teams: g.teams.filter((t) => t.id !== teamId) }
-          : g
-      )
-    );
-
-    // Persistir no mockApi
+    // 1. Atualizar mockApi PRIMEIRO
     const mockData = mockApi.getMockData();
     if (mockData.grupos) {
       mockData.grupos = mockData.grupos.map((g) =>
@@ -101,7 +92,11 @@ export const AdmGroupsEdit = () => {
           ? { ...g, teams: (g.teams || []).filter((t) => t.id !== teamId) }
           : g
       );
+      mockApi.saveMockDataSync();
     }
+
+    // 2. Depois atualizar o state React
+    setGroups([...mockData.grupos]);
   };
 
   return (

@@ -229,8 +229,8 @@ export const Games = () => {
             .filter((t) => t.grupo === "A" || t.grupo === "B")
             .sort((a, b) => a.grupo.localeCompare(b.grupo) || b.pontos - a.pontos)
             .slice(0, 8)
-            .map((t) => teams.find((tm) => tm.id === t.time_id)?.name || "—"),
-          col2: Array(4).fill("—"),
+            .map((t) => teams.find((tm) => tm.id === t.time_id)?.name || ""),
+          col2: [],
           col3: [getGroupWinners().semifinal1_1, getGroupWinners().semifinal2_1],
           col4: [getSemifinalists().finalist1],
         }}
@@ -262,40 +262,6 @@ export const Games = () => {
         )}
       </div>
 
-      {/* Partidas Agendadas */}
-      <h1 className="text-2xl font-extrabold text-white text-center">
-        PARTIDAS AGENDADAS
-      </h1>
-      <h2 className="text-lg font-bold text-white mb-8 text-center">
-        PRÓXIMOS JOGOS
-      </h2>
-
-      <div className="relative z-10 w-full max-w-3xl bg-white/75 rounded-2xl shadow-lg p-6 mb-10 backdrop-blur-sm">
-        {matches.filter((m) => m.status === "agendado").length === 0 ? (
-          <p className="text-gray-600 text-center py-6">Nenhuma partida agendada</p>
-        ) : (
-          matches
-            .filter((m) => m.status === "agendado")
-            .map((jogo) => (
-              <div
-                key={jogo.id}
-                className="flex justify-between items-center bg-yellow-50 rounded-xl shadow-md mb-2 p-3 cursor-pointer hover:bg-yellow-100 transition"
-              >
-                <span className="text-xs font-bold text-yellow-900 bg-yellow-200 px-2 py-1 rounded-md">
-                  AGENDADO
-                </span>
-                <div className="flex-1 flex justify-center items-center text-gray-800 font-semibold">
-                  <span>{jogo.time1_nome || "—"}</span>
-                  <span className="mx-3 text-gray-800 font-bold">
-                    {jogo.gols_time1} x {jogo.gols_time2}
-                  </span>
-                  <span>{jogo.time2_nome || "—"}</span>
-                </div>
-                <span className="text-gray-400 text-lg">›</span>
-              </div>
-            ))
-        )}
-      </div>
 
       {/* Modal */}
       {jogoSelecionado && (
