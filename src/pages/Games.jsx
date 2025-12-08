@@ -10,15 +10,20 @@ export const Games = () => {
   const [table, setTable] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Carregar dados ao montar
+  // Carregar dados ao montar e recarregar periodicamente
   useEffect(() => {
+    console.log("useEffect Games.jsx iniciado");
+    
     const loadData = async () => {
       try {
-        const [matchesData, groupsData, tableData] = await Promise.all([
-          mockApi.getPartidas(),
-          mockApi.getGrupos?.() || Promise.resolve([]),
-          mockApi.getTabela(),
-        ]);
+        console.log("Carregando dados...");
+        const matchesData = await mockApi.getPartidas();
+        const groupsData = await (mockApi.getGrupos?.() || Promise.resolve([]));
+        const tableData = await mockApi.getTabela();
+        
+        console.log("Matches:", matchesData);
+        console.log("Finalizadas:", matchesData.filter((m) => m.status === "finalizado"));
+        
         setMatches(matchesData);
         setGroups(groupsData || []);
         setTable(tableData);
@@ -28,7 +33,19 @@ export const Games = () => {
         setLoading(false);
       }
     };
+    
     loadData();
+    
+    // Recarregar dados a cada 2 segundos para sincronizar com AdmMatchesEdit
+    const interval = setInterval(() => {
+      console.log("Polling - recarregando dados");
+      loadData();
+    }, 2000);
+    
+    return () => {
+      console.log("Limpando intervalo");
+      clearInterval(interval);
+    };
   }, []);
 
   // Filtrar apenas partidas finalizadas

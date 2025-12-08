@@ -1,11 +1,33 @@
 // src/pages/About.jsx
+import { useState, useEffect } from "react";
+
 export const About = () => {
+  const [content, setContent] = useState({
+    image: "/X2logoY.svg",
+    title: "▶ TORNEIO X2 FUTEBOL JUVENIL – REGULAMENTO (2010 A 2015)",
+    description1:
+      "O torneio acontecerá no dia 16 de novembro de 2025, com objetivo de promover o desenvolvimento esportivo, social e a integração entre atletas nascidos entre 2010 e 2013.",
+    description2:
+      "A inscrição custa R$ 50,00 por jogador (inclui camiseta do evento e marmita) e deverá ser paga até 03/10/2025. As equipes serão formadas em trios (1 goleiro + 2 jogadores), mediante apresentação de documento de identidade.",
+  });
+
+  useEffect(() => {
+    const saved = localStorage.getItem("aboutContent");
+    if (saved) {
+      try {
+        setContent(JSON.parse(saved));
+      } catch (error) {
+        console.error("Erro ao carregar conteúdo:", error);
+      }
+    }
+  }, []);
+
   return (
     <div className="w-full min-h-screen bg-dark flex flex-col items-center px-6 py-12">
       
       {/* Logo central */}
       <img
-        src="/X2logoY.svg"
+        src={content.image || "/X2logoY.svg"}
         alt="Logo"
         className="h-42 mb-16 drop-shadow-lg"
       />
@@ -15,15 +37,13 @@ export const About = () => {
         
         <section>
           <h2 className="font-bold text-white mb-2">
-            ▶ TORNEIO X2 FUTEBOL JUVENIL – REGULAMENTO (2010 A 2015)
+            {content.title}
           </h2>
           <p>
-            O torneio acontecerá no dia 16 de novembro de 2025, com objetivo de promover o
-            desenvolvimento esportivo, social e a integração entre atletas nascidos entre 2010 e 2013.
+            {content.description1}
           </p>
           <p>
-            A inscrição custa R$ 50,00 por jogador (inclui camiseta do evento e marmita) e deverá ser paga até
-            03/10/2025. As equipes serão formadas em trios (1 goleiro + 2 jogadores), mediante apresentação de documento de identidade.
+            {content.description2}
           </p>
         </section>
 
