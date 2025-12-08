@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { mockApi } from "../services/mockApi";
+import * as teamsApi from "../api/teams";
 
 export const TeamsContext = createContext();
 
@@ -11,11 +11,11 @@ export const TeamsProvider = ({ children }) => {
   useEffect(() => {
     const loadTeams = async () => {
       try {
-        const data = await mockApi.getTimes();
-        const mappedTeams = data.map((team) => ({
+        const data = await teamsApi.listTeams();
+        const mappedTeams = (data || []).map((team) => ({
           id: team.id,
-          name: team.nome,
-          escudo: team.escudo,
+          name: team.nome || team.name || "",
+          escudo: team.escudo || null,
         }));
         setTeams(mappedTeams);
       } catch (error) {
@@ -28,41 +28,36 @@ export const TeamsProvider = ({ children }) => {
     loadTeams();
   }, []);
 
-  const addTeam = (teamName) => {
-    const newTeam = {
-      id: Math.max(...teams.map((t) => t.id), 0) + 1,
-      name: teamName,
-      escudo: null,
-    };
-    setTeams((prev) => [...prev, newTeam]);
-    
-    // Persistir no mockApi
-    const mockData = mockApi.getMockData();
-    mockData.times.push({
-      id: newTeam.id,
-      nome: newTeam.name,
-      escudo: newTeam.escudo,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    });
-    mockApi.saveMockDataSync();
-    
-    return newTeam;
+  const addTeam = async (teamName) => {
+    try {
+      const created = await teamsApi.createTeam({ nome: teamName, escudo: null });
+      const t = { id: created.id, name: created.nome || created.name, escudo: created.escudo || null };
+      setTeams((prev) => [...prev, t]);
+      return t;
+    } catch (err) {
+      console.error('Erro ao criar time:', err);
+      throw err;
+    }
   };
 
-  const removeTeam = (teamId) => {
-    setTeams((prev) => prev.filter((t) => t.id !== teamId));
-    
-    // Persistir no mockApi
-    const mockData = mockApi.getMockData();
-    mockData.times = mockData.times.filter((t) => t.id !== teamId);
-    mockApi.saveMockDataSync();
+  const removeTeam = async (teamId) => {
+    try {
+      await teamsApi.deleteTeam(teamId);
+      setTeams((prev) => prev.filter((t) => t.id !== teamId));
+    } catch (err) {
+      console.error('Erro ao deletar time:', err);
+      throw err;
+    }
   };
 
-  const updateTeam = (teamId, updates) => {
-    setTeams((prev) =>
-      prev.map((t) => (t.id === teamId ? { ...t, ...updates } : t))
-    );
+  const updateTeam = async (teamId, updates) => {
+    try {
+      const updated = await teamsApi.updateTeam(teamId, { nome: updates.name, escudo: updates.escudo });
+      setTeams((prev) => prev.map((t) => (t.id === teamId ? { ...t, name: updated.nome || updated.name, escudo: updated.escudo || null } : t)));
+    } catch (err) {
+      console.error('Erro ao atualizar time:', err);
+      throw err;
+    }
   };
 
   return (

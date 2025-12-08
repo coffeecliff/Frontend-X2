@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Edit3, Save, X, ImagePlus, PlusCircle } from "lucide-react";
-import { mockApi } from "../services/mockApi";
+import client from "../api/client";
 import { TeamsContext } from "../context/TeamsContext";
 import { PlayerImage } from "../components/PlayerImage";
 
@@ -24,13 +24,26 @@ export const AdmPlayersEdit = () => {
   useEffect(() => {
     const loadPlayers = async () => {
       try {
-        const playersData = await mockApi.getJogadores();
-        const mappedPlayers = playersData.map((player) => ({
-          ...player,
-          time_nome: player.time_nome || teams.find(t => t.id === player.time_id)?.name || "SEM TIME",
-          nascimento: player.data_nascimento,
-        }));
-        setPlayers(mappedPlayers);
+        // Fetch all times (each TimeResponse includes jogadores)
+        const res = await client.get('/times');
+        const times = res.data || [];
+        // flatten jogadores from times and map to UI shape
+        const mapped = [];
+        for (const time of times) {
+          const jgs = time.jogadores || [];
+          for (const j of jgs) {
+            mapped.push({
+              id: j.id,
+              nome: j.nome,
+              data_nascimento: j.data_nascimento,
+              time_id: time.id,
+              time_nome: time.nome,
+              nascimento: j.data_nascimento,
+              foto: null,
+            });
+          }
+        }
+        setPlayers(mapped);
       } catch (error) {
         console.error("Erro ao carregar jogadores:", error);
       }
@@ -48,20 +61,22 @@ export const AdmPlayersEdit = () => {
   const savePlayerChanges = (id) => {
     const updatedPlayer = players.find(p => p.id === id);
     if (!updatedPlayer) return;
-
-    const mockData = mockApi.getMockData();
-    const playerIndex = mockData.jogadores.findIndex(p => p.id === id);
-    
-    if (playerIndex !== -1) {
-      mockData.jogadores[playerIndex] = {
-        ...mockData.jogadores[playerIndex],
-        nome: updatedPlayer.nome,
-        data_nascimento: updatedPlayer.nascimento,
-        time_nome: updatedPlayer.time_nome,
-        time_id: teams.find(t => t.name === updatedPlayer.time_nome)?.id || mockData.jogadores[playerIndex].time_id,
-        foto: updatedPlayer.foto,
-      };
-    }
+    (async () => {
+      try {
+        const team = teams.find((t) => t.name === updatedPlayer.time_nome);
+        const payload = {
+          nome: updatedPlayer.nome,
+          data_nascimento: updatedPlayer.nascimento,
+          time_id: team ? team.id : updatedPlayer.time_id,
+        };
+        await client.put(`/times/jogadores/${id}`, payload);
+        // update local state
+        setPlayers((prev) => prev.map((p) => (p.id === id ? { ...p, ...updatedPlayer } : p)));
+      } catch (err) {
+        console.error('Erro ao salvar jogador:', err);
+        alert('Erro ao salvar jogador');
+      }
+    })();
   };
 
   const handleImageUpload = (id, file) => {
@@ -82,42 +97,61 @@ export const AdmPlayersEdit = () => {
     if (file) reader.readAsDataURL(file);
   };
 
-  const addPlayer = () => {
+  const addPlayer = async () => {
     if (!newPlayer.nome || !newPlayer.data_nascimento || !newPlayer.time_nome) {
       alert("Preencha todos os campos!");
       return;
     }
 
     const selectedTeam = teams.find((t) => t.name === newPlayer.time_nome);
-    const id = Math.max(...players.map((p) => p.id), 0) + 1;
+    if (!selectedTeam) {
+      alert('Time inválido');
+      return;
+    }
 
-    const playerToAdd = {
-      id,
-      nome: newPlayer.nome,
-      data_nascimento: newPlayer.data_nascimento,
-      time_nome: newPlayer.time_nome,
-      time_id: selectedTeam?.id || 1,
-      nascimento: newPlayer.data_nascimento,
-      foto: newPlayer.foto,
-    };
+    // quick auth check: ensure access token exists
+    const access = localStorage.getItem('access_token');
+    if (!access) {
+      alert('Você precisa estar logado como administrador para criar jogadores.');
+      return;
+    }
 
-    setPlayers((prev) => [...prev, playerToAdd]);
-
-    // Persistir no mockApi
-    const mockData = mockApi.getMockData();
-    mockData.jogadores.push({
-      id,
-      nome: newPlayer.nome,
-      data_nascimento: newPlayer.data_nascimento,
-      time_id: selectedTeam?.id || 1,
-      time_nome: newPlayer.time_nome,
-      foto: newPlayer.foto,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    });
-
-    setNewPlayer({ nome: "", data_nascimento: "", time_nome: "", foto: null });
-    setAdding(false);
+    try {
+      const payload = {
+        nome: newPlayer.nome,
+        data_nascimento: newPlayer.data_nascimento,
+        time_id: selectedTeam.id,
+      };
+      console.log('Criando jogador payload:', payload, 'teamId=', selectedTeam.id);
+      const res = await client.post(`/times/${selectedTeam.id}/jogadores`, payload);
+      const created = res.data;
+      const playerToAdd = {
+        id: created.id,
+        nome: created.nome,
+        data_nascimento: created.data_nascimento,
+        time_nome: selectedTeam.name,
+        time_id: selectedTeam.id,
+        nascimento: created.data_nascimento,
+        foto: newPlayer.foto || null,
+      };
+      setPlayers((prev) => [...prev, playerToAdd]);
+      setNewPlayer({ nome: "", data_nascimento: "", time_nome: "", foto: null });
+      setAdding(false);
+    } catch (err) {
+      const resp = err?.response;
+      let serverMsg = '';
+      if (resp && resp.data) {
+        try {
+          serverMsg = typeof resp.data === 'string' ? resp.data : JSON.stringify(resp.data);
+        } catch (err) {
+          serverMsg = String(resp.data);
+        }
+      } else {
+        serverMsg = err?.message || String(err);
+      }
+      console.error('Erro ao criar jogador:', err, resp && resp.data ? resp.data : null);
+      alert('Erro ao criar jogador: ' + serverMsg);
+    }
   };
 
   // FILTRAR
@@ -315,10 +349,14 @@ export const AdmPlayersEdit = () => {
 
             <button
               className="bg-red-600 px-3 py-2 cursor-pointer rounded text-white flex items-center gap-1"
-              onClick={() => {
-                setPlayers(players.filter((p) => p.id !== player.id));
-                const mockData = mockApi.getMockData();
-                mockData.jogadores = mockData.jogadores.filter((p) => p.id !== player.id);
+              onClick={async () => {
+                try {
+                  await client.delete(`/times/jogadores/${player.id}`);
+                  setPlayers((prev) => prev.filter((p) => p.id !== player.id));
+                } catch (err) {
+                  console.error('Erro ao deletar jogador:', err);
+                  alert('Erro ao deletar jogador');
+                }
               }}
             >
               <X size={18} /> Remover

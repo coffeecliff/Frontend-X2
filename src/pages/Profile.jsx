@@ -126,9 +126,9 @@ export const Profile = () => {
           <div>
             <label className="block text-sm font-bold mb-1">Tipo de conta:</label>
             <p className="bg-gray-100 rounded-lg p-2 capitalize">
-              {user?.type === "adm"
-                ? "Usuário ADM"
-                : "Usuário comum"}
+              {(user?.type || '').toString().toLowerCase() === 'admin'
+                ? 'Usuário ADMIN'
+                : 'Usuário comum'}
             </p>
 
           </div>

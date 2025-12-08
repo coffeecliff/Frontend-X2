@@ -2,7 +2,30 @@
 import { useState, useEffect, useContext } from "react";
 import { Plus, Users, Trash2, Shuffle } from "lucide-react";
 import { TeamsContext } from "../context/TeamsContext";
-import { mockApi } from "../services/mockApi";
+
+// Groups are client-side only for now (backend has no groups API).
+// Persist groups to localStorage instead of the old mockApi.
+
+const GROUPS_KEY = 'app_groups_v1';
+
+const loadGroupsFromStorage = () => {
+  try {
+    const raw = localStorage.getItem(GROUPS_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw);
+  } catch (e) {
+    console.error('Erro lendo grupos do localStorage', e);
+    return [];
+  }
+};
+
+const saveGroupsToStorage = (groups) => {
+  try {
+    localStorage.setItem(GROUPS_KEY, JSON.stringify(groups));
+  } catch (e) {
+    console.error('Erro salvando grupos no localStorage', e);
+  }
+};
 
 export const AdmGroupsEdit = () => {
   const { teams } = useContext(TeamsContext);
@@ -10,93 +33,74 @@ export const AdmGroupsEdit = () => {
   const [groups, setGroups] = useState([]);
   const [newGroupName, setNewGroupName] = useState("");
 
-  // Carregar grupos ao montar o componente
+  // Carregar grupos ao montar o componente (a partir do localStorage)
   useEffect(() => {
-    const loadGroups = async () => {
-      try {
-        const mockData = mockApi.getMockData();
-        // Se não houver grupos, iniciar vazio
-        if (!mockData.grupos) {
-          mockData.grupos = [];
-          mockApi.saveMockDataSync();
-        }
-        // Faz uma cópia para evitar referência duplicada
-        setGroups([...mockData.grupos]);
-      } catch (error) {
-        console.error("Erro ao carregar grupos:", error);
-      }
-    };
-
-    loadGroups();
+    const stored = loadGroupsFromStorage();
+    setGroups(Array.isArray(stored) ? stored : []);
   }, []);
 
   // ==== Funções com persistência ====
   const addGroup = () => {
     if (!newGroupName.trim()) return;
-    
-    // 1. Atualizar mockApi PRIMEIRO
-    const mockData = mockApi.getMockData();
-    if (!mockData.grupos) mockData.grupos = [];
-    
-    const newGroup = {
-      id: Math.max(...mockData.grupos.map((g) => g.id), 0) + 1,
-      name: newGroupName,
-      teams: [],
-    };
-    
-    mockData.grupos.push(newGroup);
-    mockApi.saveMockDataSync();
-    
-    // 2. Depois atualizar o state React
-    setGroups([...mockData.grupos]);
+
+    const current = loadGroupsFromStorage();
+    const nextId = current.length ? Math.max(...current.map((g) => g.id)) + 1 : 1;
+    const newGroup = { id: nextId, name: newGroupName.trim(), teams: [] };
+    const updated = [...current, newGroup];
+    saveGroupsToStorage(updated);
+    setGroups(updated);
     setNewGroupName("");
   };
 
   const removeGroup = (groupId) => {
-    // 1. Atualizar mockApi PRIMEIRO
-    const mockData = mockApi.getMockData();
-    if (mockData.grupos) {
-      mockData.grupos = mockData.grupos.filter((g) => g.id !== groupId);
-      mockApi.saveMockDataSync();
-    }
-    
-    // 2. Depois atualizar o state React
-    setGroups([...mockData.grupos]);
+    const current = loadGroupsFromStorage();
+    const updated = current.filter((g) => g.id !== groupId);
+    saveGroupsToStorage(updated);
+    setGroups(updated);
   };
 
   const addTeamToGroup = (groupId, teamId) => {
     const team = teams.find((t) => t.id == teamId);
     if (!team) return;
 
-    // 1. Atualizar mockApi PRIMEIRO
-    const mockData = mockApi.getMockData();
-    if (mockData.grupos) {
-      mockData.grupos = mockData.grupos.map((g) =>
-        g.id === groupId
-          ? { ...g, teams: [...(g.teams || []), team] }
-          : g
-      );
-      mockApi.saveMockDataSync();
-    }
-
-    // 2. Depois atualizar o state React
-    setGroups([...mockData.grupos]);
+    const current = loadGroupsFromStorage();
+    const updated = current.map((g) =>
+      g.id === groupId ? { ...g, teams: [...(g.teams || []), team] } : g
+    );
+    saveGroupsToStorage(updated);
+    setGroups(updated);
   };
 
   const removeTeamFromGroup = (groupId, teamId) => {
-    // 1. Atualizar mockApi PRIMEIRO
-    const mockData = mockApi.getMockData();
-    if (mockData.grupos) {
-      mockData.grupos = mockData.grupos.map((g) =>
-        g.id === groupId
-          ? { ...g, teams: (g.teams || []).filter((t) => t.id !== teamId) }
-          : g
-      );
-      mockApi.saveMockDataSync();
+    const current = loadGroupsFromStorage();
+    const updated = current.map((g) =>
+      g.id === groupId ? { ...g, teams: (g.teams || []).filter((t) => t.id !== teamId) } : g
+    );
+    saveGroupsToStorage(updated);
+    setGroups(updated);
+  };
+
+  const distributeTeams = () => {
+    if (groups.length === 0 || teams.length === 0) return;
+
+    // 1. Copiar times
+    const allTeams = [...teams];
+
+    // 2. Criar grupos vazios
+    const newGroups = groups.map((g) => ({ ...g, teams: [] }));
+
+    // 3. Distribuir de forma circular
+    let index = 0;
+    for (let team of allTeams) {
+      newGroups[index].teams.push(team);
+      index = (index + 1) % newGroups.length;
     }
 
-    // 2. Depois atualizar o state React
-    setGroups([...mockData.grupos]);
+    // 4. Salvar no localStorage
+    saveGroupsToStorage(newGroups);
+
+    // 5. Atualizar estado React
+    setGroups(newGroups);
   };
 
   return (
@@ -127,6 +131,16 @@ export const AdmGroupsEdit = () => {
             </button>
           </div>
         </div>
+        {/* Botão Distribuir Times */}
+            <div className="flex justify-end">
+              <button
+                onClick={distributeTeams}
+                className="px-4 py-2 bg-accent text-white rounded-md flex items-center gap-2 hover:bg-light cursor-pointer"
+              >
+                <Shuffle className="w-4 h-4" />
+                Distribuir Times
+              </button>
+            </div>
 
         {/* Listagem dos Grupos */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

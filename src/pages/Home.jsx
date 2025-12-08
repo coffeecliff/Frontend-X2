@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "../components/Button";
-import { mockApi } from "../services/mockApi";
+import client from "../api/client";
 
 export const Home = () => {
   const [tabelaData, setTabelaData] = useState([]);
@@ -11,8 +11,32 @@ export const Home = () => {
   useEffect(() => {
     const loadTabela = async () => {
       try {
-        const data = await mockApi.getTabela();
-        setTabelaData(data);
+        const res = await client.get('/partidas/tabela/classificacao');
+        const data = res.data || [];
+
+        const mapped = data.map((item) => ({
+          id: item.id,
+          grupo: item.grupo || '',
+          posicao: item.posicao,
+          flag: item.time_nome ? `${item.time_nome.toLowerCase().replace(/\s+/g, '')}.svg` : 'placeholder.svg',
+          vitorias: item.vitorias,
+          derrotas: item.derrotas,
+          gols_pro: item.gols_pro,
+          saldo_gols: item.saldo_gols,
+          pontos: item.pontos,
+        }));
+
+        // If backend doesn't provide 'grupo', create a reasonable fallback grouping
+        let finalMapped = mapped;
+        const hasGrupo = mapped.some((it) => it.grupo && String(it.grupo).trim().length > 0);
+        if (!hasGrupo) {
+          // sort by posicao (ascending) and split into two groups A/B
+          const sorted = [...mapped].sort((a, b) => (a.posicao ?? 0) - (b.posicao ?? 0));
+          const half = Math.ceil(sorted.length / 2);
+          finalMapped = sorted.map((it, idx) => ({ ...it, grupo: idx < half ? 'A' : 'B' }));
+        }
+
+        setTabelaData(finalMapped);
       } catch (error) {
         console.error("Erro ao carregar tabela:", error);
       }
@@ -139,7 +163,7 @@ export const Home = () => {
 
                 <tbody>
                   {tabelaData
-                    .filter((item) => item.grupo === 'A')
+                    .filter((item) => item.grupo === 'A' && item.flag && item.flag !== 'placeholder.svg')
                     .sort((a, b) => a.posicao - b.posicao)
                     .map((item, i) => {
                       const bgClass = i % 2 === 0 ? "bg-tableaccent" : "bg-tablemedium";
@@ -178,7 +202,7 @@ export const Home = () => {
 
                 <tbody>
                   {tabelaData
-                    .filter((item) => item.grupo === 'B')
+                    .filter((item) => item.grupo === 'B' && item.flag && item.flag !== 'placeholder.svg')
                     .sort((a, b) => a.posicao - b.posicao)
                     .map((item, i) => {
                       const bgClass = i % 2 === 0 ? "bg-tableaccent" : "bg-tablemedium";

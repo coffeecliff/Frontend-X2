@@ -55,8 +55,6 @@ export const About = () => {
           <ul className="list-disc ml-6">
             <li>Vitória: 3 pontos</li>
             <li>Empate: 1 ponto + disputa de pênaltis (com ponto extra)</li>
-            <li>Vitória nos pênaltis: 2 pontos</li>
-            <li>Derrota nos pênaltis: 1 ponto</li>
           </ul>
           <p>
             Critérios de desempate: pontos, vitórias, saldo de gols, gols pró, confronto direto e nova disputa de pênaltis.

@@ -43,20 +43,18 @@ export const Sidebar = () => {
 
   // 📌 Links de navegação, diferentes para psicólogo ou paciente
   const navLinks =
-    user?.type === 'adm'
+    (user?.type || '').toString().toLowerCase() === 'admin'
       ? [
-        { to: '/admhomeedit', label: 'Home', icon: FaHome },
         { to: '/admgamesedit', label: 'Jogos', icon: RiFootballFill },
         { to: '/admplayersedit', label: 'Jogadores', icon: User },
         { to: '/admsponsoredit', label: 'Patrocinadores', icon: FaRegHandshake },
-        { to: '/admaboutedit', label: 'Sobre', icon: FaInfoCircle }
       ]
       : [
 
       ];
 
   const funcLinks =
-    user?.type === 'adm'
+    (user?.type || '').toString().toLowerCase() === 'admin'
       ? [
         { to: '/admteamsedit', label: 'Editar Times', icon: Users },
         { to: '/admgroupsedit', label: 'Editar Grupos', icon: Group },

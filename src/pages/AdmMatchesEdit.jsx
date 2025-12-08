@@ -1,13 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { Trophy, Clock, Plus, Trash2, Edit3, Save, X } from "lucide-react";
 import { TeamsContext } from "../context/TeamsContext";
-import { mockApi } from "../services/mockApi";
+import client from "../api/client";
 
 export const AdmMatchesEdit = () => {
     const { teams } = useContext(TeamsContext);
     const [matches, setMatches] = useState([]);
     const [editingId, setEditingId] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [ setLoading ] = useState(true);
 
     const [newMatch, setNewMatch] = useState({
         time1_id: "",
@@ -20,59 +20,30 @@ export const AdmMatchesEdit = () => {
     useEffect(() => {
         const loadMatches = async () => {
             try {
-                const matchesData = await mockApi.getPartidas();
-                setMatches(matchesData);
+                const res = await client.get('/partidas');
+                const data = res.data || [];
+                const mapped = data.map((m) => ({
+                    id: m.id,
+                    time1_id: m.time_mandante_id,
+                    time2_id: m.time_visitante_id,
+                    time1_nome: (teams.find((t) => t.id === m.time_mandante_id) || {}).name || '',
+                    time2_nome: (teams.find((t) => t.id === m.time_visitante_id) || {}).name || '',
+                    gols_time1: m.placar_mandante ?? 0,
+                    gols_time2: m.placar_visitante ?? 0,
+                    status: (m.placar_mandante != null || m.placar_visitante != null) && (m.placar_mandante !== 0 || m.placar_visitante !== 0) ? 'finalizado' : 'agendado',
+                }));
+                setMatches(mapped);
             } catch (error) {
                 console.error("Erro ao carregar partidas:", error);
             } finally {
                 setLoading(false);
             }
         };
+
         loadMatches();
-    }, []);
-
-    // Função auxiliar para atualizar tabela baseado em resultado
-    const updateTableFromMatch = (match) => {
-        const mockData = mockApi.getMockData();
-        const tabela = mockData.tabela || [];
-
-        const time1Entry = tabela.find((t) => t.time_id === match.time1_id);
-        const time2Entry = tabela.find((t) => t.time_id === match.time2_id);
-
-        if (!time1Entry || !time2Entry) return;
-
-        // Atualizar gols
-        time1Entry.gols_pro += match.gols_time1;
-        time1Entry.gols_contra += match.gols_time2;
-        time2Entry.gols_pro += match.gols_time2;
-        time2Entry.gols_contra += match.gols_time1;
-
-        // Atualizar saldo de gols
-        time1Entry.saldo_gols = time1Entry.gols_pro - time1Entry.gols_contra;
-        time2Entry.saldo_gols = time2Entry.gols_pro - time2Entry.gols_contra;
-
-        // Atualizar jogos
-        time1Entry.jogos += 1;
-        time2Entry.jogos += 1;
-
-        // Determinar resultado
-        if (match.gols_time1 > match.gols_time2) {
-            time1Entry.vitorias += 1;
-            time1Entry.pontos += 3;
-            time2Entry.derrotas += 1;
-        } else if (match.gols_time1 < match.gols_time2) {
-            time2Entry.vitorias += 1;
-            time2Entry.pontos += 3;
-            time1Entry.derrotas += 1;
-        } else {
-            time1Entry.empates += 1;
-            time2Entry.empates += 1;
-            time1Entry.pontos += 1;
-            time2Entry.pontos += 1;
-        }
-    };
-
-    const addMatch = () => {
+    }, [teams]);
+   
+    const addMatch = async () => {
         if (!newMatch.time1_id || !newMatch.time2_id || newMatch.time1_id === newMatch.time2_id) {
             alert("Selecione dois times diferentes!");
             return;
@@ -81,45 +52,51 @@ export const AdmMatchesEdit = () => {
         const time1 = teams.find((t) => t.id == newMatch.time1_id);
         const time2 = teams.find((t) => t.id == newMatch.time2_id);
 
-        const match = {
-            id: Math.max(...matches.map((m) => m.id), 0) + 1,
-            time1_id: parseInt(newMatch.time1_id),
-            time2_id: parseInt(newMatch.time2_id),
-            time1_nome: time1?.name,
-            time2_nome: time2?.name,
-            gols_time1: newMatch.gols_time1,
-            gols_time2: newMatch.gols_time2,
-            status: "agendado",
+        const payload = {
+            data_hora: new Date().toISOString(),
+            local: "",
+            time_mandante_id: parseInt(newMatch.time1_id),
+            time_visitante_id: parseInt(newMatch.time2_id),
+            placar_mandante: newMatch.gols_time1,
+            placar_visitante: newMatch.gols_time2,
         };
 
-        const updatedMatches = [...matches, match];
-        setMatches(updatedMatches);
-
-        // Persistir
-        const mockData = mockApi.getMockData();
-        mockData.partidas = updatedMatches;
-        mockApi.saveMockDataSync();
-
-        setNewMatch({ time1_id: "", time2_id: "", gols_time1: 0, gols_time2: 0 });
+        try {
+            const res = await client.post('/partidas', payload);
+            const m = res.data;
+            const created = {
+                id: m.id,
+                time1_id: m.time_mandante_id,
+                time2_id: m.time_visitante_id,
+                time1_nome: time1?.name,
+                time2_nome: time2?.name,
+                gols_time1: m.placar_mandante ?? 0,
+                gols_time2: m.placar_visitante ?? 0,
+                status: (m.placar_mandante != null || m.placar_visitante != null) && (m.placar_mandante !== 0 || m.placar_visitante !== 0) ? 'finalizado' : 'agendado',
+            };
+            setMatches((prev) => [...prev, created]);
+            setNewMatch({ time1_id: "", time2_id: "", gols_time1: 0, gols_time2: 0 });
+        } catch (err) {
+            console.error('Erro ao criar partida:', err);
+            alert('Erro ao criar partida');
+        }
     };
 
-    const finishMatch = (id) => {
+    const finishMatch = async (id) => {
         const match = matches.find((m) => m.id === id);
         if (!match) return;
 
-        // Atualizar tabela
-        updateTableFromMatch(match);
-
-        // Atualizar status
-        const updatedMatches = matches.map((m) =>
-            m.id === id ? { ...m, status: "finalizado" } : m
-        );
-        setMatches(updatedMatches);
-
-        // Persistir
-        const mockData = mockApi.getMockData();
-        mockData.partidas = updatedMatches;
-        mockApi.saveMockDataSync();
+        try {
+            await client.put(`/partidas/${id}`, {
+                placar_mandante: match.gols_time1,
+                placar_visitante: match.gols_time2,
+            });
+            const updatedMatches = matches.map((m) => (m.id === id ? { ...m, status: 'finalizado' } : m));
+            setMatches(updatedMatches);
+        } catch (err) {
+            console.error('Erro ao finalizar partida:', err);
+            alert('Erro ao finalizar partida');
+        }
     };
 
     const handleChange = (id, field, value) => {
@@ -134,20 +111,30 @@ export const AdmMatchesEdit = () => {
         setMatches(updatedMatches);
     };
 
-    const saveMatchChanges = (id) => {
-        const mockData = mockApi.getMockData();
-        mockData.partidas = matches;
-        mockApi.saveMockDataSync();
-        setEditingId(null);
+    const saveMatchChanges = async (id) => {
+        try {
+            const m = matches.find((mm) => mm.id === id);
+            if (!m) return;
+            await client.put(`/partidas/${id}`, {
+                placar_mandante: m.gols_time1,
+                placar_visitante: m.gols_time2,
+            });
+            setEditingId(null);
+        } catch (err) {
+            console.error('Erro ao salvar partida:', err);
+            alert('Erro ao salvar partida');
+        }
     };
 
-    const deleteMatch = (id) => {
-        const updatedMatches = matches.filter((m) => m.id !== id);
-        setMatches(updatedMatches);
-
-        const mockData = mockApi.getMockData();
-        mockData.partidas = updatedMatches;
-        mockApi.saveMockDataSync();
+    const deleteMatch = async (id) => {
+        try {
+            await client.delete(`/partidas/${id}`);
+            const updatedMatches = matches.filter((m) => m.id !== id);
+            setMatches(updatedMatches);
+        } catch (err) {
+            console.error('Erro ao deletar partida:', err);
+            alert('Erro ao deletar partida');
+        }
     };
 
     const getStatusBadge = (match) => {

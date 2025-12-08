@@ -3,15 +3,29 @@ import { Plus, Trash2, Users } from "lucide-react";
 import { TeamsContext } from "../context/TeamsContext";
 
 export const AdmTeamsEdit = () => {
-    const { teams, addTeam, removeTeam, loading } = useContext(TeamsContext);
+    const { teams, addTeam, removeTeam, updateTeam } = useContext(TeamsContext);
     const [newTeamName, setNewTeamName] = useState("");
+    const [newTeamLogo, setNewTeamLogo] = useState("");
 
-    const handleAddTeam = () => {
+
+    const handleAddTeam = async () => {
         if (!newTeamName.trim()) return;
-        addTeam(newTeamName);
-        setNewTeamName("");
-    };
 
+        try {
+            // addTeam expects a team name (string) per TeamsContext API
+            const created = await addTeam(newTeamName.trim());
+            // if a logo/url was provided, call updateTeam to set escudo
+            if (newTeamLogo && updateTeam && created && created.id) {
+                await updateTeam(created.id, { name: created.name, escudo: newTeamLogo });
+            }
+        } catch (err) {
+            console.error('Erro ao adicionar time:', err);
+            // optionally show user feedback
+        } finally {
+            setNewTeamName("");
+            setNewTeamLogo("");
+        }
+    };
     const handleRemoveTeam = (id) => {
         removeTeam(id);
     };
@@ -48,6 +62,13 @@ export const AdmTeamsEdit = () => {
                             Adicionar
                         </button>
                     </div>
+                      {/* URL da logo */}
+                        <input
+                        className="px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-accent/40"
+                        placeholder="URL da logo (ex: https://meusite.com/logo.png)"
+                        value={newTeamLogo}
+                        onChange={(e) => setNewTeamLogo(e.target.value)}
+                        />
                 </div>
 
                 {/* Lista de times */}

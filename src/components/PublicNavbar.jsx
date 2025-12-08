@@ -15,7 +15,7 @@ export const PublicNavbar = () => {
     { to: "/games", label: "Jogos" },
     { to: "/about", label: "Sobre" },
 
-    ...(user?.type !== "adm"
+      ...( (user?.type || '').toString().toLowerCase() !== 'admin'
       ? [{ to: "/contact", label: "Contato" }]
       : []),
 
@@ -72,9 +72,9 @@ export const PublicNavbar = () => {
               ))}
 
               {/* Seção ADM */}
-              {user?.type === "adm" && (
+                {(user?.type || '').toString().toLowerCase() === "admin" && (
                 <Link
-                  to="/admhomeedit"
+                  to="/admgamesedit"
                   className="hidden sm:block font-extrabold transition-colors text-sm md:text-[20px] mr-12 text-white hover:text-accent"
                 >
                   Seção ADM
@@ -147,7 +147,7 @@ export const PublicNavbar = () => {
               >
 
                 {/* Seção ADM mobile */}
-                {user?.type === "adm" && (
+                  {(user?.type || '').toString().toLowerCase() === "admin" && (
                   <Link
                     to="/admhomeedit"
                     className="block px-3 py-1 rounded-lg text-white hover:text-accent hover:bg-light/5 font-semibold"

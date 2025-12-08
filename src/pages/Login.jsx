@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { mockApi } from "../services/mockApi";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import toast from "react-hot-toast";
@@ -10,23 +9,14 @@ export const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [loading, setLoading] = useState(false);
     const { login } = useAuth();
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
         try {
-            const { user, token } = await mockApi.login(
-                formData.email,
-                formData.password
-            );
-
-            login(user, token);
+            await login({ email: formData.email, password: formData.password });
             toast.success("Login realizado com sucesso!");
-            // ❌ Não navegue aqui — o redirecionamento será feito automaticamente pelo AppRoutes
-            // navigate("/admhomeedit");
-
         } catch (error) {
             toast.error(error.message);
         } finally {

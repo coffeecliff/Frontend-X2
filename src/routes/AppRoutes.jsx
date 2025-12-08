@@ -22,28 +22,17 @@ import { Contact } from '../pages/Contact';
 
 
 // Páginas protegidas (apenas para usuários autenticados)
-import { AdmHomeEdit } from '../pages/AdmHomeEdit';
 import { AdmGamesEdit } from '../pages/AdmGamesEdit';
-import { AdmAboutEdit } from '../pages/AdmAboutEdit';
 import { Sponsor } from '../pages/Sponsor';
 import { AdmSponsorEdit } from '../pages/AdmSponsorEdit';
 import { Register } from '../pages/Register';
 import { Profile } from '../pages/Profile';
-import { ClientDashboard } from "../pages/ClientDashboard";
+
 import { Moments } from '../pages/Moments'
 import { AdmPlayersEdit } from '../pages/AdmPlayersEdit';
 import { AdmTeamsEdit } from '../pages/AdmTeamsEdit';
 import { AdmMatchesEdit } from '../pages/AdmMatchesEdit';
 import { AdmGroupsEdit } from '../pages/AdmGroupsEdit';
-
-// import { DashboardPaciente } from '../pages/DashboardPaciente';
-// import { Agendamento } from '../pages/Agendamentos';
-// import { ChatIA } from '../pages/ChatIA';
-// import { Relatorios } from '../pages/Relatorios';
-// import { Solicitacoes } from '../pages/Solicitacoes';
-// import { Pacientes } from '../pages/Pacientes';
-// import { PacienteDetalhes } from '../pages/PacientesDetalhes';
-// import { SessaoDetalhes } from '../pages/SessaoDetalhes';
 
 /* ==============================
    Componente de rota protegida
@@ -54,9 +43,14 @@ import { AdmGroupsEdit } from '../pages/AdmGroupsEdit';
     if (loading) return <LoadingSpinner size="lg" />;
     if (!user) return <Navigate to="/login" replace />;
   
-    // Se a rota exige tipo específico (ex: gerente)
-    if (allowedRoles && !allowedRoles.includes(user.type)) {
-      return <Navigate to="/" replace />; 
+    // Normaliza tipos para comparação (case-insensitive)
+    const userType = (user?.type || '').toString().toLowerCase();
+    const allowed = Array.isArray(allowedRoles)
+      ? allowedRoles.map((r) => r.toString().toLowerCase())
+      : [];
+
+    if (allowed.length > 0 && !allowed.includes(userType)) {
+      return <Navigate to="/" replace />;
     }
   
     return (
@@ -73,30 +67,23 @@ import { AdmGroupsEdit } from '../pages/AdmGroupsEdit';
         </div>
       </>
     );
-  };  
-<Route
-  path="/client"
-  element={
-    <ProtectedRoute allowedRoles={["client"]}>
-      <ClientDashboard />
-    </ProtectedRoute>
-  }
-/>
+  };
 
 /* ==============================
    Componente de rota pública
    ============================== */
 const PublicRoute = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const location = useLocation();
 
   const authPages = ["/login", "/register"];
   const isAuthPage = authPages.includes(location.pathname);
 
-  // Redireciona conforme tipo de usuário
+  // Redireciona conforme tipo de usuário (case-insensitive)
   if (user && isAuthPage) {
-    if (user.type === "adm") {
-      return <Navigate to="/admhomeedit" replace />;
+    const t = (user?.type || '').toString().toLowerCase();
+    if (t === 'admin') {
+      return <Navigate to="/admgamesedit" replace />;
     } else {
       return <Navigate to="/" replace />; // paciente
     }
@@ -124,8 +111,9 @@ const PublicRoute = ({ children }) => {
    ============================== */
 const Dashboard = () => {
   const { user } = useAuth();
-  // Retorna dashboard específico baseado no tipo do usuário
-  return user?.type === 'adm' ? <DashboardPsicologo /> : <DashboardPaciente />;
+  // Retorna dashboard específico baseado no tipo do usuário (case-insensitive)
+  const t = (user?.type || '').toString().toLowerCase();
+  return t === 'admin' ? <DashboardPsicologo /> : <DashboardPaciente />;
 };
 
 /* ==============================
@@ -187,19 +175,9 @@ export const AppRoutes = () => {
         {/* ==============================
            Rotas Protegidas
            ============================== */}
-        <Route path="/admhomeedit" element={
-          <ProtectedRoute>
-            <AdmHomeEdit /> 
-          </ProtectedRoute>
-        } />
         <Route path="/admgamesedit" element={
           <ProtectedRoute>
             <AdmGamesEdit /> 
-          </ProtectedRoute>
-        } />
-        <Route path="/admaboutedit" element={
-          <ProtectedRoute>
-            <AdmAboutEdit /> 
           </ProtectedRoute>
         } />
         <Route path="/admsponsoredit" element={

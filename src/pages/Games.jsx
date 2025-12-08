@@ -1,7 +1,7 @@
 // src/pages/Games.jsx
 import { useState, useEffect, useContext } from "react";
 import { TeamsContext } from "../context/TeamsContext";
-import { mockApi } from "../services/mockApi";
+import client from "../api/client";
 
 export const Games = () => {
   const { teams } = useContext(TeamsContext);
@@ -13,142 +13,57 @@ export const Games = () => {
   // Carregar dados ao montar e recarregar periodicamente
   useEffect(() => {
     console.log("useEffect Games.jsx iniciado");
-    
+
     const loadData = async () => {
       try {
-        console.log("Carregando dados...");
-        const matchesData = await mockApi.getPartidas();
-        const groupsData = await (mockApi.getGrupos?.() || Promise.resolve([]));
-        const tableData = await mockApi.getTabela();
-        
-        console.log("Matches:", matchesData);
-        console.log("Finalizadas:", matchesData.filter((m) => m.status === "finalizado"));
-        
-        setMatches(matchesData);
-        setGroups(groupsData || []);
-        setTable(tableData);
+        console.log("Carregando dados do backend...");
+        const partidasRes = await client.get('/partidas');
+        const tabelaRes = await client.get('/partidas/tabela/classificacao');
+
+        const partidasData = partidasRes.data || [];
+        const tabelaData = tabelaRes.data || [];
+
+        // Mapear partidas para o formato esperado pela UI
+        const mappedMatches = partidasData.map((m) => ({
+          id: m.id,
+          time1_id: m.time_mandante_id,
+          time2_id: m.time_visitante_id,
+          time1_nome: (teams.find((t) => t.id === m.time_mandante_id) || {}).name || '',
+          time2_nome: (teams.find((t) => t.id === m.time_visitante_id) || {}).name || '',
+          gols_time1: m.placar_mandante ?? 0,
+          gols_time2: m.placar_visitante ?? 0,
+          status: (m.placar_mandante != null || m.placar_visitante != null) && (m.placar_mandante !== 0 || m.placar_visitante !== 0) ? 'finalizado' : 'agendado',
+        }));
+
+        setMatches(mappedMatches);
+        // backend may not provide 'grupo' — keep raw tabelaData and let UI handle absent fields
+        setTable(tabelaData);
+        // groups endpoint not available; keep empty array or implement if backend provides
+        setGroups([]);
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
       } finally {
         setLoading(false);
       }
     };
-    
+
     loadData();
-    
+
     // Recarregar dados a cada 2 segundos para sincronizar com AdmMatchesEdit
     const interval = setInterval(() => {
       console.log("Polling - recarregando dados");
       loadData();
     }, 2000);
-    
+
     return () => {
       console.log("Limpando intervalo");
       clearInterval(interval);
     };
-  }, []);
+  }, [teams]);
 
   // Filtrar apenas partidas finalizadas
   const finishedMatches = matches.filter((m) => m.status === "finalizado");
 
-  // Obter 2 melhores times de cada grupo para semifinais
-  const getGroupWinners = () => {
-    const groupA = table.filter((t) => t.grupo === "A").sort((a, b) => b.pontos - a.pontos);
-    const groupB = table.filter((t) => t.grupo === "B").sort((a, b) => b.pontos - a.pontos);
-
-    return {
-      semifinal1_1: groupA[0]?.time_id ? teams.find((t) => t.id === groupA[0].time_id)?.name : "",
-      semifinal1_2: groupB[0]?.time_id ? teams.find((t) => t.id === groupB[0].time_id)?.name : "",
-      semifinal2_1: groupA[1]?.time_id ? teams.find((t) => t.id === groupA[1].time_id)?.name : "",
-      semifinal2_2: groupB[1]?.time_id ? teams.find((t) => t.id === groupB[1].time_id)?.name : "",
-    };
-  };
-
-  // Obter semifinalistas
-  const getSemifinalists = () => {
-    const semifinalMatches = finishedMatches.filter((m) => m.status === "finalizado");
-    // Últimas 2 partidas finalizadas são as semifinais
-    if (semifinalMatches.length >= 2) {
-      const semi1 = semifinalMatches[semifinalMatches.length - 2];
-      const semi2 = semifinalMatches[semifinalMatches.length - 1];
-      return {
-        finalist1: semi1?.gols_time1 > semi1?.gols_time2 ? semi1.time1_nome : semi1?.time2_nome,
-        finalist2: semi2?.gols_time1 > semi2?.gols_time2 ? semi2.time1_nome : semi2?.time2_nome,
-      };
-    }
-    return { finalist1: "", finalist2: "" };
-  };
-
-  const TorneioBracket = ({ dados }) => {
-    const col1 = dados?.col1 || [];
-    const col2 = dados?.col2 || [];
-    const col3 = dados?.col3 || [];
-    const col4 = dados?.col4 || [];
-
-    return (
-      <div className="w-full flex justify-center overflow-x-auto mt-10 mb-10 space-x-4">
-        <div className="grid grid-cols-1">
-          {/* ==== COLUNA 1 (GRUPOS) ==== */}
-          <div className="flex flex-col justify-between h-full space-y-10">
-            {[1, 2, 3, 4].map((num, idx) => (
-              <div key={num} className="flex items-center space-x-1">
-                <span className="text-white text-xl font-bold w-6">{num}</span>
-
-                {/* Box esquerda */}
-                <div className="w-45 h-10 bg-white rounded-md shadow flex items-center px-2 text-black text-sm font-semibold">
-                  {col1[idx] || ""}
-                </div>
-
-                <div className="w-5 h-1 bg-white" />
-
-                {/* Box direita */}
-                <div className="w-45 h-10 bg-white rounded-md shadow flex items-center px-2 text-black text-sm font-semibold">
-                  {col1[idx + 4] || ""}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Colunas 2, 3, 4 */}
-        <div className="grid grid-cols-3 gap-x-5">
-          {/* ==== COLUNA 2 (OITAVAS) ==== */}
-          <div className="flex flex-col justify-evenly">
-            {[0, 1, 2, 3].map((i) => (
-              <div key={i} className="flex items-center">
-                <div className="w-6 h-1 bg-white" />
-                <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm font-semibold">
-                  {col2[i] || ""}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* ==== COLUNA 3 (SEMIFINAL) ==== */}
-          <div className="flex flex-col justify-evenly">
-            {[0, 1].map((i) => (
-              <div key={i} className="flex items-center">
-                <div className="w-6 h-1 bg-white" />
-                <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm font-semibold">
-                  {col3[i] || ""}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* ==== COLUNA 4 (FINAL) ==== */}
-          <div className="flex flex-col justify-center">
-            <div className="flex items-center">
-              <div className="w-6 h-1 bg-white" />
-              <div className="w-45 h-10 bg-white rounded-md shadow ml-2 flex items-center px-2 text-black text-sm font-semibold">
-                {col4[0] || ""}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
   // Estado do jogo selecionado
   const [jogoSelecionado, setJogoSelecionado] = useState(null);
 
@@ -229,28 +144,6 @@ export const Games = () => {
         src="/BolasYR.png"
         alt="Bola inferior direita"
         className="absolute bottom-0 right-0 w-1/4 md:w-1/6"
-      />
-
-      {/* Título */}
-      <h1 className="text-2xl font-extrabold text-white text-center">
-        CHAVEAMENTO
-      </h1>
-      <h2 className="text-lg font-bold text-white mb-8 text-center">
-        DO TORNEIO
-      </h2>
-
-      {/* Tabela estilo torneio */}
-      <TorneioBracket
-        dados={{
-          col1: table
-            .filter((t) => t.grupo === "A" || t.grupo === "B")
-            .sort((a, b) => a.grupo.localeCompare(b.grupo) || b.pontos - a.pontos)
-            .slice(0, 8)
-            .map((t) => teams.find((tm) => tm.id === t.time_id)?.name || ""),
-          col2: [],
-          col3: [getGroupWinners().semifinal1_1, getGroupWinners().semifinal2_1],
-          col4: [getSemifinalists().finalist1],
-        }}
       />
 
       {/* Título */}

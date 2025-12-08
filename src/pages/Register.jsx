@@ -1,14 +1,12 @@
 import { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { mockApi } from "../services/mockApi";
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";
 import { Input } from "../components/Input";
 import toast from "react-hot-toast";
  
 export const Register = () => {
-  const [userType, setUserType] = useState("cliente");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,7 +16,7 @@ export const Register = () => {
     birthDate: "",
   });
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { register } = useAuth();
   const navigate = useNavigate();
  
   const handleInputChange = useCallback(
@@ -36,15 +34,30 @@ export const Register = () => {
     }
     setLoading(true);
     try {
-      const { user, token } = await mockApi.register({
-        ...formData,
-        type: userType,
-      });
-      login(user, token);
-      toast.success("Conta criada com sucesso!");
-      navigate("/dashboard");
+      // Segurança: forçar registro público como 'user'
+      const payload = {
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+        phone: formData.phone || undefined,
+        // envie birthDate se preenchido
+        ...(formData.birthDate ? { birthDate: formData.birthDate } : {}),
+        type: 'user',
+      };
+
+      const user = await register(payload);
+      toast.success('Conta criada com sucesso!');
+
+      // navegação baseada no role retornado (case-insensitive)
+      const role = (user?.type || '').toString().toLowerCase();
+      if (role === 'admin') {
+        navigate('/admgamesedit');
+      } else {
+        navigate('/client');
+      }
     } catch (error) {
-      toast.error(error.message);
+      const msg = error?.response?.data?.detail || error?.message || 'Erro ao criar conta';
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -108,15 +121,11 @@ export const Register = () => {
             label="Telefone"
             type="tel"
             value={formData.phone}
-            onChange={handleInputChange("phone")}
+            onChange={handleInputChange('phone')}
             placeholder="Digite seu telefone"
-            required
           />
  
-          {userType === "administrador" && (
-            <>              
-            </>
-          )}
+          {/* userType removed from public registration (admins must be created securely) */}
          
           <Button type="submit" loading={loading} className="w-full">
             Criar Conta
