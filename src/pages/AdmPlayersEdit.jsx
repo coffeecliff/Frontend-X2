@@ -173,7 +173,7 @@ export const AdmPlayersEdit = () => {
 
       {/* BOTÃO ADICIONAR */}
       <button
-        className="flex items-center gap-2 cursor-pointer bg-accent text-black font-bold px-4 py-2 rounded mb-4"
+        className="flex items-center gap-2 cursor-pointer text-white bg-accent text-black font-bold px-4 py-2 rounded mb-4"
         onClick={() => setAdding(!adding)}
       >
         <PlusCircle size={20} /> Adicionar Jogador
@@ -181,7 +181,7 @@ export const AdmPlayersEdit = () => {
 
       {/* FORMULÁRIO ADICIONAR */}
       {adding && (
-        <div className="bg-neutral-900 border border-neutral-700 p-4 rounded-lg mb-6">
+        <div className="bg-neutral-900 border border-neutral-700 p-4 text-white rounded-lg mb-6">
           <h2 className="text-xl mb-3 font-semibold">Novo Jogador</h2>
 
           <div className="flex gap-4 items-center">

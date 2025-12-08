@@ -45,7 +45,6 @@ export const Sidebar = () => {
   const navLinks =
     (user?.type || '').toString().toLowerCase() === 'admin'
       ? [
-        { to: '/admgamesedit', label: 'Jogos', icon: RiFootballFill },
         { to: '/admplayersedit', label: 'Jogadores', icon: User },
         { to: '/admsponsoredit', label: 'Patrocinadores', icon: FaRegHandshake },
       ]

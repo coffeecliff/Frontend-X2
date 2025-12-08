@@ -22,7 +22,6 @@ import { Contact } from '../pages/Contact';
 
 
 // Páginas protegidas (apenas para usuários autenticados)
-import { AdmGamesEdit } from '../pages/AdmGamesEdit';
 import { Sponsor } from '../pages/Sponsor';
 import { AdmSponsorEdit } from '../pages/AdmSponsorEdit';
 import { Register } from '../pages/Register';
@@ -83,7 +82,7 @@ const PublicRoute = ({ children }) => {
   if (user && isAuthPage) {
     const t = (user?.type || '').toString().toLowerCase();
     if (t === 'admin') {
-      return <Navigate to="/admgamesedit" replace />;
+      return <Navigate to="/admplayersedit" replace />;
     } else {
       return <Navigate to="/" replace />; // paciente
     }
@@ -175,11 +174,6 @@ export const AppRoutes = () => {
         {/* ==============================
            Rotas Protegidas
            ============================== */}
-        <Route path="/admgamesedit" element={
-          <ProtectedRoute>
-            <AdmGamesEdit /> 
-          </ProtectedRoute>
-        } />
         <Route path="/admsponsoredit" element={
           <ProtectedRoute>
             <AdmSponsorEdit /> 

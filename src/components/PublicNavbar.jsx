@@ -74,7 +74,7 @@ export const PublicNavbar = () => {
               {/* Seção ADM */}
                 {(user?.type || '').toString().toLowerCase() === "admin" && (
                 <Link
-                  to="/admgamesedit"
+                  to="/admplayersedit"
                   className="hidden sm:block font-extrabold transition-colors text-sm md:text-[20px] mr-12 text-white hover:text-accent"
                 >
                   Seção ADM
@@ -149,7 +149,7 @@ export const PublicNavbar = () => {
                 {/* Seção ADM mobile */}
                   {(user?.type || '').toString().toLowerCase() === "admin" && (
                   <Link
-                    to="/admhomeedit"
+                    to="/admplayersedit"
                     className="block px-3 py-1 rounded-lg text-white hover:text-accent hover:bg-light/5 font-semibold"
                     onClick={() => setIsOpen(false)}
                   >
