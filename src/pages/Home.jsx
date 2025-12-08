@@ -140,7 +140,7 @@ export const Home = () => {
 
         <div className="relative z-10">
           <h2 className="text-accent text-2xl md:text-3xl font-extrabold mb-8 tracking-wide">
-            RESULTADO DO ÚLTIMO JOGO
+            PONTUAÇÃO DOS TIMES
           </h2>
 
           <div className="flex flex-col justify-center gap-10 items-center z-10">
